@@ -1,0 +1,11 @@
+P, Porch
+W, Walkway
+X, Closet
+G, Dungeon
+A, Attic
+K, Kitchen
+Q, Pool Room
+B, Ballroom
+E, Dining Room
+T, Living Room
+N, Den
