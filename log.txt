@@ -1,1 +1,1 @@
-Some column lengths are not the same in your board
+Legend is not formated properly

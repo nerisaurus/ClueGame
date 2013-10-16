@@ -37,8 +37,8 @@ public class TestBoardSetup {
 
 		@Test
 		public void testBoardDimensions() {
-			assertEquals(ROWS, board.getNumRows());
-			assertEquals(COLS, board.getNumCols());		
+			assertEquals(ROWS, board.getHeight());
+			assertEquals(COLS, board.getWidth());		
 		}
 
 		@Test
@@ -64,7 +64,7 @@ public class TestBoardSetup {
 		@Test
 		public void testNumberOfDoorways() {
 			int numDoors = 0;
-			int totalCells = board.getNumCols() * board.getNumRows();
+			int totalCells = board.getWidth() * board.getHeight();
 			Assert.assertEquals(462, totalCells);
 			for (int i=0; i<totalCells; i++) {
 				BoardCell cell = board.getCellAt(i);
@@ -96,22 +96,22 @@ public class TestBoardSetup {
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
 			Board b = new Board("clueLayoutBadColumnsCSV.csv", "clueLegendTXT.txt");
-			b.loadLegendConfig();
-			b.loadBoardConfig();
+			b.loadLegend();
+			b.loadBoard();
 		}
 
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
 			Board b = new Board("clueLayoutBadRoomCSV.csv", "clueLegendTXT.txt");
-			b.loadLegendConfig();
-			b.loadBoardConfig();
+			b.loadLegend();
+			b.loadBoard();
 		}
 
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
 			Board b = new Board("clueLayoutCSV.csv", "ClueLegendBadFormatTXT.txt");
-			b.loadLegendConfig();
-			b.loadBoardConfig();
+			b.loadLegend();
+			b.loadBoard();
 		}
 
 }

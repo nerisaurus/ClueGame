@@ -23,7 +23,7 @@ public class testsForAdjAndTargets {
 	public static void setUp() throws IOException, BadConfigFormatException {
 		board = new Board("clueLayoutCSV.csv", "clueLegendTXT.txt");
 		board.loadConfigFiles();
-		board.calcAdjacencies();
+		board.calculateAdjacencies();
 	}
 	@Test
 	public void testAdjacencies227(){
@@ -113,7 +113,7 @@ public class testsForAdjAndTargets {
 	}
 	@Test
 	public void testTargets362_2Steps(){
-		board.calcTargets(17,5, 2);
+		board.startTargets(17,5, 2);
 		Set<BoardCell> targets = board.getTargets();
 		Assert.assertEquals(3, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(19, 5))));
@@ -122,7 +122,7 @@ public class testsForAdjAndTargets {
 	}
 	@Test
 	public void testTargets15_3Steps(){
-		board.calcTargets(0,16, 3);
+		board.startTargets(0,16, 3);
 		Set<BoardCell> targets = board.getTargets();
 		Assert.assertEquals(6, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(0, 17))));
@@ -131,7 +131,7 @@ public class testsForAdjAndTargets {
 	}
 	@Test
 	public void testTargets181_4Steps(){
-		board.calcTargets(board.calcIndex(8,13), 4);
+		board.startTargets(8,13, 4);
 		Set<BoardCell> targets = board.getTargets();
 		Assert.assertEquals(15, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(11,12))));
@@ -144,7 +144,7 @@ public class testsForAdjAndTargets {
 	}
 	@Test
 	public void testTargets437_5Steps(){
-		board.calcTargets(20,17, 5);
+		board.startTargets(20,17, 5);
 		Set<BoardCell> targets = board.getTargets();
 		Assert.assertEquals(2, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(15,17))));
@@ -152,20 +152,20 @@ public class testsForAdjAndTargets {
 	}
 	@Test
 	public void testTargets249_enterRoom(){
-		board.calcTargets(11,18, 4);
+		board.startTargets(11,18, 4);
 		Set<BoardCell> targets = board.getTargets();
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(13,20))));
 	}
 	@Test
 	public void testTargets152_enterRoom(){
-		board.calcTargets(7,5, 5);
+		board.startTargets(7,5, 5);
 		Set<BoardCell> targets = board.getTargets();
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(4,3))));
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(10,5))));
 	}
 	@Test
 	public void testTargetsLeaveRoom287_2Steps(){
-		board.calcTargets(8,13, 2);
+		board.startTargets(8,13, 2);
 		Set<BoardCell> targets = board.getTargets();
 		Assert.assertEquals(4, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(10,13))));
@@ -175,7 +175,7 @@ public class testsForAdjAndTargets {
 	}
 	@Test
 	public void testTargetsLeaveRoom431_1Steps(){
-		board.calcTargets(19,13, 1);
+		board.startTargets(19,13, 1);
 		Set<BoardCell> targets = board.getTargets();
 		Assert.assertEquals(1, targets.size());
 		Assert.assertTrue(targets.contains(board.getCellAt(board.calcIndex(19,12))));

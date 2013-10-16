@@ -19,7 +19,7 @@ import clueGame.RoomCell.DoorDirection;
 public class Board {
 	private ArrayList<BoardCell> cells;
 	private Map<Character,String> rooms;
-	private int numRows,numCols;
+	private int height,width;
 	private String layout, legend;
 	private boolean[] visited;
 	private Set<BoardCell> targets;
@@ -45,8 +45,8 @@ public class Board {
 
 	public void loadConfigFiles() {
 		try {
-			loadLegendConfig();
-			loadBoardConfig();
+			loadLegend();
+			loadBoard();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}catch(FileNotFoundException e) {
@@ -54,16 +54,16 @@ public class Board {
 		}
 	}
 
-	public void loadBoardConfig() throws BadConfigFormatException, FileNotFoundException {
+	public void loadBoard() throws BadConfigFormatException, FileNotFoundException {
 		FileReader file = new FileReader(layout);
 		Scanner reader = new Scanner(file);
 		while(reader.hasNextLine()) {
 			String[] row = reader.nextLine().split(",");
-			if (numRows == 0) {
-				numCols = row.length;
+			if (height == 0) {
+				width = row.length;
 			}
 			else {
-				if (row.length != numCols) {
+				if (row.length != width) {
 					throw new BadConfigFormatException("Some column lengths are not " +
 							"the same in your board");
 				}
@@ -74,32 +74,32 @@ public class Board {
 			for(String cell : row) {
 				if(cell.length() == 1) {					
 					if(cell.charAt(0) == 'W')
-						cells.add(new WalkwayCell(numRows, index));
+						cells.add(new WalkwayCell(height, index));
 					else 
-						cells.add(new RoomCell(numRows, index, cell.charAt(0)));
+						cells.add(new RoomCell(height, index, cell.charAt(0)));
 				}
 				else if(cell.length() == 2) {
 					if(cell.charAt(1) == 'U')
-						cells.add(new RoomCell(numRows, index, cell.charAt(0), DoorDirection.UP));
+						cells.add(new RoomCell(height, index, cell.charAt(0), DoorDirection.UP));
 					else if(cell.charAt(1) == 'D')
-						cells.add(new RoomCell(numRows, index, cell.charAt(0), DoorDirection.DOWN));
+						cells.add(new RoomCell(height, index, cell.charAt(0), DoorDirection.DOWN));
 					else if(cell.charAt(1) == 'R')
-						cells.add(new RoomCell(numRows, index, cell.charAt(0), DoorDirection.RIGHT));
+						cells.add(new RoomCell(height, index, cell.charAt(0), DoorDirection.RIGHT));
 					else if(cell.charAt(1) == 'L')
-						cells.add(new RoomCell(numRows, index, cell.charAt(0), DoorDirection.LEFT));
+						cells.add(new RoomCell(height, index, cell.charAt(0), DoorDirection.LEFT));
 					else
-						cells.add(new RoomCell(numRows, index, cell.charAt(0)));
+						cells.add(new RoomCell(height, index, cell.charAt(0)));
 				}
 				else {
 					throw new BadConfigFormatException("Cells have an imporper format");
 				}
 				index++;
 			}
-			numRows++;
+			height++;
 		}
 	}
 	
-	public void loadLegendConfig() throws BadConfigFormatException, FileNotFoundException {
+	public void loadLegend() throws BadConfigFormatException, FileNotFoundException {
 		FileReader file = new FileReader(legend);
 		Scanner reader = new Scanner(file);
 		while(reader.hasNextLine()) {
@@ -116,7 +116,7 @@ public class Board {
 	}
 	
 	public int calcIndex(int row, int col) {
-		return ((row*numCols) + col);
+		return ((row*width) + col);
 	}
 	
 	public RoomCell getRoomCellAt(int row, int col) {
@@ -140,20 +140,16 @@ public class Board {
 		return rooms;
 	}
 
-	public int getNumRows() {
-		return numRows;
+	public int getHeight() {
+		return height;
 	}
 
-	public int getNumCols() {
-		return numCols;
-	}
-
-	public void calcTargets(int row, int col, int steps) {
-		int index = calcIndex(row, col);
-		setupTargets(index, steps);
+	public int getWidth() {
+		return width;
 	}
 	
-	public void setupTargets(int index, int steps) {
+	public void startTargets(int row, int col, int steps)  {
+		int index = calcIndex(row, col);
 		targets = new HashSet<BoardCell>();
 		Arrays.fill(visited, false);
 		visited[index] = true;
@@ -194,11 +190,11 @@ public class Board {
 		return targets;
 	}
 	
-	public void calcAdjacencies() {
+	public void calculateAdjacencies() {
 		visited = new boolean[cells.size()];
 		LinkedList<Integer> theAdjs; 
-		for(int i=0; i<numRows; i++) {
-			for(int j=0; j<numCols; j++) {
+		for(int i=0; i<height; i++) {
+			for(int j=0; j<width; j++) {
 				theAdjs = new LinkedList<Integer>();
 				if(getCellAt(calcIndex(i,j)).isDoorway() || getCellAt(calcIndex(i,j)).isWalkway()) {
 					if(i>0) {
@@ -219,7 +215,7 @@ public class Board {
 							}
 						}
 					}
-					if(i<numRows-1) {
+					if(i<height-1) {
 						if(getCellAt(calcIndex(i+1,j)).isDoorway() || getCellAt(calcIndex(i+1,j)).isWalkway()) {
 							if(getCellAt(calcIndex(i,j)).isDoorway()) {
 								if(getCellAt(calcIndex(i+1,j)).isWalkway()) {
@@ -255,7 +251,7 @@ public class Board {
 							}
 						}
 					}
-					if(j<numCols-1) {
+					if(j<width-1) {
 						if(getCellAt(calcIndex(i,j+1)).isDoorway() || getCellAt(calcIndex(i,j+1)).isWalkway()) {
 							if(getCellAt(calcIndex(i,j)).isDoorway()) {
 								if(getCellAt(calcIndex(i,j+1)).isWalkway()) {

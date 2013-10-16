@@ -47,8 +47,8 @@ public class CR_BoardInitTests {
 	@Test
 	public void testBoardDimensions() {
 		// Ensure we have the proper number of rows and columns
-		assertEquals(NUM_ROWS, board.getNumRows());
-		assertEquals(NUM_COLUMNS, board.getNumColumns());		
+		assertEquals(NUM_ROWS, board.getHeight());
+		assertEquals(NUM_COLUMNS, board.getWidth());		
 	}
 	
 	// Test a doorway in each direction, plus two cells that are not
@@ -83,7 +83,7 @@ public class CR_BoardInitTests {
 	public void testNumberOfDoorways() 
 	{
 		int numDoors = 0;
-		int totalCells = board.getNumColumns() * board.getNumRows();
+		int totalCells = board.getWidth() * board.getHeight();
 		Assert.assertEquals(506, totalCells);
 		for (int i=0; i<totalCells; i++)
 		{
@@ -111,11 +111,11 @@ public class CR_BoardInitTests {
 	// correct.
 	@Test
 	public void testRoomInitials() {
-		assertEquals('C', board.getRoomCellAt(0, 0).getRoomInitial()); //changed from getInitial, to match our method names
-		assertEquals('R', board.getRoomCellAt(4, 8).getRoomInitial());
-		assertEquals('B', board.getRoomCellAt(9, 0).getRoomInitial());
-		assertEquals('O', board.getRoomCellAt(21, 22).getRoomInitial());
-		assertEquals('K', board.getRoomCellAt(21, 0).getRoomInitial());
+		assertEquals('C', board.getRoomCellAt(0, 0).getInitial()); //changed from getInitial, to match our method names
+		assertEquals('R', board.getRoomCellAt(4, 8).getInitial());
+		assertEquals('B', board.getRoomCellAt(9, 0).getInitial());
+		assertEquals('O', board.getRoomCellAt(21, 22).getInitial());
+		assertEquals('K', board.getRoomCellAt(21, 0).getInitial());
 	}
 	
 	// Test that an exception is thrown for a bad config file
