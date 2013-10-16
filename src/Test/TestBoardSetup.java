@@ -102,7 +102,7 @@ public class TestBoardSetup {
 
 		@Test (expected = BadConfigFormatException.class)
 		public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
-			Board b = new Board("clueLayoutBadRoomCSV.csv", "clueLegendTXT.txt");
+			Board b = new Board("clueLayoutBadRoom.csv", "clueLegendTXT.txt");
 			b.loadLegend();
 			b.loadBoard();
 		}
