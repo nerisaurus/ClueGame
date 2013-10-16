@@ -1,4 +1,4 @@
-package ClueBoard;
+package clueGame;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -12,7 +12,8 @@ import java.util.Set;
 
 import javax.sound.sampled.Line;
 
-import ClueBoard.RoomCell.DoorDirection;
+import clueGame.RoomCell.DoorDirection;
+
 
 
 public class Board {

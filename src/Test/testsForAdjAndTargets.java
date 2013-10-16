@@ -11,9 +11,10 @@ import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ClueBoard.BadConfigFormatException;
-import ClueBoard.Board;
-import ClueBoard.BoardCell;
+import clueGame.BadConfigFormatException;
+import clueGame.Board;
+import clueGame.BoardCell;
+
 
 public class testsForAdjAndTargets {
 

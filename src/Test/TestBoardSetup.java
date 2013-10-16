@@ -7,10 +7,11 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ClueBoard.BadConfigFormatException;
-import ClueBoard.Board;
-import ClueBoard.BoardCell;
-import ClueBoard.RoomCell;
+
+import clueGame.BadConfigFormatException;
+import clueGame.Board;
+import clueGame.BoardCell;
+import clueGame.RoomCell;
 
 public class TestBoardSetup {
 		private static Board board;

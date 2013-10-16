@@ -1,4 +1,4 @@
-package ClueBoard;
+package clueGame;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 

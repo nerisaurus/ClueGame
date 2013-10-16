@@ -1,4 +1,4 @@
-package ClueBoard;
+package clueGame;
 
 public class RoomCell extends BoardCell {
 	public enum DoorDirection {RIGHT, LEFT, UP, DOWN, NONE}
