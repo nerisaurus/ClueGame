@@ -199,18 +199,14 @@ public class Board {
 				//Nathan here - why always reuse getCellAt(calcIndex(i,j))?
 				BoardCell cell = getCellAt(calcIndex(i,j));
 				
-				//sample of what i'm thinking ****************************************
-				
-				// Here we know that the cell is a Doorway.
-				if(cell.isDoorway()) {
-					
-					// Now it is either a walkway or a doorway
+//sample of what i'm thinking ****************************************
 					
 					// NOT top row
 					if(i>0) {
 						if(cell.isDoorway()){
-							// check door direction
-							// add adj cell
+							// method call to addDoorCell here that:
+							// <1> checks door direction
+							// <2> add adj cell
 						}
 						else if(cell.isWalkway()){
 							// add cell above current cell
@@ -218,20 +214,56 @@ public class Board {
 						else{ //inside a room
 							
 						}
+					}					
+					// NOT bottom row // NOT bottom row
+					if(i<height-1) {
+						if(cell.isDoorway()){
+							// method call to addDoorCell here that:
+							// <1> checks door direction
+							// <2> add adj cell
+						}
+						else if(cell.isWalkway()){
+							// add cell above current cell
+						}
+						else{ //inside a room
+							
+						}
+						
 					}
-				}
+					// NOT left column
+					if(j>0) {
+						if(cell.isDoorway()){
+							// method call to addDoorCell here that:
+							// <1> checks door direction
+							// <2> add adj cell
+						}
+						else if(cell.isWalkway()){
+							// add cell above current cell
+						}
+						else{ //inside a room
+							
+						}
+						
+					}
+					// NOT right column
+					if(j<width-1) {
+						if(cell.isDoorway()){
+							// method call to addDoorCell here that:
+							// <1> checks door direction
+							// <2> add adj cell
+						}
+						else if(cell.isWalkway()){
+							// add cell above current cell
+						}
+						else{ //inside a room
+							
+						}
+						
+					}					
+// *******************************************************************
 					
-					// NOT bottom row 
-					// ...
-				
-				
-				
-				
-				else if (cell.isWalkway()) {						
-					// *******************************************************************
 					
-					
-			// if(cell.isDoorway() || cell.isWalkway()) {
+			if(cell.isDoorway() || cell.isWalkway()) {
 					// NOT top row
 					if(i>0) {
 						if(getCellAt(calcIndex(i-1,j)).isDoorway() || getCellAt(calcIndex(i-1,j)).isWalkway()) {
