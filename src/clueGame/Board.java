@@ -196,7 +196,40 @@ public class Board {
 		for(int i=0; i<height; i++) {
 			for(int j=0; j<width; j++) {
 				theAdjs = new LinkedList<Integer>();
-				if(getCellAt(calcIndex(i,j)).isDoorway() || getCellAt(calcIndex(i,j)).isWalkway()) {
+				
+				//sample of what i'm thinking ****************************************
+				
+				// Here we know that the cell is a Doorway.
+				if(getCellAt(calcIndex(i,j)).isDoorway()) {
+					
+					// Now it is either a walkway or a doorway
+					
+					// NOT top row
+					if(i>0) {
+						if(getCellAt(calcIndex(i-1,j)).isWalkway())
+							theAdjs.add(calcIndex(i-1,j));	// ADD WALKWAY							
+						else {
+							RoomCell.DoorDirection dir = getRoomCellAt(i-1,j).getDoorDirection();
+							if(dir == RoomCell.DoorDirection.DOWN)
+								theAdjs.add(calcIndex(i-1,j)); // ADD DOORWAY
+							else
+								theAdjs.add(calcIndex(i-1,j)); // ADD ROOM
+							}
+						}
+					}
+					
+					// NOT bottom row 
+					// ...
+				
+				
+				
+				
+				else if (getCellAt(calcIndex(i,j)).isWalkway()) {						
+					// *******************************************************************
+					
+					
+			// if(getCellAt(calcIndex(i,j)).isDoorway() || getCellAt(calcIndex(i,j)).isWalkway()) {
+					// NOT top row
 					if(i>0) {
 						if(getCellAt(calcIndex(i-1,j)).isDoorway() || getCellAt(calcIndex(i-1,j)).isWalkway()) {
 							if(getCellAt(calcIndex(i,j)).isDoorway()) {
@@ -215,6 +248,8 @@ public class Board {
 							}
 						}
 					}
+					
+					// NOT bottom row
 					if(i<height-1) {
 						if(getCellAt(calcIndex(i+1,j)).isDoorway() || getCellAt(calcIndex(i+1,j)).isWalkway()) {
 							if(getCellAt(calcIndex(i,j)).isDoorway()) {
@@ -233,6 +268,8 @@ public class Board {
 							}
 						}
 					}
+					
+					// NOT left column
 					if(j>0) {
 						if(getCellAt(calcIndex(i,j-1)).isDoorway() || getCellAt(calcIndex(i,j-1)).isWalkway()) {
 							if(getCellAt(calcIndex(i,j)).isDoorway()) {
@@ -251,6 +288,8 @@ public class Board {
 							}
 						}
 					}
+					
+					// NOT right column
 					if(j<width-1) {
 						if(getCellAt(calcIndex(i,j+1)).isDoorway() || getCellAt(calcIndex(i,j+1)).isWalkway()) {
 							if(getCellAt(calcIndex(i,j)).isDoorway()) {
