@@ -208,17 +208,18 @@ public class Board {
 					
 					// NOT top row
 					if(i>0) {
-						if(getCellAt(calcIndex(i-1,j)).isWalkway())
-							adjacentCells.add(calcIndex(i-1,j));	// ADD WALKWAY							
-						else {
-							RoomCell.DoorDirection direction = getRoomCellAt(i-1,j).getDoorDirection();
-							if(direction == RoomCell.DoorDirection.DOWN)
-								adjacentCells.add(calcIndex(i-1,j)); // ADD DOORWAY
-							else
-								adjacentCells.add(calcIndex(i-1,j)); // ADD ROOM
-							}
+						if(cell.isDoorway()){
+							// check door direction
+							// add adj cell
+						}
+						else if(cell.isWalkway()){
+							// add cell above current cell
+						}
+						else{ //inside a room
+							
 						}
 					}
+				}
 					
 					// NOT bottom row 
 					// ...
