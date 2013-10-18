@@ -21,6 +21,12 @@ public class Board {
 	private boolean[] visited;
 	private Set<BoardCell> targets;
 	private Map<Integer, LinkedList<Integer>> adjMatx;
+	
+	private char walkway_char;   //Tells us which character maps to "Space" or "Walkway"
+	//tells us which element of the legend is 'space' or 'walkway'
+	private static final int WHICH_LINE_IS_WALKWAY = 11;
+	//We assume the 11th element (1-indexed, not 0-indexed) of the legend 
+	//is the 'walkway' object.  Adjust if you need to.
 
 	public Board() {
 		this.cells = new ArrayList<BoardCell>();
@@ -70,7 +76,7 @@ public class Board {
 			
 			for(String cell : row) {
 				if(cell.length() == 1) {					
-					if(cell.charAt(0) == 'W')
+					if(cell.charAt(0) == walkway_char)
 						cells.add(new WalkwayCell(height, index));
 					else if(rooms.containsKey(cell.charAt(0)))
 						cells.add(new RoomCell(height, index, cell.charAt(0)));
@@ -101,16 +107,21 @@ public class Board {
 	public void loadLegend() throws BadConfigFormatException, FileNotFoundException {
 		FileReader file = new FileReader(legend);
 		Scanner reader = new Scanner(file);
+		int counter = 1;
 		while(reader.hasNextLine()) {
 			String line = reader.nextLine();
 			String[] individual = line.split(",");
-			if(individual[0].length() == 0 || individual[1].length() == 0 || individual.length > 2) {
-				throw new BadConfigFormatException("Legend is not formated properly");
-			}else {
+			if(individual.length == 2 && individual[0].length() != 0 && individual[1].length() != 0) {
 				char key = individual[0].charAt(0);
 				String entry = individual[1].substring(1, individual[1].length());
 				rooms.put(key,entry);
+			}else {
+				throw new BadConfigFormatException("Cannot process line " + counter + " of " + legend + " - too many or too few entries");
 			}
+			if(counter == WHICH_LINE_IS_WALKWAY){
+				walkway_char = individual[0].charAt(0);
+			}
+			counter++;
 		}
 	}
 	

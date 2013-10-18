@@ -1,1 +1,1 @@
-'T' is not a recconigized room.
+Cannot process line 9 of BAD_legend.csv - too many or too few entries
