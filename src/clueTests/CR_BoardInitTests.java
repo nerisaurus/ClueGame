@@ -47,8 +47,8 @@ public class CR_BoardInitTests {
 	@Test
 	public void testBoardDimensions() {
 		// Ensure we have the proper number of rows and columns
-		assertEquals(NUM_ROWS, board.getHeight());
-		assertEquals(NUM_COLUMNS, board.getWidth());		
+		assertEquals(NUM_ROWS, board.getNumRows());
+		assertEquals(NUM_COLUMNS, board.getNumColumns());		
 	}
 	
 	// Test a doorway in each direction, plus two cells that are not
@@ -83,7 +83,7 @@ public class CR_BoardInitTests {
 	public void testNumberOfDoorways() 
 	{
 		int numDoors = 0;
-		int totalCells = board.getWidth() * board.getHeight();
+		int totalCells = board.getNumColumns() * board.getNumRows();
 		Assert.assertEquals(506, totalCells);
 		for (int i=0; i<totalCells; i++)
 		{

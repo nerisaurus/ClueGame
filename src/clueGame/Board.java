@@ -356,4 +356,12 @@ public class Board {
 		return adjMatx.get(index);
 	}
 
+	public int getNumColumns() {
+		return width;
+	}
+
+	public int getNumRows() {
+		return height;
+	}
+
 }
