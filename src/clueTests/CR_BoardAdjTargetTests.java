@@ -25,22 +25,22 @@ public class CR_BoardAdjTargetTests {
 	public void testAdjacenciesInsideRooms()
 	{
 		// Test a corner
-		LinkedList<Integer> testList = board.getAdj(board.calcIndex(0, 0));
+		LinkedList<Integer> testList = board.getAdjList(board.calcIndex(0, 0));
 		Assert.assertEquals(0, testList.size());
 		// Test one that has walkway underneath
-		testList = board.getAdj(board.calcIndex(4, 0));
+		testList = board.getAdjList(board.calcIndex(4, 0));
 		Assert.assertEquals(0, testList.size());
 		// Test one that has walkway above
-		testList = board.getAdj(board.calcIndex(15, 20));
+		testList = board.getAdjList(board.calcIndex(15, 20));
 		Assert.assertEquals(0, testList.size());
 		// Test one that is in middle of room
-		testList = board.getAdj(board.calcIndex(18, 11));
+		testList = board.getAdjList(board.calcIndex(18, 11));
 		Assert.assertEquals(0, testList.size());
 		// Test one beside a door
-		testList = board.getAdj(board.calcIndex(14, 12));
+		testList = board.getAdjList(board.calcIndex(14, 12));
 		Assert.assertEquals(0, testList.size());
 		// Test one in a corner of room
-		testList = board.getAdj(board.calcIndex(5, 20));
+		testList = board.getAdjList(board.calcIndex(5, 20));
 		Assert.assertEquals(0, testList.size());
 	}
 
@@ -52,19 +52,19 @@ public class CR_BoardAdjTargetTests {
 	public void testAdjacencyRoomExit()
 	{
 		// TEST DOORWAY RIGHT 
-		LinkedList<Integer> testList = board.getAdj(board.calcIndex(11, 6));
+		LinkedList<Integer> testList = board.getAdjList(board.calcIndex(11, 6));
 		Assert.assertEquals(1, testList.size());
 		Assert.assertTrue(testList.contains(board.calcIndex(11, 7)));
 		// TEST DOORWAY LEFT 
-		testList = board.getAdj(board.calcIndex(10, 17));
+		testList = board.getAdjList(board.calcIndex(10, 17));
 		Assert.assertEquals(1, testList.size());
 		Assert.assertTrue(testList.contains(board.calcIndex(10, 16)));
 		//TEST DOORWAY DOWN
-		testList = board.getAdj(board.calcIndex(5, 15));
+		testList = board.getAdjList(board.calcIndex(5, 15));
 		Assert.assertEquals(1, testList.size());
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 15)));
 		//TEST DOORWAY UP
-		testList = board.getAdj(board.calcIndex(5, 15));
+		testList = board.getAdjList(board.calcIndex(5, 15));
 		Assert.assertEquals(1, testList.size());
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 15)));
 		
@@ -76,33 +76,33 @@ public class CR_BoardAdjTargetTests {
 	public void testAdjacencyDoorways()
 	{
 		// Test beside a door direction RIGHT
-		LinkedList<Integer> testList = board.getAdj(board.calcIndex(4, 4));
+		LinkedList<Integer> testList = board.getAdjList(board.calcIndex(4, 4));
 		Assert.assertTrue(testList.contains(board.calcIndex(4, 3)));
 		Assert.assertTrue(testList.contains(board.calcIndex(4, 5)));
 		Assert.assertTrue(testList.contains(board.calcIndex(5, 4)));
 		Assert.assertEquals(3, testList.size());
 		// Test beside a door direction DOWN
-		testList = board.getAdj(board.calcIndex(6, 15));
+		testList = board.getAdjList(board.calcIndex(6, 15));
 		Assert.assertTrue(testList.contains(board.calcIndex(5, 15)));
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 14)));
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 16)));
 		Assert.assertEquals(3, testList.size());
 		// Test beside a door direction LEFT
-		testList = board.getAdj(board.calcIndex(15, 17));
+		testList = board.getAdjList(board.calcIndex(15, 17));
 		Assert.assertTrue(testList.contains(board.calcIndex(15, 16)));
 		Assert.assertTrue(testList.contains(board.calcIndex(15, 18)));
 		Assert.assertTrue(testList.contains(board.calcIndex(14, 17)));
 		Assert.assertTrue(testList.contains(board.calcIndex(16, 17)));
 		Assert.assertEquals(4, testList.size());
 		// Test beside a door direction UP
-		testList = board.getAdj(board.calcIndex(13, 11));
+		testList = board.getAdjList(board.calcIndex(13, 11));
 		Assert.assertTrue(testList.contains(board.calcIndex(13, 10)));
 		Assert.assertTrue(testList.contains(board.calcIndex(13, 12)));
 		Assert.assertTrue(testList.contains(board.calcIndex(12, 11)));
 		Assert.assertTrue(testList.contains(board.calcIndex(14, 11)));
 		Assert.assertEquals(4, testList.size());
 		// Test beside a door that's not the right direction
-		testList = board.getAdj(board.calcIndex(5, 3));
+		testList = board.getAdjList(board.calcIndex(5, 3));
 		Assert.assertTrue(testList.contains(board.calcIndex(5, 2)));
 		Assert.assertTrue(testList.contains(board.calcIndex(5, 4)));
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 3)));
@@ -116,25 +116,25 @@ public class CR_BoardAdjTargetTests {
 	public void testAdjacencyWalkways()
 	{
 		// Test on top edge of board, just one walkway piece
-		LinkedList<Integer> testList = board.getAdj(board.calcIndex(0, 4));
+		LinkedList<Integer> testList = board.getAdjList(board.calcIndex(0, 4));
 		Assert.assertTrue(testList.contains(5));
 		Assert.assertEquals(1, testList.size());
 		
 		// Test on left edge of board, three walkway pieces
-		testList = board.getAdj(board.calcIndex(6, 0));
+		testList = board.getAdjList(board.calcIndex(6, 0));
 		Assert.assertTrue(testList.contains(board.calcIndex(5, 0)));
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 1)));
 		Assert.assertTrue(testList.contains(board.calcIndex(7, 0)));
 		Assert.assertEquals(3, testList.size());
 
 		// Test between two rooms, walkways right and left
-		testList = board.getAdj(board.calcIndex(6, 21));
+		testList = board.getAdjList(board.calcIndex(6, 21));
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 20)));
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 22)));
 		Assert.assertEquals(2, testList.size());
 
 		// Test surrounded by 4 walkways
-		testList = board.getAdj(board.calcIndex(15,7));
+		testList = board.getAdjList(board.calcIndex(15,7));
 		Assert.assertTrue(testList.contains(board.calcIndex(15, 8)));
 		Assert.assertTrue(testList.contains(board.calcIndex(15, 6)));
 		Assert.assertTrue(testList.contains(board.calcIndex(14, 7)));
@@ -142,20 +142,20 @@ public class CR_BoardAdjTargetTests {
 		Assert.assertEquals(4, testList.size());
 		
 		// Test on bottom edge of board, next to 1 room piece
-		testList = board.getAdj(board.calcIndex(21, 15));
+		testList = board.getAdjList(board.calcIndex(21, 15));
 		Assert.assertTrue(testList.contains(board.calcIndex(21, 16)));
 		Assert.assertTrue(testList.contains(board.calcIndex(20, 15)));
 		Assert.assertEquals(2, testList.size());
 		
 		// Test on right edge of board, next to 1 room piece
-		testList = board.getAdj(board.calcIndex(14, 22));
+		testList = board.getAdjList(board.calcIndex(14, 22));
 		Assert.assertTrue(testList.contains(board.calcIndex(14, 21)));
 		Assert.assertTrue(testList.contains(board.calcIndex(13, 22)));
 		Assert.assertEquals(2, testList.size());
 
 		// Test on walkway next to  door that is not in the needed
 		// direction to enter
-		testList = board.getAdj(board.calcIndex(5, 3));
+		testList = board.getAdjList(board.calcIndex(5, 3));
 		Assert.assertTrue(testList.contains(board.calcIndex(5, 2)));
 		Assert.assertTrue(testList.contains(board.calcIndex(5, 4)));
 		Assert.assertTrue(testList.contains(board.calcIndex(6, 3)));

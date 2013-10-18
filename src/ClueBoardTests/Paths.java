@@ -34,7 +34,7 @@ public class Paths {
 	//(1) Locations with only walkways as adjacent locations	
 	@Test
 	public void locationWithOnlyWalkwaysAsAdjacentLocations(){
-		LinkedList testList = board.getAdj(401);
+		LinkedList testList = board.getAdjList(401);
 		Assert.assertTrue(testList.contains(400));
 		Assert.assertTrue(testList.contains(376));
 		Assert.assertTrue(testList.contains(402));
@@ -45,27 +45,27 @@ public class Paths {
 	//(4) Locations that are at each edge of the board	
 	@Test
 	public void locationOnLeftEdge(){
-		LinkedList testList = board.getAdj(375);
+		LinkedList testList = board.getAdjList(375);
 		Assert.assertTrue(testList.contains(376));
 		Assert.assertTrue(testList.contains(400));
 		Assert.assertEquals(2, testList.size());
 	}	
 	@Test
 	public void locationOnRightEdge(){
-		LinkedList testList = board.getAdj(424);
+		LinkedList testList = board.getAdjList(424);
 		Assert.assertTrue(testList.contains(423));
 		Assert.assertEquals(1, testList.size());
 	}	
 	@Test
 	public void locationOnTopEdge(){
-		LinkedList testList = board.getAdj(13);
+		LinkedList testList = board.getAdjList(13);
 		Assert.assertTrue(testList.contains(12));
 		Assert.assertTrue(testList.contains(38));
 		Assert.assertEquals(2, testList.size());
 	}	
 	@Test
 	public void locationOnBottomEdge(){
-		LinkedList testList = board.getAdj(613);
+		LinkedList testList = board.getAdjList(613);
 		Assert.assertTrue(testList.contains(612));
 		Assert.assertTrue(testList.contains(588));
 		Assert.assertEquals(2, testList.size());
@@ -74,14 +74,14 @@ public class Paths {
 	//(2) Locations that are beside a room cell that is not a doorway	
 	@Test
 	public void locationBesideARoomNotADoorway_a(){
-		LinkedList testList = board.getAdj(233);
+		LinkedList testList = board.getAdjList(233);
 		Assert.assertTrue(testList.contains(232));
 		Assert.assertTrue(testList.contains(208));
 		Assert.assertEquals(2, testList.size());
 	}	
 	@Test
 	public void locationBesideARoomNotADoorway_b(){
-		LinkedList testList = board.getAdj(420);
+		LinkedList testList = board.getAdjList(420);
 		Assert.assertTrue(testList.contains(419));
 		Assert.assertTrue(testList.contains(421));
 		Assert.assertEquals(2, testList.size());
@@ -90,7 +90,7 @@ public class Paths {
 	//(2) Locations that are adjacent to a doorway with needed direction (i.e., the adjacency list will include the doorway)
 	@Test
 	public void locationBesideDoorway_a(){
-		LinkedList testList = board.getAdj(456);
+		LinkedList testList = board.getAdjList(456);
 		Assert.assertTrue(testList.contains(455));
 		Assert.assertTrue(testList.contains(431));
 		Assert.assertTrue(testList.contains(457));
@@ -98,7 +98,7 @@ public class Paths {
 	}	
 	@Test
 	public void locationBesideDoorway_b(){
-		LinkedList testList = board.getAdj(170);
+		LinkedList testList = board.getAdjList(170);
 		Assert.assertTrue(testList.contains(171));
 		Assert.assertTrue(testList.contains(169));
 		Assert.assertTrue(testList.contains(145));
@@ -109,13 +109,13 @@ public class Paths {
 	//(2) Locations that are doorways	
 	@Test
 	public void locationThatIsADoorway_a(){
-		LinkedList testList = board.getAdj(128);
+		LinkedList testList = board.getAdjList(128);
 		Assert.assertTrue(testList.contains(153));
 		Assert.assertEquals(1, testList.size());
 	}	
 	@Test
 	public void locationThatIsADoorway_b(){
-		LinkedList testList = board.getAdj(274);
+		LinkedList testList = board.getAdjList(274);
 		Assert.assertTrue(testList.contains(249));
 		Assert.assertEquals(1, testList.size());
 	}

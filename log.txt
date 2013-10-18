@@ -1,1 +1,1 @@
-Some column lengths are not the same in your board
+'T' is not a recconigized room.
