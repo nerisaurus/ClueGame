@@ -22,11 +22,12 @@ public class Board {
 	private Set<BoardCell> targets;
 	private Map<Integer, LinkedList<Integer>> adjacencyMatrix;
 	
-	private String walkway_char;   //Tells us which character maps to "Space" or "Walkway"
-	//tells us which element of the legend is 'space' or 'walkway'
+	//Tells us which character maps to "Space" or "Walkway"
+	private String walkwayChar;
+	//Tells us which element of the legend is 'space' or 'walkway'
 	private static final int WHICH_LINE_IS_WALKWAY = 11;
-	//We assume the 11th element (1-indexed, not 0-indexed) of the legend 
-	//is the 'walkway' object.  Adjust if you need to.
+	//We assume the 11th line of the legend file is the 'walkway'.
+	//Adjust if you need to.
 
 	public Board() {
 		this.cells = new ArrayList<BoardCell>();
@@ -73,7 +74,7 @@ public class Board {
 			for(String layoutCell: reader.nextLine().split(",")){
 				BoardCell cell;
 				if(rooms.containsKey(layoutCell.charAt(0))) {
-					if(layoutCell.equals(walkway_char))
+					if(layoutCell.equals(walkwayChar))
 						cell = new WalkwayCell(row, col);
 					else if(layoutCell.length() == 2) //a door
 						cell = new RoomCell(row, col, layoutCell.charAt(0), layoutCell.charAt(1));
@@ -117,7 +118,7 @@ public class Board {
 				String entry = individual[1];
 				rooms.put(key,entry);
 				if(counter == WHICH_LINE_IS_WALKWAY){
-					walkway_char = individual[0];
+					walkwayChar = individual[0];
 				}
 				counter++;
 			}else {
@@ -130,18 +131,6 @@ public class Board {
 	
 	public int calcIndex(int row, int col) {
 		return ((row*width) + col);
-	}
-	
-	public RoomCell getRoomCellAt(int row, int col) {
-		return getRoomCellAt(calcIndex(row,col));
-	}
-	
-	public RoomCell getRoomCellAt(int index){
-		if(cells.get(index).isRoom()) {
-			return (RoomCell) cells.get(index);
-		}else {
-			return null;
-		}
 	}
 	
 	public void startTargets(int vertical, int horizontal, int steps){
@@ -174,36 +163,6 @@ public class Board {
 		}
 		visited[index] = false;
 	}
-/*
-	public void startTargets(int row, int col, int steps)  {
-		int index = calcIndex(row, col);
-		targets = new HashSet<BoardCell>();
-		Arrays.fill(visited, false);
-		visited[index] = true;
-		calcTargets(index, steps);
-		visited[index] = false;
-	}
-	
-	public void calcTargets(int index, int steps) {
-		LinkedList<Integer> adjacent_squares = getAdjList(index);
-		for(int adjacent : adjacent_squares){
-			if(steps == 1) { //all steps have been taken
-				targets.add(getCellAt(adjacent));
-			} else if( getCellAt(adjacent).isRoom() && getRoomCellAt(adjacent).isDoorway()) { //we enter a room
-				targets.add(getCellAt(adjacent));
-			} else {
-				visited[adjacent] = true;
-				calcTargets(adjacent, steps - 1);
-			}
-		}
-		visited[index] = false;
-	}
-*/	
-	
-	public Set<BoardCell> getTargets(){
-		return targets;
-	}
-	
 	
 	public void calculateAdjacencies() {
 		visited = new boolean[cells.size()];
@@ -283,6 +242,18 @@ public class Board {
 			}
 		}
 	}
+	
+	public RoomCell getRoomCellAt(int row, int col) {
+		return getRoomCellAt(calcIndex(row,col));
+	}
+	
+	public RoomCell getRoomCellAt(int index){
+		if(cells.get(index).isRoom()) {
+			return (RoomCell) cells.get(index);
+		}else {
+			return null;
+		}
+	}
 		
 	public LinkedList<Integer> getAdjList(int index) {
 		LinkedList<Integer> adjacent_squares = new LinkedList<Integer>();
@@ -300,6 +271,10 @@ public class Board {
 	
 	public BoardCell getCellAt(int index) {
 		return cells.get(index);
+	}
+	
+	public Set<BoardCell> getTargets(){
+		return targets;
 	}
 
 	public ArrayList<BoardCell> getCells() {
