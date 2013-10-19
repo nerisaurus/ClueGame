@@ -1,11 +1,9 @@
-package ClueBoardTests;
+package clueBoardTests;
 
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
-
-import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,13 +14,16 @@ import clueGame.RoomCell;
 
 public class LoadBoard {
 	private static Board board;
-	public static final int NUM_ROOMS = 11; //9 "Rooms" + 1 "Walkway" + 1 "Closet" = 11 Entries in the rooms map
-	public static final int NUM_ROWS = 25;
-	public static final int NUM_COLS = 25;
-	
-	//Correct Config File Names
+	//Config file names,
+	// update NUM_ROWS, NUM_COLS if board file changes
+	// update NUM_ROOMS if legend file changes
 	public static final String BOARD_FILE_STR = "board.csv";
 	public static final String LEGEND_FILE_STR = "legend.csv";
+	//9 "Rooms" + 1 "Walkway" + 1 "Closet" = 11 Entries in the rooms map
+	public static final int NUM_ROOMS = 11;
+	//Fixed board size: 25x25
+	public static final int NUM_ROWS = 25;
+	public static final int NUM_COLS = 25;
 	
 	//"Bad" Config File Names (for Exception Tests)
 	public static final String BAD_ROOM_BOARD_FILE_STR = "BAD_ROOM_board.csv";
