@@ -35,6 +35,9 @@ public class Board {
 		this.targets = new HashSet<BoardCell>();
 		this.layoutFile = "ClueLayout.csv";
 		this.legend = "ClueLegend.txt";
+		loadConfigFiles();
+		visited = new boolean[cells.size()];
+		calculateAdjacencies();
 	}
 	
 	public Board(String layout, String legend) {
@@ -44,6 +47,9 @@ public class Board {
 		this.targets = new HashSet<BoardCell>();
 		this.layoutFile = layout;
 		this.legend = legend;
+		loadConfigFiles();
+		visited = new boolean[cells.size()];
+		calculateAdjacencies();
 	}
 
 	public void loadConfigFiles() {
@@ -97,9 +103,7 @@ public class Board {
 		}
 		this.height = row;
 		reader.close(); //closes the scanner for the board
-	}
-				
-				
+	}	
 	
 	public void loadLegend() throws BadConfigFormatException, FileNotFoundException {
 		FileReader file = new FileReader(legend);
@@ -122,7 +126,7 @@ public class Board {
 			
 		}
 		reader.close();
-	}
+	}                      
 	
 	public int calcIndex(int row, int col) {
 		return ((row*width) + col);
@@ -140,6 +144,37 @@ public class Board {
 		}
 	}
 	
+	public void startTargets(int vertical, int horizontal, int steps){
+		targets = new HashSet<BoardCell>(); //a blank sheet
+		Arrays.fill(visited,false); //to ensure no issues
+		int start = calcIndex(vertical,horizontal);
+		//System.out.println("width => " + width);
+		//System.out.println("calcIndex => " + vertical + ", " + horizontal);
+		//System.out.println("startTargets, calcIndex => " + start);
+		visited[start] = true;
+		calcTargets(start, steps);
+		visited[start] = false; //cleanup, just to be safe
+	}
+
+	//The recursive meat for startTargets()
+	public void calcTargets(int index, int steps) {
+		LinkedList<Integer> adjacentSquares = getAdjList(index);
+		//System.out.println("adj List => " + getAdjList(index));
+		for(int adjacent : adjacentSquares){
+			if(steps == 1) { //all steps have been taken
+				targets.add(getCellAt(adjacent));
+				//System.out.println("Added target => " + getCellAt(adjacent));
+			} else if( getCellAt(adjacent).isRoom() && getRoomCellAt(adjacent).isDoorway()) { //we enter a room
+				targets.add(getCellAt(adjacent));
+				//System.out.println("Added target => " + getCellAt(adjacent));
+			} else {
+				visited[adjacent] = true;
+				calcTargets(adjacent, steps - 1);
+			}
+		}
+		visited[index] = false;
+	}
+/*
 	public void startTargets(int row, int col, int steps)  {
 		int index = calcIndex(row, col);
 		targets = new HashSet<BoardCell>();
@@ -163,8 +198,9 @@ public class Board {
 		}
 		visited[index] = false;
 	}
-		
-	public Set<BoardCell> getTargets() {
+*/	
+	
+	public Set<BoardCell> getTargets(){
 		return targets;
 	}
 	
