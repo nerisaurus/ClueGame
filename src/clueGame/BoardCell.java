@@ -8,24 +8,30 @@ public class BoardCell {
 		col = c;
 	}
 	
-	public int getRow() {
+	@Override
+	public String toString() {
+		return "BoardCell [row=" + row + ", col=" + col + "]";
+	}
+	public Boolean isWalkway(){ //is the cell a walkway cell?
+		return false;
+	}
+	
+	public Boolean isRoom(){ //is the cell a room cell?
+		return false;
+	}
+	
+	public Boolean isDoorway(){ //is this cell a doorway?
+		return false;
+	}
+	
+	public int getRow(){
 		return row;
 	}
-
-	public int getCol() {
+	public int getCol(){
 		return col;
 	}
-
-	public boolean isWalkway() {
-		return false;
-	}
 	
-	public boolean isRoom() {
-		return false;
-	}
-	
-	public boolean isDoorway() {
-		return false;
-	}
+	//TODO: add draw function
+	//I would put in a stub, but even the arguments and type are unknown at this point.
 
 }

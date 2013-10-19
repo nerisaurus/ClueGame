@@ -91,7 +91,7 @@ public class LoadBoard {
 		assertEquals('J', room_cell.getInitial());
 		
 		room_cell = board.getRoomCellAt(7,16);  // hallway (not a room, technically, so no room cell)
-		assertEquals(room_cell, null); 
+		assertEquals(null, room_cell); 
 		
 		room_cell = board.getRoomCellAt(24,23);  // room (but not a doorway)
 		assertFalse(room_cell.isDoorway());
@@ -102,7 +102,7 @@ public class LoadBoard {
 		int doorTotal = 0;
 		for(int i=0; i<NUM_ROWS; i++) {
 			for(int j=0; j<NUM_COLS; j++) {
-				if(board.getRoomCellAt(i, j).isDoorway())
+				if(board.getCellAt(i, j).isDoorway())
 					doorTotal++;
 			}
 		}

@@ -3,15 +3,15 @@ package clueGame;
 public class RoomCell extends BoardCell {
 	public enum DoorDirection {RIGHT, LEFT, UP, DOWN, NONE}
 	public DoorDirection doorDirection;
-	private char roomInit;
+	private char roomInitial;
 	
 	@Override
-	public boolean isRoom() {
+	public Boolean isRoom() {
 		return true;
 	}
 	
 	@Override
-	public boolean isDoorway() {
+	public Boolean isDoorway() {
 		if(doorDirection != DoorDirection.NONE) {
 			return true;
 		}else {
@@ -19,20 +19,29 @@ public class RoomCell extends BoardCell {
 		}
 	}
 	
-	public RoomCell(int row, int col, char rI) {
+	public RoomCell(int row, int col, char roomInitial) {
 		super(row, col);
-		roomInit = rI;
+		this.roomInitial = roomInitial;
 		doorDirection = DoorDirection.NONE;
 	}
 	
-	public RoomCell(int row, int col, char rI, DoorDirection dD) {
+	public RoomCell(int row, int col, char roomInitial, char doorDirection) {
 		super(row, col);
-		roomInit = rI;
-		doorDirection = dD;
+		this.roomInitial = roomInitial;
+		if(doorDirection == 'U')
+			this.doorDirection = DoorDirection.UP;
+		else if(doorDirection == 'D')
+			this.doorDirection = DoorDirection.DOWN;
+		else if(doorDirection == 'L')
+			this.doorDirection = DoorDirection.LEFT;
+		else if(doorDirection == 'R')
+			this.doorDirection = DoorDirection.RIGHT;
+		else
+			this.doorDirection = DoorDirection.NONE;
 	}
 	
 	public Object getInitial() {
-		return roomInit;
+		return roomInitial;
 	}
 	
 	public DoorDirection getDoorDirection() {

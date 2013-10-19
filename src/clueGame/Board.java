@@ -17,12 +17,12 @@ public class Board {
 	private ArrayList<BoardCell> cells;
 	private Map<Character,String> rooms;
 	private int height,width;
-	private String layout, legend;
+	private String layoutFile, legend;
 	private boolean[] visited;
 	private Set<BoardCell> targets;
-	private Map<Integer, LinkedList<Integer>> adjMatx;
+	private Map<Integer, LinkedList<Integer>> adjacencyMatrix;
 	
-	private char walkway_char;   //Tells us which character maps to "Space" or "Walkway"
+	private String walkway_char;   //Tells us which character maps to "Space" or "Walkway"
 	//tells us which element of the legend is 'space' or 'walkway'
 	private static final int WHICH_LINE_IS_WALKWAY = 11;
 	//We assume the 11th element (1-indexed, not 0-indexed) of the legend 
@@ -31,18 +31,18 @@ public class Board {
 	public Board() {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
-		this.adjMatx = new HashMap<Integer, LinkedList<Integer>>();
+		this.adjacencyMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		this.targets = new HashSet<BoardCell>();
-		this.layout = "ClueLayout.csv";
+		this.layoutFile = "ClueLayout.csv";
 		this.legend = "ClueLegend.txt";
 	}
 	
 	public Board(String layout, String legend) {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
-		this.adjMatx = new HashMap<Integer, LinkedList<Integer>>();
+		this.adjacencyMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		this.targets = new HashSet<BoardCell>();
-		this.layout = layout;
+		this.layoutFile = layout;
 		this.legend = legend;
 	}
 
@@ -58,51 +58,48 @@ public class Board {
 	}
 
 	public void loadBoard() throws BadConfigFormatException, FileNotFoundException {
-		FileReader file = new FileReader(layout);
+		FileReader file = new FileReader(layoutFile);
 		Scanner reader = new Scanner(file);
+		int row = 0;
+		int col = 0;
 		while(reader.hasNextLine()) {
-			String[] row = reader.nextLine().split(",");
-			if (height == 0) {
-				width = row.length;
-			}
-			else {
-				if (row.length != width) {
-					throw new BadConfigFormatException("Some column lengths are not " +
-							"the same in your board");
-				}
-			}
-			
-			int index = 0; //reset index at new row
-			
-			for(String cell : row) {
-				if(cell.length() == 1) {					
-					if(cell.charAt(0) == walkway_char)
-						cells.add(new WalkwayCell(height, index));
-					else if(rooms.containsKey(cell.charAt(0)))
-						cells.add(new RoomCell(height, index, cell.charAt(0)));
+			col = 0;
+			for(String layoutCell: reader.nextLine().split(",")){
+				BoardCell cell;
+				if(rooms.containsKey(layoutCell.charAt(0))) {
+					if(layoutCell.equals(walkway_char))
+						cell = new WalkwayCell(row, col);
+					else if(layoutCell.length() == 2) //a door
+						cell = new RoomCell(row, col, layoutCell.charAt(0), layoutCell.charAt(1));
 					else
-						throw new BadConfigFormatException("'" + cell.charAt(0) + "' is not a recconigized room.");
+						cell = new RoomCell(row, col, layoutCell.charAt(0));
+					//now to actually put the cell into our cell collection
+					cells.add(cell);
+					//increment the column
+					col++;
 				}
-				else if(cell.length() == 2) {
-					if(cell.charAt(1) == 'U')
-						cells.add(new RoomCell(height, index, cell.charAt(0), DoorDirection.UP));
-					else if(cell.charAt(1) == 'D')
-						cells.add(new RoomCell(height, index, cell.charAt(0), DoorDirection.DOWN));
-					else if(cell.charAt(1) == 'R')
-						cells.add(new RoomCell(height, index, cell.charAt(0), DoorDirection.RIGHT));
-					else if(cell.charAt(1) == 'L')
-						cells.add(new RoomCell(height, index, cell.charAt(0), DoorDirection.LEFT));
-					else
-						cells.add(new RoomCell(height, index, cell.charAt(0)));
-				}
-				else {
-					throw new BadConfigFormatException("Cells have an imporper format");
-				}
-				index++;
+				else
+					//throw new BadConfigFormatException();
+					throw new BadConfigFormatException("'" + layoutCell.charAt(0) + "' is not a recognized room. Error in: " + layoutFile);
 			}
-			height++;
+			//Logic to keep the board rectangular
+			if(row == 0){ //if this is the first row, we want to know how many columns it has
+				this.width = col;
+			} else { //if it's not - we want to test to make sure that it has the same number of columns
+				if(col != this.width){
+					throw new BadConfigFormatException("Line " + row + " of the file: " 
+							+ layoutFile + " does not have the same dimensions as previous lines.");
+				}
+			}
+
+			//increment the row
+			row++;
 		}
+		this.height = row;
+		reader.close(); //closes the scanner for the board
 	}
+				
+				
 	
 	public void loadLegend() throws BadConfigFormatException, FileNotFoundException {
 		FileReader file = new FileReader(legend);
@@ -110,19 +107,21 @@ public class Board {
 		int counter = 1;
 		while(reader.hasNextLine()) {
 			String line = reader.nextLine();
-			String[] individual = line.split(",");
+			String[] individual = line.split(", ");
 			if(individual.length == 2 && individual[0].length() != 0 && individual[1].length() != 0) {
 				char key = individual[0].charAt(0);
-				String entry = individual[1].substring(1, individual[1].length());
+				String entry = individual[1];
 				rooms.put(key,entry);
+				if(counter == WHICH_LINE_IS_WALKWAY){
+					walkway_char = individual[0];
+				}
+				counter++;
 			}else {
 				throw new BadConfigFormatException("Cannot process line " + counter + " of " + legend + " - too many or too few entries");
-			}
-			if(counter == WHICH_LINE_IS_WALKWAY){
-				walkway_char = individual[0].charAt(0);
-			}
-			counter++;
+			}		
+			
 		}
+		reader.close();
 	}
 	
 	public int calcIndex(int row, int col) {
@@ -130,8 +129,12 @@ public class Board {
 	}
 	
 	public RoomCell getRoomCellAt(int row, int col) {
-		if(cells.get(calcIndex(row,col)).isRoom()) {
-			return (RoomCell) cells.get(calcIndex(row,col));
+		return getRoomCellAt(calcIndex(row,col));
+	}
+	
+	public RoomCell getRoomCellAt(int index){
+		if(cells.get(index).isRoom()) {
+			return (RoomCell) cells.get(index);
 		}else {
 			return null;
 		}
@@ -143,6 +146,7 @@ public class Board {
 		Arrays.fill(visited, false);
 		visited[index] = true;
 		calcTargets(index, steps);
+		visited[index] = false;
 	}
 	
 	public void calcTargets(int index, int steps) {
@@ -179,159 +183,98 @@ public class Board {
 		return targets;
 	}
 	
+	
 	public void calculateAdjacencies() {
 		visited = new boolean[cells.size()];
-		for(int row=0; row<height; row++) {
-			for(int column=0; column<width; column++) {
+		for(int row=0; row < height; row++) {
+			for(int column=0; column < width; column++) {
 				LinkedList<Integer> adjacentCells = new LinkedList<Integer>();
 				BoardCell cell = getCellAt(calcIndex(row,column));
 				
-//sample of what i'm thinking ****************************************
-					
+				if(cell.isRoom() && cell.isDoorway()) {
+					RoomCell door = (RoomCell) cell;
+					//add the cell that the door opens to
+					switch(door.getDoorDirection()){
+					case DOWN:
+						adjacentCells.add(calcIndex(row + 1, column));
+						break;
+					case UP:
+						adjacentCells.add(calcIndex(row - 1, column));
+						break;
+					case LEFT:
+						adjacentCells.add(calcIndex(row, column - 1));	
+						break;
+					case RIGHT:
+						adjacentCells.add(calcIndex(row, column + 1));
+						break;
+					default:
+						break;								
+					}
+				} else {
 					// NOT top row
-					if(row>0) {
-						if(cell.isDoorway()){
-							// method call to addDoorCell here that:
-							// <1> checks door direction
-							// <2> add adj cell
-						}
-						else if(cell.isWalkway()){
-							// add cell above current cell
+					if(row > 0) {
+						if(cell.isWalkway()){
+							if(getCellAt(row - 1, column).isWalkway() || 
+									getRoomCellAt(row - 1, column).getDoorDirection() == DoorDirection.DOWN)
+							adjacentCells.add(calcIndex(row - 1, column));
 						}
 						else{ //inside a room
 							
 						}
 					}					
-					// NOT bottom row // NOT bottom row
-					if(row<height-1) {
-						if(cell.isDoorway()){
-							// method call to addDoorCell here that:
-							// <1> checks door direction
-							// <2> add adj cell
-						}
-						else if(cell.isWalkway()){
-							// add cell above current cell
-						}
-						else{ //inside a room
-							
-						}
-						
-					}
-					// NOT left column
-					if(column>0) {
-						if(cell.isDoorway()){
-							// method call to addDoorCell here that:
-							// <1> checks door direction
-							// <2> add adj cell
-						}
-						else if(cell.isWalkway()){
-							// add cell above current cell
-						}
-						else{ //inside a room
-							
-						}
-						
-					}
-					// NOT right column
-					if(column<width-1) {
-						if(cell.isDoorway()){
-							// method call to addDoorCell here that:
-							// <1> checks door direction
-							// <2> add adj cell
-						}
-						else if(cell.isWalkway()){
-							// add cell above current cell
-						}
-						else{ //inside a room
-							
-						}
-						
-					}					
-// *******************************************************************
-					
-					
-			if(cell.isDoorway() || cell.isWalkway()) {
-					// NOT top row
-					if(row>0) {
-						if(getCellAt(calcIndex(row-1,column)).isWalkway())
-							adjacentCells.add(calcIndex(row-1,column));
-						else if(getCellAt(calcIndex(row-1,column)).isDoorway()) {
-							if(getRoomCellAt(row-1,column).getDoorDirection() == RoomCell.DoorDirection.DOWN) {
-								adjacentCells.add(calcIndex(row-1,column));
-							}							
-						}
-					}
-					
 					// NOT bottom row
-					if(row<height-1) {
-						if(getCellAt(calcIndex(row+1,column)).isDoorway() || getCellAt(calcIndex(row+1,column)).isWalkway()) {
-							if(cell.isDoorway()) {
-								if(getCellAt(calcIndex(row+1,column)).isWalkway()) {
-									adjacentCells.add(calcIndex(row+1,column));
-								}
-							}else {
-								if(getCellAt(calcIndex(row+1,column)).isDoorway()) {
-									RoomCell.DoorDirection direction = getRoomCellAt(row+1,column).getDoorDirection();
-									if(direction == RoomCell.DoorDirection.UP) {
-										adjacentCells.add(calcIndex(row+1,column));
-									}
-								}else {
-									adjacentCells.add(calcIndex(row+1,column));
-								}
-							}
+					if(row < height-1) {
+						if(cell.isWalkway()){
+							if(getCellAt(row + 1, column).isWalkway() || 
+									getRoomCellAt(row + 1, column).getDoorDirection() == DoorDirection.UP)
+							adjacentCells.add(calcIndex(row + 1, column));
 						}
+						else{ //inside a room
+							
+						}
+						
 					}
-					
 					// NOT left column
-					if(column>0) {
-						if(getCellAt(calcIndex(row,column-1)).isDoorway() || getCellAt(calcIndex(row,column-1)).isWalkway()) {
-							if(cell.isDoorway()) {
-								if(getCellAt(calcIndex(row,column-1)).isWalkway()) {
-									adjacentCells.add(calcIndex(row,column-1));
-								}
-							}else {
-								if(getCellAt(calcIndex(row,column-1)).isDoorway()) {
-									RoomCell.DoorDirection direction = getRoomCellAt(row,column-1).getDoorDirection();
-									if(direction == RoomCell.DoorDirection.RIGHT) {
-										adjacentCells.add(calcIndex(row,column-1));
-									}
-								}else {
-									adjacentCells.add(calcIndex(row,column-1));
-								}
-							}
+					if(column > 0) {
+						if(cell.isWalkway()){
+							if(getCellAt(row, column - 1).isWalkway() || 
+									getRoomCellAt(row, column -1).getDoorDirection() == DoorDirection.RIGHT)
+							adjacentCells.add(calcIndex(row, column - 1));
 						}
+						else{ //inside a room
+							
+						}
+						
 					}
-					
 					// NOT right column
-					if(column<width-1) {
-						if(getCellAt(calcIndex(row,column+1)).isDoorway() || getCellAt(calcIndex(row,column+1)).isWalkway()) {
-							if(cell.isDoorway()) {
-								if(getCellAt(calcIndex(row,column+1)).isWalkway()) {
-									adjacentCells.add(calcIndex(row,column+1));
-								}
-							}else {
-								if(getCellAt(calcIndex(row,column+1)).isDoorway()) {
-									RoomCell.DoorDirection direction = getRoomCellAt(row,column+1).getDoorDirection();
-									if(direction == RoomCell.DoorDirection.LEFT) {
-										adjacentCells.add(calcIndex(row,column+1));
-									}
-								}else {
-									adjacentCells.add(calcIndex(row,column+1));
-								}
-							}
+					if(column < width - 1) {
+						if(cell.isWalkway()){
+							if(getCellAt(row, column + 1).isWalkway() || 
+									getRoomCellAt(row, column + 1).getDoorDirection() == DoorDirection.LEFT)
+							adjacentCells.add(calcIndex(row, column + 1));
 						}
-					}
-					adjMatx.put((Integer) calcIndex(row,column), adjacentCells);
-				}else {
-					LinkedList<Integer> empty = new LinkedList<Integer>();
-					adjMatx.put((Integer) calcIndex(row,column), empty);
+						else{ //inside a room
+							
+						}	
+					}	
 				}
+				adjacencyMatrix.put(calcIndex(row,column), adjacentCells);
 			}
 		}
 	}
 		
 	public LinkedList<Integer> getAdjList(int index) {
-		return adjMatx.get(index);
+		LinkedList<Integer> adjacent_squares = new LinkedList<Integer>();
+		for(int square : adjacencyMatrix.get(index)){
+			if(!visited[square]) {
+				adjacent_squares.add(square);
+			}
+		}
+		return adjacent_squares;
+	}
+	
+	public BoardCell getCellAt(int row, int col) {
+		return getCellAt(calcIndex(row,col)); //to override for multi-input
 	}
 	
 	public BoardCell getCellAt(int index) {

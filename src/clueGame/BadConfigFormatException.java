@@ -1,32 +1,40 @@
 package clueGame;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 
 public class BadConfigFormatException extends Exception {
-	private String msg;
+	private String logFileName = "logfile.txt";
 	
-	public BadConfigFormatException(String message) {
+	public BadConfigFormatException() {
 		super();
-		writeExceptionLog(message);
-		msg = message;
+		writeExceptionLog(null);
 	}
-	
-	public String getMessage() {
-		return msg;
+	public BadConfigFormatException(String message) {
+		super(message);
+		writeExceptionLog(message);
 	}
 	
 	public String toString() {
 		return "The configuration file is in an invalid format";
 	}
 	
-	public void writeExceptionLog(String msag) {
+	private void writeExceptionLog(String message) {
 		try {
-			PrintWriter writter = new PrintWriter("log.txt");
-			writter.println(msag);
-			writter.close();
+			PrintWriter writeLog = new PrintWriter(new FileWriter(logFileName, true));
+			writeLog.print("[" + (new Date()).toString() + "]" +
+					" ERROR: BadConfigFormatException\n" + super.getMessage() + "\n");
+			writeLog.close();
 		}catch (FileNotFoundException e) {
+			System.out.println("Log file not found.");
 			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("IO Exception when writing to error log.");
+			e.printStackTrace();
 		}
 	}
 

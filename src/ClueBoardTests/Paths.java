@@ -234,7 +234,7 @@ public class Paths {
 	@Test
 	public void test_Targets_85_1(){ // Targetz_x_y means testing startTargetz(x.x, x.y, y);
 		board.startTargets(10, 3, 1);
-		Set targets= board.getTargets();
+		Set targets = board.getTargets();
 		Assert.assertTrue(targets.contains(81));
 		Assert.assertTrue(targets.contains(106));
 		Assert.assertTrue(targets.contains(161));
