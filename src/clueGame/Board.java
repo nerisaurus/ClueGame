@@ -150,33 +150,18 @@ public class Board {
 	}
 	
 	public void calcTargets(int index, int steps) {
-		LinkedList<BoardCell> adjs = new LinkedList<BoardCell>();
-		visited[index] = true;
-		for(Integer i : getAdjList(index)){
-			if(!visited[i]) {
-				adjs.add(cells.get(i));
+		LinkedList<Integer> adjacent_squares = getAdjList(index);
+		for(int adjacent : adjacent_squares){
+			if(steps == 1) { //all steps have been taken
+				targets.add(getCellAt(adjacent));
+			} else if( getCellAt(adjacent).isRoom() && getRoomCellAt(adjacent).isDoorway()) { //we enter a room
+				targets.add(getCellAt(adjacent));
+			} else {
+				visited[adjacent] = true;
+				calcTargets(adjacent, steps - 1);
 			}
 		}
-		for(BoardCell adj : adjs) {
-			boolean exited = false;
-			for(int i=0; i< cells.size(); i++) {
-				if(getCellAt(i).isDoorway() && visited[i]) {
-					exited = true;
-				}
-			}
-			int area = calcIndex(adj.getRow(),adj.getCol());
-			visited[area] = true;
-			if(area < cells.size() && area > 0) {
-				if(steps == 1) {
-					targets.add(adj);
-				}else if(getCellAt(area).isDoorway() && !exited) {
-					targets.add(adj);
-				}else {
-					calcTargets(area, steps-1);
-				}
-			}
-			visited[area] = false;
-		}
+		visited[index] = false;
 	}
 		
 	public Set<BoardCell> getTargets() {
