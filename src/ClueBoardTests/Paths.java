@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.BoardCell;
 
 public class Paths {
 	private static Board board;
@@ -171,8 +172,9 @@ public class Paths {
 		Assert.assertTrue(targets.contains(board.getCellAt(141)));
 		Assert.assertTrue(targets.contains(board.getCellAt(169)));
 		Assert.assertTrue(targets.contains(board.getCellAt(165)));
-		System.out.println(targets);
-		Assert.assertEquals(16, targets.size());
+		Assert.assertTrue(targets.contains(board.getCellAt(143)));
+		Assert.assertTrue(targets.contains(board.getCellAt(139)));
+		Assert.assertEquals(18, targets.size());
 	}
 
 	@Test
@@ -210,6 +212,8 @@ public class Paths {
 		board.startTargets(6, 13, 3);
 		Set targets= board.getTargets();
 		Assert.assertTrue(targets.contains(board.getCellAt(160)));
+		Assert.assertTrue(targets.contains(board.getCellAt(162)));
+		Assert.assertTrue(targets.contains(board.getCellAt(164)));
 		Assert.assertTrue(targets.contains(board.getCellAt(136)));
 		Assert.assertTrue(targets.contains(board.getCellAt(186)));
 		Assert.assertTrue(targets.contains(board.getCellAt(188)));
@@ -220,29 +224,19 @@ public class Paths {
 		Assert.assertTrue(targets.contains(board.getCellAt(114)));
 		Assert.assertTrue(targets.contains(board.getCellAt(138)));
 		Assert.assertTrue(targets.contains(board.getCellAt(88)));
-		Assert.assertEquals(11, targets.size());
+		Assert.assertEquals(13, targets.size());
 	}
 	
-	//(2) Targets calculated when leaving a room
-	@Test
-	public void test_Targets_560_1(){ // Targetz_x_y means testing startTargetz(x.x, x.y, y);
-		board.startTargets(22, 10, 1);
-		Set targets= board.getTargets();
-		Assert.assertTrue(targets.contains(board.getCellAt(563)));
-		Assert.assertEquals(1, targets.size());
-	}
+	//Targets Calculated Inside a Room (no movement)
+		@Test
+		public void test_Targets_InsideRoom(){
+			board.startTargets(22, 10, 1);
+			Set<BoardCell> targets = board.getTargets();
+			Assert.assertEquals(0, targets.size());
 
-	@Test
-	public void test_Targets_85_1(){ // Targetz_x_y means testing startTargetz(x.x, x.y, y);
-		board.startTargets(3, 10, 1);
-		Set targets = board.getTargets();
-		System.out.println("TARGETS 81, 1 => " + board.getTargets());
-		Assert.assertTrue(targets.contains(board.getCellAt(81)));
-		Assert.assertTrue(targets.contains(board.getCellAt(106)));
-		Assert.assertTrue(targets.contains(board.getCellAt(161)));
-		Assert.assertTrue(targets.contains(board.getCellAt(88)));
-		Assert.assertTrue(targets.contains(board.getCellAt(11)));
-		Assert.assertEquals(5, targets.size());
-	}
+			board.startTargets(3, 10, 1);
+			targets= board.getTargets();
+			Assert.assertEquals(0, targets.size());
+		} 
 
 }
