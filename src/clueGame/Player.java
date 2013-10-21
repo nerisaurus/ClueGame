@@ -24,7 +24,7 @@ public class Player {
 		this.startingRow = startingRowPosition;
 		this.startingColumn = startingColumnPosition;
 	}
-	
+
 	public Color convertColor(String strColor) {
 		Color color; 
 		try {     

@@ -9,8 +9,8 @@ package clueGame;
  */
 public class ComputerPlayer extends Player {
 
-	public ComputerPlayer() {
-		// TODO Auto-generated constructor stub
+	public ComputerPlayer(String name, String color, int startingRowPosition, int startingColumnPosition) {
+		super(name, color, startingRowPosition, startingColumnPosition);
 	}
 
 }

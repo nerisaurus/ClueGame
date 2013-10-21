@@ -6,6 +6,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.Card;
+import clueGame.CardType;
 import clueGame.ClueGame;
 import clueGame.Player;
 
@@ -51,12 +53,13 @@ public class GameSetupTests {
 		assertEquals(15, clue.getPlayers().get("Human").get(0).getStartingRow()); //row
 		assertEquals(2, clue.getPlayers().get("Human").get(0).getStartingColumn()); //column
 		
-		//we could test everything with something like this
+		//we could test everything with something like this...
 		/*
 		for(Player player: clue.getPlayers().get("Computer")){
 				
 		}
 		*/
+		//but all we need to do is this...
 		assertEquals("blue", clue.getPlayers().get("Computer").get(3).getName());
 		assertEquals(java.awt.Color.BLUE, clue.getPlayers().get("Computer").get(3).getColor());
 		assertEquals(17, clue.getPlayers().get("Computer").get(3).getStartingRow());
@@ -65,6 +68,42 @@ public class GameSetupTests {
 		assertEquals(java.awt.Color.YELLOW, clue.getPlayers().get("Computer").get(4).getColor());
 		assertEquals(22, clue.getPlayers().get("Computer").get(4).getStartingRow());
 		assertEquals(8, clue.getPlayers().get("Computer").get(4).getStartingColumn());
+	}
+	
+	@Test
+	public void setupDeck() {
+		// The ClueGame deck should have 21 cards
+		assertEquals(21, clue.getDeck().size());
+		// 6 People, 6 Weapons, 9 Rooms
+		int people = 0;
+		int weapons = 0;
+		int rooms = 0;
+		for(Card c: clue.getDeck()){
+			switch(c.getType()){
+				case PERSON:
+					people++;
+					break;
+				case WEAPON: 
+					weapons++;
+					break;
+				case ROOM:
+					rooms++;
+					break;
+				default:
+					break;
+			}
+		}
+		assertEquals(6, people);
+		assertEquals(6, weapons);
+		assertEquals(9, rooms);
+		
+		// The deck should have these cards
+		Card personCard = new Card("player1", CardType.PERSON);
+		assertTrue(clue.getDeck().contains(personCard));
+		Card weaponCard = new Card("weapon1", CardType.WEAPON);
+		assertTrue(clue.getDeck().contains(weaponCard));
+		Card roomCard = new Card("room1", CardType.ROOM);
+		assertTrue(clue.getDeck().contains(roomCard));
 	}
 }
 
