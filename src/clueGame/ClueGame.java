@@ -15,22 +15,30 @@ public class ClueGame {
 
 	//file strings
 	private String playersFile;
+	private String peopleCardsFile;
+	private String weaponCardsFile;
+	private String roomCardsFile;
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
 	}
 	
 	public ClueGame(String legend, String board, String players, String people, String weapons, String rooms) {
+		//files
+		this.playersFile = players;
+		this.peopleCardsFile = people;
+		this.weaponCardsFile = weapons;
+		this.roomCardsFile = rooms;
+		
 		//board loads its own config files
 		this.board = new Board(board, legend);
 		
-		//set up the players
+		//setup empty players hash
 		this.players = new HashMap<String, LinkedList<Player>>();
 		LinkedList<Player> emptyHumanList = new LinkedList<Player>();
 		this.players.put("Human", emptyHumanList);
 		LinkedList<Player> emptyComputerList = new LinkedList<Player>();
 		this.players.put("Computer", emptyComputerList);
-		this.playersFile = players;
 		
 		this.deck = new ArrayList<Card>();
 		
@@ -42,6 +50,7 @@ public class ClueGame {
 		// TODO Auto-generated method stub
 		try {
 			loadPlayers();
+			loadDeck();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,6 +78,42 @@ public class ClueGame {
 				players.get("Computer").add(player);
 			}
 			row++;
+		}
+		reader.close();
+	}
+	
+	public void loadDeck() throws FileNotFoundException {
+		loadPeopleCards();
+		loadWeaponCards();
+		loadRoomCards();
+	}
+	
+	public void loadPeopleCards() throws FileNotFoundException {
+		FileReader file = new FileReader(peopleCardsFile);
+		Scanner reader = new Scanner(file);
+		while(reader.hasNextLine()) {
+			Card card = new Card(reader.nextLine(), CardType.PERSON);
+			deck.add(card);
+		}
+		reader.close();
+	}
+	
+	public void loadWeaponCards() throws FileNotFoundException {
+		FileReader file = new FileReader(weaponCardsFile);
+		Scanner reader = new Scanner(file);
+		while(reader.hasNextLine()) {
+			Card card = new Card(reader.nextLine(), CardType.WEAPON);
+			deck.add(card);
+		}
+		reader.close();
+	}
+	
+	public void loadRoomCards() throws FileNotFoundException {
+		FileReader file = new FileReader(roomCardsFile);
+		Scanner reader = new Scanner(file);
+		while(reader.hasNextLine()) {
+			Card card = new Card(reader.nextLine(), CardType.ROOM);
+			deck.add(card);
 		}
 		reader.close();
 	}
