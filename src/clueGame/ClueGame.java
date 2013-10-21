@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -57,17 +58,30 @@ public class ClueGame {
 	}
 	
 	public void loadConfigFiles() {
-		// TODO Auto-generated method stub
 		try {
 			loadPlayers();
 			loadDeck();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 	
+	public void dealCards() {	
+		do{
+			for(Player p: getAllPlayers()){
+				if(deck.size() == 0)
+					break;
+				else{
+					int indexR = new Random().nextInt(deck.size());
+					p.addCardToHand(deck.get(indexR));
+					deck.remove(indexR);
+				}
+			}
+		}while(deck.size() > 1);
+	}
+	
+	// HELPERS ****************************************************************
 	public void loadPlayers() throws FileNotFoundException {
 		FileReader file = new FileReader(playersFile);
 		Scanner reader = new Scanner(file);
@@ -80,11 +94,13 @@ public class ClueGame {
 			int startingColumnPosition = Integer.parseInt(line[3]);			
 			
 			if(row == 0){
-				HumanPlayer player = new HumanPlayer(name, color, startingRowPosition, startingColumnPosition);
+				HumanPlayer player = new HumanPlayer(name, color, 
+						startingRowPosition, startingColumnPosition);
 				players.get("Human").add(player);
 			}
 			else{
-				ComputerPlayer player = new ComputerPlayer(name, color, startingRowPosition, startingColumnPosition);
+				ComputerPlayer player = new ComputerPlayer(name, color, 
+						startingRowPosition, startingColumnPosition);
 				players.get("Computer").add(player);
 			}
 			row++;
@@ -127,8 +143,9 @@ public class ClueGame {
 		}
 		reader.close();
 	}
-	
-	// Used for testing purposes only.
+
+	// GETTERS ****************************************************************
+	// Used for testing purposes only. (or are they?)
 	public Map<String, LinkedList<Player>> getPlayers() {
 		return players;
 	}
@@ -140,6 +157,11 @@ public class ClueGame {
 	// Return a list of all players human and computer alike.
 	public LinkedList<Player> getAllPlayers() {	
 		LinkedList<Player> allPlayers = new LinkedList<Player>();
+		for(String playerType: players.keySet()){
+			for(Player p: players.get(playerType)){
+				allPlayers.add(p);
+			}
+		}
 		return allPlayers;		
 	}
 }

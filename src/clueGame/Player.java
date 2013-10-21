@@ -24,7 +24,8 @@ public class Player {
 		this.name = name;
 		this.color = convertColor(color);
 		this.startingRow = startingRowPosition;
-		this.startingColumn = startingColumnPosition;
+		this.startingColumn = startingColumnPosition;	
+		this.hand = new ArrayList<Card>();
 	}
 
 	public Color convertColor(String strColor) {
@@ -37,6 +38,10 @@ public class Player {
 			color = null; // Not defined } 
 		}
 		return color;
+	}
+	
+	public void addCardToHand(Card c) {
+		hand.add(c);
 	}
 	
 	public String getName() {

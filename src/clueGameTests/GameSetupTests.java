@@ -112,12 +112,15 @@ public class GameSetupTests {
 	
 	@Test
 	public void allCardsAreDealt() {
+		clue.dealCards();
 		// this is the deck BEFORE cards are handed out...
 		Set<Card> deckActual = new HashSet<Card>(clue.getDeck());
-		//...there should be 21 cards here
-		assertEquals(21, deckActual.size());
+		//...there should be 0 cards in the deck now
+		assertEquals(0, deckActual.size());
 		// now to build a new deck from the cards that were passed out
 		ArrayList<Card> deckCollected = new ArrayList<Card>();
+		// just making sure we get inside of the loop with a test
+		assertEquals(6, clue.getAllPlayers().size());
 		for(Player p: clue.getAllPlayers()){
 			// while we are in here let's make sure that the player
 			// has either 3 or 4 cards
@@ -134,7 +137,7 @@ public class GameSetupTests {
 		Set<Card> deckCollectedNoDup = new HashSet<Card>(deckCollected);
 		// deckCollectedNoDup should have 21 cards in it if all cards 
 		// were passed out
-		assertEquals(deckActual.size(), deckCollectedNoDup.size());
+		assertEquals(21, deckCollectedNoDup.size());
 		
 	}
 
