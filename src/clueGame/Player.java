@@ -9,5 +9,19 @@ package clueGame;
  * program the GUI.
  */
 public class Player {
-
+	private String name;
+	private Color color;
+	private int[] startingPosition;
+	
+	public String getName() {
+		return name;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+	
+	public int[] getStartingPosition() {
+		return startingPosition;
+	}
 }
