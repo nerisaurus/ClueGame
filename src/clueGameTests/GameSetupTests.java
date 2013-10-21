@@ -2,6 +2,10 @@ package clueGameTests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -108,6 +112,34 @@ public class GameSetupTests {
 	
 	@Test
 	public void allCardsAreDealt() {
+		// this is the deck BEFORE cards are handed out...
+		Set<Card> deckActual = new HashSet<Card>(clue.getDeck());
+		//...there should be 21 cards here
+		assertEquals(21, deckActual.size());
+		// now to build a new deck from the cards that were passed out
+		ArrayList<Card> deckCollected = new ArrayList<Card>();
+		for(Player p: clue.getAllPlayers()){
+			// while we are in here let's make sure that the player
+			// has either 3 or 4 cards
+			boolean fairDeal = false;
+			if(p.getHand().size() == 4 || p.getHand().size() == 3)
+				fairDeal = true;
+			assertsTure(fairDeal);
+			// now collect the cards
+			for(Card c: p.getHand()){
+				deckCollected.add(c);
+			}
+		}
+		// setup the collected deck as a set to remove duplicates...
+		Set<Card> deckCollectedNoDup = new HashSet<Card>(deckCollected);
+		// deckCollectedNoDup should have 21 cards in it if all cards 
+		// were passed out
+		assertEquals(deckActual.size(), deckCollectedNoDup.size());
+		
+	}
+
+	private void assertsTure(boolean fairDeal) {
+		// TODO Auto-generated method stub
 		
 	}
 }

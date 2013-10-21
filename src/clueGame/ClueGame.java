@@ -13,7 +13,7 @@ import java.util.TreeSet;
 
 public class ClueGame {
 	private Board board;
-	private Map<String, LinkedList<Player>> players;
+	private Map<String, LinkedList<Player>> players; // see note in constructor
 	private LinkedList<Card> deck;
 
 	//file strings
@@ -37,6 +37,13 @@ public class ClueGame {
 		this.board = new Board(board, legend);
 		
 		//setup empty players hash
+		// NOTE: There may be some coding overhead to maintain this but
+		// it insures that we always know where the human player is
+		// also creates flexibility in the number of computer players
+		// versus human players in the game.
+		// Added a getAllPlayers() method to make it a little easer
+		// to, well, get all of the players whether or not they 
+		// are human or computer.
 		this.players = new HashMap<String, LinkedList<Player>>();
 		LinkedList<Player> emptyHumanList = new LinkedList<Player>();
 		this.players.put("Human", emptyHumanList);
@@ -128,5 +135,11 @@ public class ClueGame {
 	
 	public LinkedList<Card> getDeck() {
 		return deck;
+	}
+	
+	// Return a list of all players human and computer alike.
+	public LinkedList<Player> getAllPlayers() {	
+		LinkedList<Player> allPlayers = new LinkedList<Player>();
+		return allPlayers;		
 	}
 }

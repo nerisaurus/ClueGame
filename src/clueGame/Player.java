@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.Color;
 import java.text.Format.Field;
+import java.util.ArrayList;
 
 /*
  * The Player class is the super class for the two 
@@ -16,7 +17,8 @@ public class Player {
 	private String name;
 	private Color color;
 	private int startingRow;
-	private int startingColumn;
+	private int startingColumn;	
+	private ArrayList<Card> hand;
 	
 	public Player(String name, String color, int startingRowPosition, int startingColumnPosition) {
 		this.name = name;
@@ -51,5 +53,9 @@ public class Player {
 	
 	public int getStartingColumn() {
 		return startingColumn;
+	}
+	
+	public ArrayList<Card> getHand() {
+		return hand;
 	}
 }
