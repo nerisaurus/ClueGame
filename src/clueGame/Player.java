@@ -1,4 +1,8 @@
 package clueGame;
+
+import java.awt.Color;
+import java.text.Format.Field;
+
 /*
  * The Player class is the super class for the two 
  * types of players, the ComputerPlayer and a HumanPlayer.
@@ -10,23 +14,34 @@ package clueGame;
  */
 public class Player {
 	private String name;
-	//private Color color; //string for now...
-	private String color;
+	private Color color;
 	private int startingRow;
 	private int startingColumn;
 	
 	public Player(String name, String color, int startingRowPosition, int startingColumnPosition) {
 		this.name = name;
-		this.color = color;
+		this.color = convertColor(color);
 		this.startingRow = startingRowPosition;
 		this.startingColumn = startingColumnPosition;
+	}
+	
+	public Color convertColor(String strColor) {
+		Color color; 
+		try {     
+			// We can use reflection to convert the string to a color
+			java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(strColor.trim());     
+			color = (Color)field.get(null); } 
+		catch (Exception e) {  
+			color = null; // Not defined } 
+		}
+		return color;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 	
