@@ -4,14 +4,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ClueGame {
 	private Board board;
 	private Map<String, LinkedList<Player>> players;
-	private ArrayList<Card> deck;
+	private LinkedList<Card> deck;
 
 	//file strings
 	private String playersFile;
@@ -40,7 +43,7 @@ public class ClueGame {
 		LinkedList<Player> emptyComputerList = new LinkedList<Player>();
 		this.players.put("Computer", emptyComputerList);
 		
-		this.deck = new ArrayList<Card>();
+		this.deck = new LinkedList<Card>();
 		
 		//load players, and cards here
 		//loadConfigFiles();
@@ -123,7 +126,7 @@ public class ClueGame {
 		return players;
 	}
 	
-	public ArrayList<Card> getDeck() {
+	public LinkedList<Card> getDeck() {
 		return deck;
 	}
 }

@@ -662,3 +662,39 @@ Cannot process line 9 of BAD_legend.csv - too many or too few entries
 Cannot process line 1 of board.csv - too many or too few entries
 [Sun Oct 20 20:46:56 MDT 2013] ERROR: BadConfigFormatException
 Cannot process line 1 of board.csv - too many or too few entries
+[Mon Oct 21 15:33:37 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Line 1 of the file: ClueLayoutBadColumns.csv does not have the same dimensions as previous lines.
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Line 1 of the file: ClueLayoutBadColumns.csv does not have the same dimensions as previous lines.
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+'Z' is not a recognized room. Error in: ClueLayoutBadRoom.csv
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+'Z' is not a recognized room. Error in: ClueLayoutBadRoom.csv
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of ClueLegendBadFormat.txt - too many or too few entries
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of ClueLegendBadFormat.txt - too many or too few entries
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Line 22 of the file: BAD_COLUMN_board.csv does not have the same dimensions as previous lines.
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Line 22 of the file: BAD_COLUMN_board.csv does not have the same dimensions as previous lines.
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+'T' is not a recognized room. Error in: BAD_ROOM_board.csv
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+'T' is not a recognized room. Error in: BAD_ROOM_board.csv
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 9 of BAD_legend.csv - too many or too few entries
+[Mon Oct 21 15:34:52 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 9 of BAD_legend.csv - too many or too few entries
+[Mon Oct 21 15:38:00 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Mon Oct 21 15:49:29 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Mon Oct 21 15:49:45 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Mon Oct 21 15:49:59 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries

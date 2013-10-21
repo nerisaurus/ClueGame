@@ -98,14 +98,17 @@ public class GameSetupTests {
 		assertEquals(9, rooms);
 		
 		// The deck should have these cards
-		/* need a way to test these...
-		Card personCard = new Card("white", CardType.PERSON);
-		assertTrue(clue.getDeck().contains(personCard));
-		Card weaponCard = new Card("Lightsaber", CardType.WEAPON);
-		assertTrue(clue.getDeck().contains(weaponCard));
-		Card roomCard = new Card("Jupiter", CardType.ROOM);
-		assertTrue(clue.getDeck().contains(roomCard));
-		*/
+		assertEquals("white", clue.getDeck().get(1).getName());
+		assertEquals(CardType.PERSON, clue.getDeck().get(1).getType());
+		assertEquals("Lightsaber", clue.getDeck().get(9).getName());
+		assertEquals(CardType.WEAPON, clue.getDeck().get(9).getType());
+		assertEquals("Jupiter", clue.getDeck().get(16).getName());
+		assertEquals(CardType.ROOM, clue.getDeck().get(16).getType());
+	}
+	
+	@Test
+	public void allCardsAreDealt() {
+		
 	}
 }
 
