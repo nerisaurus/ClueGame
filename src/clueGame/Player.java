@@ -10,18 +10,31 @@ package clueGame;
  */
 public class Player {
 	private String name;
-	private Color color;
-	private int[] startingPosition;
+	//private Color color; //string for now...
+	private String color;
+	private int startingRow;
+	private int startingColumn;
+	
+	public Player(String name, String color, int startingRowPosition, int startingColumnPosition) {
+		this.name = name;
+		this.color = color;
+		this.startingRow = startingRowPosition;
+		this.startingColumn = startingColumnPosition;
+	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 	
-	public int[] getStartingPosition() {
-		return startingPosition;
+	public int getStartingRow() {
+		return startingRow;
+	}
+	
+	public int getStartingColumn() {
+		return startingColumn;
 	}
 }

@@ -560,3 +560,23 @@ Cannot process line 9 of BAD_legend.csv - too many or too few entries
 Cannot process line 1 of board.csv - too many or too few entries
 [Sun Oct 20 18:32:08 MDT 2013] ERROR: BadConfigFormatException
 Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:11:02 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:11:32 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:11:40 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:16:05 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:16:28 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:16:42 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:17:27 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:19:19 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:19:35 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Sun Oct 20 19:20:51 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries

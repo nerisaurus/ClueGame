@@ -39,7 +39,7 @@ public class GameSetupTests {
 	public void setupPlayers() {
 		//ClueGame will store players in a hash table of the form
 		//players = { "Human" => Player, "Computer" => Player[] }
-		
+
 		//test 1: value of "Human" should be 1 Player
 		assertEquals(1, clue.getPlayers().get("Human").size());
 		
@@ -48,9 +48,9 @@ public class GameSetupTests {
 		
 		//test 3: each player should have a name, color, and starting location
 		assertEquals("red", clue.getPlayers().get("Human").get(0).getName());
-		assertEquals(Color.RED, clue.getPlayers().get("Human").get(0).getColor());
-		assertEquals(15, clue.getPlayers().get("Human").get(0).getStartingPosition()[0]); //row
-		assertEquals(2, clue.getPlayers().get("Human").get(0).getStartingPosition()[1]); //column
+		assertEquals("RED", clue.getPlayers().get("Human").get(0).getColor());
+		assertEquals(15, clue.getPlayers().get("Human").get(0).getStartingRow()); //row
+		assertEquals(2, clue.getPlayers().get("Human").get(0).getStartingColumn()); //column
 		
 		//we could test everything with something like this
 		/*
@@ -59,13 +59,13 @@ public class GameSetupTests {
 		}
 		*/
 		assertEquals("blue", clue.getPlayers().get("Computer").get(3).getName());
-		assertEquals(Color.BLUE, clue.getPlayers().get("Computer").get(3).getColor());
-		assertEquals(17, clue.getPlayers().get("Computer").get(3).getStartingPosition()[0]);
-		assertEquals(17, clue.getPlayers().get("Computer").get(3).getStartingPosition()[1]);
+		assertEquals("BLUE", clue.getPlayers().get("Computer").get(3).getColor());
+		assertEquals(17, clue.getPlayers().get("Computer").get(3).getStartingRow());
+		assertEquals(17, clue.getPlayers().get("Computer").get(3).getStartingColumn());
 		assertEquals("yellow", clue.getPlayers().get("Computer").get(4).getName());
-		assertEquals(Color.YELLOW, clue.getPlayers().get("Computer").get(4).getColor());
-		assertEquals(22, clue.getPlayers().get("Computer").get(4).getStartingPosition()[0]);
-		assertEquals(8, clue.getPlayers().get("Computer").get(4).getStartingPosition()[1]);
+		assertEquals("YELLOW", clue.getPlayers().get("Computer").get(4).getColor());
+		assertEquals(22, clue.getPlayers().get("Computer").get(4).getStartingRow());
+		assertEquals(8, clue.getPlayers().get("Computer").get(4).getStartingColumn());
 	}
 }
 
