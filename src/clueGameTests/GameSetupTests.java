@@ -38,7 +38,6 @@ public class GameSetupTests {
 		clue = new ClueGame(BOARD, LEGEND, PLAYERS, 
 							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.loadConfigFiles();
-		clue.buildSolution();
 	}
 	
 	@Test
@@ -144,6 +143,7 @@ public class GameSetupTests {
 
 	@Test
 	public void goodSolutionFormed() {
+		clue.buildSolution();
 		// Just want to make sure that the solution has exactly
 		// one person, one weapon, and one room.
 		// To test this we'll look at each card in the solution,
