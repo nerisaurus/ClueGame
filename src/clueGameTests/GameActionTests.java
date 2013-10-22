@@ -49,16 +49,16 @@ public class GameActionTests {
 		clue.setSolution(realSolution);
 		//First, a correct accusation:
 		Solution correctAccusation = new Solution(clue.getDeck().get(1), clue.getDeck().get(6), clue.getDeck().get(13));
-		assertEquals(true, clue.checkAccusation(correctAccusation));
+		assertTrue(clue.checkAccusation(correctAccusation));
 		//now a wrong Person Card
 		Solution wrongSuspect = new Solution(clue.getDeck().get(4), clue.getDeck().get(6), clue.getDeck().get(13));
-		assertEquals(false, clue.checkAccusation(wrongSuspect));
+		assertFalse(clue.checkAccusation(wrongSuspect));
 		//now for a wrong Weapon Card
 		Solution wrongWeapon = new Solution(clue.getDeck().get(1), clue.getDeck().get(8), clue.getDeck().get(13));
-		assertEquals(false, clue.checkAccusation(wrongWeapon));
+		assertFalse(clue.checkAccusation(wrongWeapon));
 		//now for a wrong Room Card
 		Solution wrongRoom = new Solution(clue.getDeck().get(1), clue.getDeck().get(6), clue.getDeck().get(18));
-		assertEquals(false, clue.checkAccusation(wrongRoom));		
+		assertFalse(clue.checkAccusation(wrongRoom));		
 	}
 
 }
