@@ -27,4 +27,25 @@ public class Card {
 	public CardType getType() {
 		return type;
 	}
+
+	@Override
+	public String toString() {
+		return "Card [name=" + name + ", type=" + type + "]";
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if(!(other instanceof Card)) {
+			return false;
+		} else {
+			Card otherCard = (Card) other;
+			if(otherCard.getName().equals(name) && otherCard.getType().equals(type)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	
 }

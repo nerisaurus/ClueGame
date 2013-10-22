@@ -13,7 +13,7 @@ public class ClueGame {
 	private Board board;
 	private Map<String, LinkedList<Player>> players; // see note in constructor
 	private LinkedList<Card> deck;
-	private ArrayList<Card> solution;
+	private Solution solution;
 	private int numPeople, numWeapons, numRooms;
 
 	//file strings
@@ -49,7 +49,7 @@ public class ClueGame {
 		this.players.put("Computer", emptyComputerList);
 		
 		this.deck = new LinkedList<Card>();
-		this.solution = new ArrayList<Card>();
+		this.solution = new Solution();
 		
 		//loadConfigFiles();
 		//buildSolution();
@@ -70,13 +70,15 @@ public class ClueGame {
 		//prepare deck index for each type of card
 		//then add card to solution and remove from the deck
 		int personIndex = (int) (0 + (Math.random() * (5))); // 6 possible people - 1
-		this.solution.add(deck.get(personIndex));
+		this.solution.setPerson(deck.get(personIndex));
 		deck.remove(personIndex);
+		
 		int weaponIndex = (int) (5 + (Math.random() * (5))); // 6 possible weapons - 1
-		this.solution.add(deck.get(weaponIndex));
+		this.solution.setWeapon(deck.get(weaponIndex));
 		deck.remove(weaponIndex);
+		
 		int roomIndex = (int) (10 + (Math.random() * (8))); // 9 possible rooms - 1
-		this.solution.add(deck.get(roomIndex));
+		this.solution.setRoom(deck.get(roomIndex));
 		deck.remove(roomIndex);
 	}
 	
@@ -172,7 +174,7 @@ public class ClueGame {
 		return deck;
 	}
 	
-	public ArrayList<Card> getSolution() {
+	public Solution getSolution() {
 		return solution;
 	}
 	

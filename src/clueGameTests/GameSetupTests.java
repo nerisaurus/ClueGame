@@ -114,32 +114,14 @@ public class GameSetupTests {
 		// Just want to make sure that the solution has exactly
 		// one person, one weapon, and one room.
 		// To test this we'll look at each card in the solution,
-		// keeping track of how many we remove of each type.
-		// We should have exactly one of each type and a total of three cards.
-		int people = 0;
-		int weapons = 0;
-		int rooms = 0;
-		for(Card c: clue.getSolution()){
-			switch(c.getType()){
-			case PERSON:
-				people++;
-				break;
-			case WEAPON:
-				weapons++;
-				break;
-			case ROOM:
-				rooms++;
-				break;
-			default:
-				break;
-			}
-		}
+		// and see if it is the proper type.
+		// We should have exactly one of each type and a total of three cards
+		// (that is, the deck should have 21 - 3 = 18 cards after building the solution)
 		
-		assertEquals(1, people);
-		assertEquals(1, weapons);
-		assertEquals(1, rooms);
-		assertEquals(3, clue.getSolution().size());
-		
+		assertEquals(CardType.PERSON, clue.getSolution().getPerson().getType());
+		assertEquals(CardType.WEAPON, clue.getSolution().getWeapon().getType());
+		assertEquals(CardType.ROOM, clue.getSolution().getRoom().getType());
+		assertEquals(18, clue.getDeck().size());
 	}
 	
 	@Test
