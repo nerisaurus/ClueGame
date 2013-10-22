@@ -33,7 +33,7 @@ public class GameSetupTests {
 	
 	@Before
 	public void setUp() {
-		clue = new ClueGame(BOARD, LEGEND,  
+		clue = new ClueGame(LEGEND, BOARD,
 							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.loadConfigFiles();
 	}
@@ -156,12 +156,3 @@ public class GameSetupTests {
 		
 	}
 }
-
-/*players.csv
-red,RED,15,2
-white,WHITE,1,20
-green,GREEN,8,8
-purple,PURPLE,8,15
-blue,BLUE,17,17
-yellow,YELLOW,22,8
- */
