@@ -49,7 +49,7 @@ public class GameSetupTests {
 		assertEquals(5, clue.getPlayers().get("Computer").size());
 		
 		//test 3: each player should have a name, color, and starting location
-		assertEquals("red", clue.getPlayers().get("Human").get(0).getName());
+		assertEquals("Cosmonaut Crimson", clue.getPlayers().get("Human").get(0).getName());
 		assertEquals(java.awt.Color.RED, clue.getPlayers().get("Human").get(0).getColor());
 		assertEquals(15, clue.getPlayers().get("Human").get(0).getStartingRow()); //row
 		assertEquals(2, clue.getPlayers().get("Human").get(0).getStartingColumn()); //column
@@ -61,12 +61,12 @@ public class GameSetupTests {
 		}
 		*/
 		//but all we need to do is this...
-		assertEquals("blue", clue.getPlayers().get("Computer").get(3).getName());
-		assertEquals(java.awt.Color.BLUE, clue.getPlayers().get("Computer").get(3).getColor());
+		assertEquals("Galactic Senator Cyan", clue.getPlayers().get("Computer").get(3).getName());
+		assertEquals(java.awt.Color.CYAN, clue.getPlayers().get("Computer").get(3).getColor());
 		assertEquals(17, clue.getPlayers().get("Computer").get(3).getStartingRow());
 		assertEquals(17, clue.getPlayers().get("Computer").get(3).getStartingColumn());
-		assertEquals("yellow", clue.getPlayers().get("Computer").get(4).getName());
-		assertEquals(java.awt.Color.YELLOW, clue.getPlayers().get("Computer").get(4).getColor());
+		assertEquals("Captain Fuschia", clue.getPlayers().get("Computer").get(4).getName());
+		assertEquals(java.awt.Color.PINK, clue.getPlayers().get("Computer").get(4).getColor());
 		assertEquals(22, clue.getPlayers().get("Computer").get(4).getStartingRow());
 		assertEquals(8, clue.getPlayers().get("Computer").get(4).getStartingColumn());
 	}
