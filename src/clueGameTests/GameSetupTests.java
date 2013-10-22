@@ -109,37 +109,6 @@ public class GameSetupTests {
 		assertEquals("Jupiter", clue.getDeck().get(16).getName());
 		assertEquals(CardType.ROOM, clue.getDeck().get(16).getType());
 	}
-	
-	@Test
-	public void allCardsAreDealt() {
-		clue.dealCards();
-		// this is the deck BEFORE cards are handed out...
-		Set<Card> deckActual = new HashSet<Card>(clue.getDeck());
-		//...there should be 0 cards in the deck now
-		assertEquals(0, deckActual.size());
-		// now to build a new deck from the cards that were passed out
-		ArrayList<Card> deckCollected = new ArrayList<Card>();
-		// just making sure we get inside of the loop with a test
-		assertEquals(6, clue.getAllPlayers().size());
-		for(Player p: clue.getAllPlayers()){
-			// while we are in here let's make sure that the player
-			// has either 3 or 4 cards
-			boolean fairDeal = false;
-			if(p.getHand().size() == 4 || p.getHand().size() == 3)
-				fairDeal = true;
-			assertTrue(fairDeal);
-			// now collect the cards
-			for(Card c: p.getHand()){
-				deckCollected.add(c);
-			}
-		}
-		// setup the collected deck as a set to remove duplicates...
-		Set<Card> deckCollectedNoDup = new HashSet<Card>(deckCollected);
-		// deckCollectedNoDup should have 21 cards in it if all cards 
-		// were passed out
-		assertEquals(21, deckCollectedNoDup.size());
-		
-	}
 
 	@Test
 	public void goodSolutionFormed() {
@@ -172,6 +141,37 @@ public class GameSetupTests {
 		assertEquals(1, weapons);
 		assertEquals(1, rooms);
 		assertEquals(3, clue.getSolution().size());
+		
+	}
+	
+	@Test
+	public void allCardsAreDealt() {
+		clue.dealCards();
+		// this is the deck BEFORE cards are handed out...
+		Set<Card> deckActual = new HashSet<Card>(clue.getDeck());
+		//...there should be 0 cards in the deck now
+		assertEquals(0, deckActual.size());
+		// now to build a new deck from the cards that were passed out
+		ArrayList<Card> deckCollected = new ArrayList<Card>();
+		// just making sure we get inside of the loop with a test
+		assertEquals(6, clue.getAllPlayers().size());
+		for(Player p: clue.getAllPlayers()){
+			// while we are in here let's make sure that the player
+			// has either 3 or 4 cards
+			boolean fairDeal = false;
+			if(p.getHand().size() == 4 || p.getHand().size() == 3)
+				fairDeal = true;
+			assertTrue(fairDeal);
+			// now collect the cards
+			for(Card c: p.getHand()){
+				deckCollected.add(c);
+			}
+		}
+		// setup the collected deck as a set to remove duplicates...
+		Set<Card> deckCollectedNoDup = new HashSet<Card>(deckCollected);
+		// deckCollectedNoDup should have 18 cards in it if all cards 
+		// were passed out (including 3 in the solution)
+		assertEquals(18, deckCollectedNoDup.size());
 		
 	}
 }
