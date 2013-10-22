@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,8 +31,8 @@ public class GameSetupTests {
 	//	
 	public static final String ROOM_CARDS = "room_cards.csv";
 	
-	@BeforeClass
-	public static void setUp() {
+	@Before
+	public void setUp() {
 		clue = new ClueGame(BOARD, LEGEND,  
 							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.loadConfigFiles();
@@ -99,7 +100,7 @@ public class GameSetupTests {
 		assertEquals(9, rooms);
 		
 		// The deck should have these cards
-		assertEquals("white", clue.getDeck().get(1).getName());
+		assertEquals("Android Orange", clue.getDeck().get(1).getName());
 		assertEquals(CardType.PERSON, clue.getDeck().get(1).getType());
 		assertEquals("Lightsaber", clue.getDeck().get(9).getName());
 		assertEquals(CardType.WEAPON, clue.getDeck().get(9).getType());
@@ -143,6 +144,7 @@ public class GameSetupTests {
 	
 	@Test
 	public void allCardsAreDealt() {
+		clue.buildSolution();
 		clue.dealCards();
 		// this is the deck BEFORE cards are handed out...
 		Set<Card> deckActual = new HashSet<Card>(clue.getDeck());
