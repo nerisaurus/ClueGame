@@ -36,7 +36,7 @@ public class Solution {
 		if(person.getType() == CardType.PERSON)
 			this.person = person;
 		else
-			throw new RuntimeException(weapon + " is not a person.");
+			throw new RuntimeException(person + " is not a person.");
 	}
 
 	public Card getWeapon() {
@@ -58,7 +58,7 @@ public class Solution {
 		if(room.getType() == CardType.ROOM)
 			this.room = room;
 		else
-			throw new RuntimeException(weapon + " is not a room.");
+			throw new RuntimeException(room + " is not a room.");
 	}
 
 	

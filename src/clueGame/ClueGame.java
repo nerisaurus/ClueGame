@@ -194,6 +194,9 @@ public class ClueGame {
 	}
 
 	public boolean checkAccusation(Solution accusation) {
-		return false; //just a skeleton to fill in later
+		if(solution.equals(accusation))
+			return true;
+		else
+			return false;
 	}
 }
