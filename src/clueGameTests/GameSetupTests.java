@@ -19,12 +19,9 @@ public class GameSetupTests {
 	private static ClueGame clue;
 	public static final String BOARD = "board.csv";
 	public static final String LEGEND = "legend.csv";
-	//players.csv format:
-	//	name,color,starting row,starting column
-	//the first player in the list is the human player.
-	public static final String PLAYERS = "players.csv";
 	//person_cards.csv format:
-	//	
+	//	name,color,starting row,starting column
+	//the first player in the list is the human player.	
 	public static final String PERSON_CARDS = "person_cards.csv";
 	//weapon_cards.csv format:
 	//	
@@ -35,7 +32,7 @@ public class GameSetupTests {
 	
 	@BeforeClass
 	public static void setUp() {
-		clue = new ClueGame(BOARD, LEGEND, PLAYERS, 
+		clue = new ClueGame(BOARD, LEGEND,  
 							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.loadConfigFiles();
 	}

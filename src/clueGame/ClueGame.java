@@ -17,7 +17,6 @@ public class ClueGame {
 	private int numPeople, numWeapons, numRooms;
 
 	//file strings
-	private String playersFile;
 	private String peopleCardsFile;
 	private String weaponCardsFile;
 	private String roomCardsFile;
@@ -26,9 +25,8 @@ public class ClueGame {
 		this.players = new HashMap<String, LinkedList<Player>>();
 	}
 	
-	public ClueGame(String legend, String board, String players, String people, String weapons, String rooms) {
+	public ClueGame(String legend, String board, String people, String weapons, String rooms) {
 		//files
-		this.playersFile = players;
 		this.peopleCardsFile = people;
 		this.weaponCardsFile = weapons;
 		this.roomCardsFile = rooms;
@@ -71,13 +69,13 @@ public class ClueGame {
 	public void buildSolution() {
 		//prepare deck index for each type of card
 		//then add card to solution and remove from the deck
-		int personIndex = (int) (0 + (Math.random() * (5)));
+		int personIndex = (int) (0 + (Math.random() * (5))); // 6 possible people - 1
 		this.solution.add(deck.get(personIndex));
 		deck.remove(personIndex);
-		int weaponIndex = (int) (5 + (Math.random() * (5)));
+		int weaponIndex = (int) (5 + (Math.random() * (5))); // 6 possible weapons - 1
 		this.solution.add(deck.get(weaponIndex));
 		deck.remove(weaponIndex);
-		int roomIndex = (int) (10 + (Math.random() * (8)));
+		int roomIndex = (int) (10 + (Math.random() * (8))); // 9 possible rooms - 1
 		this.solution.add(deck.get(roomIndex));
 		deck.remove(roomIndex);
 	}
@@ -98,7 +96,7 @@ public class ClueGame {
 	
 	// HELPERS ****************************************************************
 	public void loadPlayers() throws FileNotFoundException {
-		FileReader file = new FileReader(playersFile);
+		FileReader file = new FileReader(peopleCardsFile);
 		Scanner reader = new Scanner(file);
 		int row = 0;
 		while(reader.hasNextLine()) {
@@ -133,7 +131,9 @@ public class ClueGame {
 		FileReader file = new FileReader(peopleCardsFile);
 		Scanner reader = new Scanner(file);
 		while(reader.hasNextLine()) {
-			Card card = new Card(reader.nextLine(), CardType.PERSON);
+			String[] line = reader.nextLine().split(",");
+			String playerName = line[0];
+			Card card = new Card(playerName, CardType.PERSON);
 			deck.add(card);
 			this.numPeople++;
 		}
