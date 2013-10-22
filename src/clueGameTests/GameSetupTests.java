@@ -38,6 +38,7 @@ public class GameSetupTests {
 		clue = new ClueGame(BOARD, LEGEND, PLAYERS, 
 							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.loadConfigFiles();
+		clue.buildSolution();
 	}
 	
 	@Test
@@ -127,7 +128,7 @@ public class GameSetupTests {
 			boolean fairDeal = false;
 			if(p.getHand().size() == 4 || p.getHand().size() == 3)
 				fairDeal = true;
-			assertsTure(fairDeal);
+			assertTrue(fairDeal);
 			// now collect the cards
 			for(Card c: p.getHand()){
 				deckCollected.add(c);
@@ -141,8 +142,36 @@ public class GameSetupTests {
 		
 	}
 
-	private void assertsTure(boolean fairDeal) {
-		// TODO Auto-generated method stub
+	@Test
+	public void goodSolutionFormed() {
+		// Just want to make sure that the solution has exactly
+		// one person, one weapon, and one room.
+		// To test this we'll look at each card in the solution,
+		// keeping track of how many we remove of each type.
+		// We should have exactly one of each type and a total of three cards.
+		int people = 0;
+		int weapons = 0;
+		int rooms = 0;
+		for(Card c: clue.getSolution()){
+			switch(c.getType()){
+			case PERSON:
+				people++;
+				break;
+			case WEAPON:
+				weapons++;
+				break;
+			case ROOM:
+				rooms++;
+				break;
+			default:
+				break;
+			}
+		}
+		
+		assertEquals(1, people);
+		assertEquals(1, weapons);
+		assertEquals(1, rooms);
+		assertEquals(3, clue.getSolution().size());
 		
 	}
 }

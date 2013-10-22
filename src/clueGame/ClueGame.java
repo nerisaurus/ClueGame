@@ -4,18 +4,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class ClueGame {
 	private Board board;
 	private Map<String, LinkedList<Player>> players; // see note in constructor
 	private LinkedList<Card> deck;
+	private ArrayList<Card> solution;
+	private int numPeople, numWeapons, numRooms;
 
 	//file strings
 	private String playersFile;
@@ -53,8 +52,9 @@ public class ClueGame {
 		
 		this.deck = new LinkedList<Card>();
 		
-		//load players, and cards here
 		//loadConfigFiles();
+		//buildSolution();
+		//dealCards();
 	}
 	
 	public void loadConfigFiles() {
@@ -64,6 +64,10 @@ public class ClueGame {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public void buildSolution() {
 		
 	}
 	
@@ -120,6 +124,7 @@ public class ClueGame {
 		while(reader.hasNextLine()) {
 			Card card = new Card(reader.nextLine(), CardType.PERSON);
 			deck.add(card);
+			this.numPeople++;
 		}
 		reader.close();
 	}
@@ -130,6 +135,7 @@ public class ClueGame {
 		while(reader.hasNextLine()) {
 			Card card = new Card(reader.nextLine(), CardType.WEAPON);
 			deck.add(card);
+			this.numWeapons++;
 		}
 		reader.close();
 	}
@@ -140,6 +146,7 @@ public class ClueGame {
 		while(reader.hasNextLine()) {
 			Card card = new Card(reader.nextLine(), CardType.ROOM);
 			deck.add(card);
+			this.numRooms++;
 		}
 		reader.close();
 	}
@@ -152,6 +159,10 @@ public class ClueGame {
 	
 	public LinkedList<Card> getDeck() {
 		return deck;
+	}
+	
+	public ArrayList<Card> getSolution() {
+		return solution;
 	}
 	
 	// Return a list of all players human and computer alike.

@@ -1754,3 +1754,7 @@ Line 22 of the file: BAD_COLUMN_board.csv does not have the same dimensions as p
 Cannot process line 9 of BAD_legend.csv - too many or too few entries
 [Mon Oct 21 17:56:54 MDT 2013] ERROR: BadConfigFormatException
 Cannot process line 9 of BAD_legend.csv - too many or too few entries
+[Mon Oct 21 18:08:25 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
+[Mon Oct 21 18:34:13 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of board.csv - too many or too few entries
