@@ -70,20 +70,16 @@ public class ClueGame {
 	
 	public void buildSolution() {
 		//prepare deck index for each type of card
-		int personIndex = (int) (0 + (Math.random() * (numPeople - 0)));
-		int weaponIndex = (int) (numPeople + (Math.random() * (numWeapons - numPeople)));
-		int roomIndex = (int) (numWeapons + (Math.random() * (numRooms - numWeapons)));
-		
-		System.out.println(personIndex);
-		System.out.println(weaponIndex);
-		System.out.println(roomIndex);
+		int personIndex = (int) (0 + (Math.random() * (5)));
+		int weaponIndex = (int) (6 + (Math.random() * (5)));
+		int roomIndex = (int) (12 + (Math.random() * (8)));
 		
 		//add card to solution and remove from the deck
 		this.solution.add(deck.get(personIndex));
-		deck.remove(personIndex);
 		this.solution.add(deck.get(weaponIndex));
-		deck.remove(weaponIndex);
 		this.solution.add(deck.get(roomIndex));
+		deck.remove(personIndex);
+		deck.remove(weaponIndex);
 		deck.remove(roomIndex);
 	}
 	
