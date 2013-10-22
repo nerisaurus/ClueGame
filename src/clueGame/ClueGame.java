@@ -178,6 +178,10 @@ public class ClueGame {
 		return solution;
 	}
 	
+	public void setSolution(Solution s) {
+		solution = s;
+	}
+	
 	// Return a list of all players human and computer alike.
 	public LinkedList<Player> getAllPlayers() {	
 		LinkedList<Player> allPlayers = new LinkedList<Player>();
@@ -187,5 +191,9 @@ public class ClueGame {
 			}
 		}
 		return allPlayers;		
+	}
+
+	public boolean checkAccusation(Solution accusation) {
+		return false; //just a skeleton to fill in later
 	}
 }
