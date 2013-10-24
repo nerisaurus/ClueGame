@@ -78,7 +78,6 @@ public class Player {
 	}
 	
 	
-	
 	public void setLocation(int startingRow, int startingColumn) {
 		this.startingRow = startingRow;
 		this.startingColumn = startingColumn;

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.junit.Before;
@@ -207,9 +208,7 @@ public class GameActionTests {
 	@Test
 	public void testMakingSuggestions() {
 		//Setup
-		Player detective = new Player();
-		
-		clue.loadConfigFiles(); //to make the game refresh its deck of cards
+		ComputerPlayer detective = new ComputerPlayer();
 		detective.setUnseenCards(clue.getDeck());
 		
 		//Player is put in a room:
@@ -230,6 +229,7 @@ public class GameActionTests {
 		detective.seesCard(new Card("Asteroid Miner Magenta", CardType.PERSON));
 		detective.seesCard(new Card("Android Orange", CardType.PERSON));
 		
+		
 		//The only rational suggestion is thus "Galactic Senator Cyan on Jupiter with the Lightsaber"
 		Solution test_1 = detective.makeSuggestion(roomCard);
 		assertEquals("Galactic Senator Cyan", test_1.getPerson().getName());
@@ -240,9 +240,8 @@ public class GameActionTests {
 	@Test
 	public void testMakingSuggestions_Randomness() {
 		//Setup:
-		Player detective = new Player();
+		ComputerPlayer detective = new ComputerPlayer();
 		
-		clue.loadConfigFiles(); //to make the game refresh its deck of cards
 		detective.setUnseenCards(clue.getDeck());
 		
 		
@@ -256,7 +255,7 @@ public class GameActionTests {
 		//Player sees some weapons:
 		detective.addCardToHand(new Card("Lightsaber", CardType.WEAPON));
 		detective.addCardToHand(new Card("M41A Pulse Rifle", CardType.WEAPON));
-		detective.addCardToHand(new Card("Android Orange", CardType.WEAPON));
+		detective.addCardToHand(new Card("Proton Pack", CardType.WEAPON));
 		detective.addCardToHand(new Card("Thermal Detonator", CardType.WEAPON));
 		//Player sees some people
 		detective.seesCard(new Card("Galactic Senator Cyan", CardType.PERSON));

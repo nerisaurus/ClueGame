@@ -31,10 +31,31 @@ public class ComputerPlayer extends Player {
 	public void seesCard(Card card) {
 		unseenCards.remove(card);
 	}
+	
+	public LinkedList<Card> getUnseenCards(){
+		return unseenCards;
+	}
 
 	@Override
 	public Solution makeSuggestion(Card roomCard) {
-		return null; //TODO: Overwrite
+		Random random = new Random(); //set up random number generation
+		Solution suggestion = new Solution(); //and our suggestion
+		
+		//Figure out which cards we have to pick between
+		ArrayList<Card> unseenWeapons = new ArrayList<Card>(), unseenPeople = new ArrayList<Card>();
+		for(Card unseen : unseenCards){
+			if(unseen.getType() == CardType.WEAPON){
+				unseenWeapons.add(unseen);
+			} else if(unseen.getType() == CardType.PERSON){
+				unseenPeople.add(unseen);
+			}
+		}
+		
+		suggestion.setWeapon(unseenWeapons.get(random.nextInt(unseenWeapons.size())));
+		suggestion.setPerson(unseenPeople.get(random.nextInt(unseenPeople.size())));
+		suggestion.setRoom(roomCard);
+		
+		return suggestion;
 	}
 
 	@Override
