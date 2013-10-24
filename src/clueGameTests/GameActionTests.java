@@ -106,40 +106,42 @@ public class GameActionTests {
 		Solution suggestionGoodRoom = new Solution(androidCard, lightsaberCard, jupiterCard);
 		Solution suggestionGoodWeapon = new Solution(androidCard, miniNukeCard, marsCard);
 		Solution suggestionGoodPlayer = new Solution(spaceCadetCard, lightsaberCard, marsCard);	
-		p.addCardToHand(jupiterCard);
-		p.addCardToHand(miniNukeCard);
 		p.addCardToHand(spaceCadetCard);
+		p.addCardToHand(miniNukeCard);
+		p.addCardToHand(jupiterCard);
 		assertEquals(null, p.disproveSuggestion(badSuggestion));
 		assertEquals(jupiterCard, p.disproveSuggestion(suggestionGoodRoom));
 		assertEquals(miniNukeCard, p.disproveSuggestion(suggestionGoodWeapon));
 		assertEquals(spaceCadetCard, p.disproveSuggestion(suggestionGoodPlayer));	
 		
-		//Test for one player, multiple possible matches	
+		//Test for one player, multiple possible matches
+		System.out.println("START");
 		Solution allMatchingSuggestion = new Solution(spaceCadetCard, miniNukeCard, jupiterCard);
 		int personPick = 0;
 		int weaponPick = 0;
 		int roomPick = 0;
 		for(int i = 0; i<100; i++){
-			switch(p.disproveSuggestion(allMatchingSuggestion).getType()){
-			case PERSON:
-				assertEquals(spaceCadetCard, p.disproveSuggestion(allMatchingSuggestion));
+			Card pick = p.disproveSuggestion(allMatchingSuggestion);
+			if(pick.equals(spaceCadetCard)) {
+				assertEquals(spaceCadetCard, pick);
 				personPick++;
-				break;
-			case WEAPON:
-				assertEquals(miniNukeCard, p.disproveSuggestion(allMatchingSuggestion));
+			}
+			else if(pick.equals(miniNukeCard)) {
+				assertEquals(miniNukeCard, pick);
 				weaponPick++;
-				break;
-			case ROOM:
-				assertEquals(jupiterCard, p.disproveSuggestion(allMatchingSuggestion));
+			}
+			else if(pick.equals(jupiterCard)) {
+				assertEquals(jupiterCard, pick);
 				roomPick++;
-				break;
-			default:
+			}
+			else
 				//a catch all in case something goes wrong, should always catch something!
 				assertTrue(false);
-				break;
-			}
 		}
-		
+
+		System.out.println(personPick);
+		System.out.println(weaponPick);
+		System.out.println(roomPick);
 		// testing to see that each card was picked, that is randomly
 		assertTrue(personPick > 1);
 		assertTrue(weaponPick > 1);
