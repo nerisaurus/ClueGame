@@ -125,7 +125,8 @@ public class GameActionTests {
 		//Target includes a room: 2-step 281 (should pick 279)
 		testSubject.setLocation(11, 6);
 		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
-		int target1 = testSubject.pickTarget(1, board);
+		int target1 = testSubject.pickTarget(2, board);
+		System.out.println(target1);
 		assertEquals('N', board.getRoomCellAt(target1).getInitial());
 		assertEquals('N',testSubject.getLastVisited()); //tests that lastVisited is set properly
 
