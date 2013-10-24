@@ -20,6 +20,10 @@ public class Player {
 	private int startingColumn;	
 	private ArrayList<Card> hand;
 	
+	public Player() {
+		super();
+	}
+	
 	public Player(String name, String color, int startingRowPosition, int startingColumnPosition) {
 		this.name = name;
 		this.color = convertColor(color);
@@ -38,6 +42,10 @@ public class Player {
 			color = null; // Not defined } 
 		}
 		return color;
+	}
+	
+	public Card disporveSuggestion(Solution suggestion) {
+		return null;
 	}
 	
 	public void addCardToHand(Card c) {
