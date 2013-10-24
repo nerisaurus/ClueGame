@@ -15,6 +15,7 @@ import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ClueGame;
+import clueGame.ComputerPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 import static org.junit.Assert.*;
@@ -122,7 +123,7 @@ public class GameActionTests {
 	@Test
 	public void testTargets_RoomPriority() {
 		Board board = clue.getBoard();
-		Player testSubject = new Player();
+		ComputerPlayer testSubject = new ComputerPlayer();
 		
 		//Target includes a room: 2-step 281 (should pick 279)
 		testSubject.setLocation(11, 6);
@@ -142,7 +143,7 @@ public class GameActionTests {
 	
 	@Test
 	public void testTargets_Randomness() {
-		Player testSubject = new Player();
+		ComputerPlayer testSubject = new ComputerPlayer();
 		Board board = clue.getBoard();
 		
 		//Random target (no rooms possible): 1-step 181 - should randomly pick between 180, 182, 156, 206

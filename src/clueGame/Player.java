@@ -22,7 +22,6 @@ public class Player {
 	private int startingRow;
 	private int startingColumn;	
 	private ArrayList<Card> hand;
-	private char lastVisited;
 	
 	public Player() {
 		super();	
@@ -55,6 +54,7 @@ public class Player {
 	
 	public void addCardToHand(Card c) {
 		hand.add(c);
+		seesCard(c);
 	}
 	
 	public String getName() {
@@ -77,44 +77,15 @@ public class Player {
 		return hand;
 	}
 	
-	public char getLastVisited(){
-		return lastVisited;
-	}
+	
 	
 	public void setLocation(int startingRow, int startingColumn) {
 		this.startingRow = startingRow;
 		this.startingColumn = startingColumn;
 	}
 
-	public void setLastVisited(char room) {
-		lastVisited = room;	
-	}
-
-	//pickTarget: takes a number of steps (dice roll) and Board object
-	//(the surrounding board) and returns the index of the square it
-	//(semi-randomly) chooses to move to
 	public int pickTarget(int steps, Board board) {
-		Random random = new Random();
-		Set<BoardCell> potentialTargets;
-		ArrayList<Integer> potentialTargetLocations = new ArrayList<Integer>();
-		
-		board.startTargets(startingRow, startingColumn, steps);
-		potentialTargets = board.getTargets();
-		
-		for(BoardCell target : potentialTargets) {
-			if(target.isRoom()){
-				RoomCell roomTarget = (RoomCell) target;
-				if(roomTarget.getInitial() != lastVisited) {
-					lastVisited = roomTarget.getInitial();
-					return board.calcIndex(roomTarget.getRow(), roomTarget.getCol());
-				}
-			}
-			potentialTargetLocations.add(board.calcIndex(target.getRow(), target.getCol()));
-		}
-		
-		int pick = random.nextInt(potentialTargetLocations.size());
-		
-		return potentialTargetLocations.get(pick);
+		return 0; //Overridden by ComputerPlayer and HumanPlayer
 	}
 
 	public void seesCard(Card card) {
