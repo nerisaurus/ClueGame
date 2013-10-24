@@ -17,10 +17,7 @@ import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ClueGame;
 import clueGame.ComputerPlayer;
-<<<<<<< HEAD
-=======
 import clueGame.HumanPlayer;
->>>>>>> suggestion
 import clueGame.Player;
 import clueGame.Solution;
 import static org.junit.Assert.*;
@@ -101,14 +98,6 @@ public class GameActionTests {
 		Card miniNukeCard = new Card("Mini-Nuke", CardType.WEAPON);
 		Card spaceCadetCard = new Card("Space Cadet Grey", CardType.PERSON);		
 
-<<<<<<< HEAD
-		//cards to test suggestion
-		Card marsCard = new Card("Mars", CardType.ROOM);
-		Card lightsaberCard = new Card("Lightsaber", CardType.WEAPON);
-		Card androidCard = new Card("Android Orange", CardType.PERSON);
-
-
-=======
 		//three more sets of cards for testing
 		Card asteroidCard = new Card("Asteroid Miner Magenta", CardType.PERSON);
 		Card cosmonautCard = new Card("Cosmonaut Crimson", CardType.PERSON);
@@ -128,105 +117,11 @@ public class GameActionTests {
 		Player p = new Player();
 		
 		//Test for one player, one correct match
->>>>>>> suggestion
 		Solution badSuggestion = new Solution(androidCard, lightsaberCard, marsCard);
 		Solution suggestionGoodRoom = new Solution(androidCard, lightsaberCard, jupiterCard);
 		Solution suggestionGoodWeapon = new Solution(androidCard, miniNukeCard, marsCard);
 		Solution suggestionGoodPlayer = new Solution(spaceCadetCard, lightsaberCard, marsCard);	
 		p.addCardToHand(spaceCadetCard);
-<<<<<<< HEAD
-
-		assertEquals(null, p.disproveSuggestion(badSuggestion));
-		assertEquals(marsCard, p.disproveSuggestion(suggestionGoodRoom));
-		assertEquals(lightsaberCard, p.disproveSuggestion(suggestionGoodWeapon));
-		assertEquals(androidCard, p.disproveSuggestion(suggestionGoodPlayer));
-
-	}
-
-
-	@Test
-	public void testTargets_RoomPriority() {
-		Board board = clue.getBoard();
-		ComputerPlayer testSubject = new ComputerPlayer();
-		
-		//Target includes a room: 2-step 281 (should pick 279)
-		testSubject.setLocation(11, 6);
-		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
-		int target1 = testSubject.pickTarget(2, board);
-		System.out.println(target1);
-		assertEquals('N', board.getRoomCellAt(target1).getInitial());
-		assertEquals('N',testSubject.getLastVisited()); //tests that lastVisited is set properly
-
-		//Target includes a room that's closer than other targets (target logic terminates properly): 4-step 281 (should be in Neptune)
-		testSubject.setLocation(11, 6);
-		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
-		int target4 = testSubject.pickTarget(4, board);
-		assertEquals('N', board.getRoomCellAt(target4).getInitial());
-		assertEquals('N',testSubject.getLastVisited());
-	}
-	
-	@Test
-	public void testTargets_Randomness() {
-		ComputerPlayer testSubject = new ComputerPlayer();
-		Board board = clue.getBoard();
-		
-		//Random target (no rooms possible): 1-step 181 - should randomly pick between 180, 182, 156, 206
-		int counter180 = 0, counter182 =0, counter156 = 0, counter206 = 0, counterOther = 0;
-		for(int i = 1; i < 100; i++) {
-			testSubject.setLocation(7, 6);
-			int target = testSubject.pickTarget(1, board);
-			switch(target){
-			case 180:
-				counter180++;
-				break;
-			case 182:
-				counter182++;
-				break;
-			case 156:
-				counter156++;
-				break;
-			case 206:
-				counter206++;
-				break;
-			default:
-				counterOther++;
-				break;								
-			}
-		}
-		boolean randomness = false;
-		if(counter180 > 10 && counter182 > 10 && counter156 > 10 && counter206 > 10) {
-			randomness = true; //making statisticians cry
-		}	
-		assertEquals(0, counterOther);
-		assertTrue(randomness);
-		
-		//Random target (room was last visited): 1-step 249 - should randomly pick between 248 and 274
-		testSubject.setLastVisited('V'); //Making sure it believes this was the last visited room
-		int counter248 = 0, counter274 = 0;
-		counterOther = 0; //reusing the old counter for the same purpose
-
-		for(int i = 1; i < 100; i++) {
-			testSubject.setLocation(9, 24);
-			int target = testSubject.pickTarget(1, board);
-			switch(target){
-			case 248:
-				counter248++;
-				break;
-			case 274:
-				counter274++;
-				break;
-			default:
-				counterOther++;
-				break;								
-			}
-		}
-		randomness = false;
-		if(counter248 > 20 && counter274 > 20) {
-			randomness = true; //making statisticians cry
-		}
-		assertEquals(0, counterOther);
-		assertTrue(randomness);
-=======
 		p.addCardToHand(miniNukeCard);
 		p.addCardToHand(jupiterCard);
 		assertEquals(null, p.disproveSuggestion(badSuggestion));
@@ -312,7 +207,91 @@ public class GameActionTests {
 		Solution lastPlayersSuggestion = new Solution(androidCard, lightsaberCard, neptuneCard);
 		assertEquals(neptuneCard, clue.handleSuggestion(hal, lastPlayersSuggestion));
 		//number of players searched should be 3
->>>>>>> suggestion
+	}
+
+
+	@Test
+	public void testTargets_RoomPriority() {
+		Board board = clue.getBoard();
+		ComputerPlayer testSubject = new ComputerPlayer();
+		
+		//Target includes a room: 2-step 281 (should pick 279)
+		testSubject.setLocation(11, 6);
+		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
+		int target1 = testSubject.pickTarget(2, board);
+		System.out.println(target1);
+		assertEquals('N', board.getRoomCellAt(target1).getInitial());
+		assertEquals('N',testSubject.getLastVisited()); //tests that lastVisited is set properly
+
+		//Target includes a room that's closer than other targets (target logic terminates properly): 4-step 281 (should be in Neptune)
+		testSubject.setLocation(11, 6);
+		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
+		int target4 = testSubject.pickTarget(4, board);
+		assertEquals('N', board.getRoomCellAt(target4).getInitial());
+		assertEquals('N',testSubject.getLastVisited());
+	}
+	
+	@Test
+	public void testTargets_Randomness() {
+		ComputerPlayer testSubject = new ComputerPlayer();
+		Board board = clue.getBoard();
+		
+		//Random target (no rooms possible): 1-step 181 - should randomly pick between 180, 182, 156, 206
+		int counter180 = 0, counter182 =0, counter156 = 0, counter206 = 0, counterOther = 0;
+		for(int i = 1; i < 100; i++) {
+			testSubject.setLocation(7, 6);
+			int target = testSubject.pickTarget(1, board);
+			switch(target){
+			case 180:
+				counter180++;
+				break;
+			case 182:
+				counter182++;
+				break;
+			case 156:
+				counter156++;
+				break;
+			case 206:
+				counter206++;
+				break;
+			default:
+				counterOther++;
+				break;								
+			}
+		}
+		boolean randomness = false;
+		if(counter180 > 10 && counter182 > 10 && counter156 > 10 && counter206 > 10) {
+			randomness = true; //making statisticians cry
+		}	
+		assertEquals(0, counterOther);
+		assertTrue(randomness);
+		
+		//Random target (room was last visited): 1-step 249 - should randomly pick between 248 and 274
+		testSubject.setLastVisited('V'); //Making sure it believes this was the last visited room
+		int counter248 = 0, counter274 = 0;
+		counterOther = 0; //reusing the old counter for the same purpose
+
+		for(int i = 1; i < 100; i++) {
+			testSubject.setLocation(9, 24);
+			int target = testSubject.pickTarget(1, board);
+			switch(target){
+			case 248:
+				counter248++;
+				break;
+			case 274:
+				counter274++;
+				break;
+			default:
+				counterOther++;
+				break;								
+			}
+		}
+		randomness = false;
+		if(counter248 > 20 && counter274 > 20) {
+			randomness = true; //making statisticians cry
+		}
+		assertEquals(0, counterOther);
+		assertTrue(randomness);
 	}
 	
 	@Test
