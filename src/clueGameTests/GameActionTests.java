@@ -114,7 +114,36 @@ public class GameActionTests {
 		assertEquals(miniNukeCard, p.disproveSuggestion(suggestionGoodWeapon));
 		assertEquals(spaceCadetCard, p.disproveSuggestion(suggestionGoodPlayer));	
 		
-		//Test for one player, multiple possible matches
+		//Test for one player, multiple possible matches	
+		Solution allMatchingSuggestion = new Solution(spaceCadetCard, miniNukeCard, jupiterCard);
+		int personPick = 0;
+		int weaponPick = 0;
+		int roomPick = 0;
+		for(int i = 0; i<100; i++){
+			switch(p.disproveSuggestion(allMatchingSuggestion).getType()){
+			case PERSON:
+				assertEquals(spaceCadetCard, p.disproveSuggestion(allMatchingSuggestion));
+				personPick++;
+				break;
+			case WEAPON:
+				assertEquals(miniNukeCard, p.disproveSuggestion(allMatchingSuggestion));
+				weaponPick++;
+				break;
+			case ROOM:
+				assertEquals(jupiterCard, p.disproveSuggestion(allMatchingSuggestion));
+				roomPick++;
+				break;
+			default:
+				//a catch all in case something goes wrong, should always catch something!
+				assertTrue(false);
+				break;
+			}
+		}
+		
+		// testing to see that each card was picked, that is randomly
+		assertTrue(personPick > 1);
+		assertTrue(weaponPick > 1);
+		assertTrue(roomPick > 1);
 		
 	}
 	
