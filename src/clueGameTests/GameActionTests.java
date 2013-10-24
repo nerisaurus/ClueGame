@@ -118,12 +118,10 @@ public class GameActionTests {
 
 
 	@Test
-	public void testRoomTargetPriority() {
-		assertTrue(false); //TODO:
-		
+	public void testTargets_RoomPriority() {
 		Board board = clue.getBoard();
-
 		Player testSubject = new Player();
+		
 		//Target includes a room: 2-step 281 (should pick 279)
 		testSubject.setLocation(11, 6);
 		testSubject.setLastVisited("Mars"); //just to make sure it knows it is far away
@@ -137,7 +135,13 @@ public class GameActionTests {
 		int target4 = testSubject.pickTarget(4, board);
 		assertEquals('N', board.getRoomCellAt(target4).getInitial());
 		assertEquals("Neptune",testSubject.getLastVisited());
-
+	}
+	
+	@Test
+	public void testTargets_Randomness() {
+		Player testSubject = new Player();
+		Board board = clue.getBoard();
+		
 		//Random target (no rooms possible): 1-step 181 - should randomly pick between 180, 182, 156, 206
 		int counter180 = 0, counter182 =0, counter156 = 0, counter206 = 0, counterOther = 0;
 		for(int i = 1; i < 100; i++) {
@@ -193,7 +197,5 @@ public class GameActionTests {
 		}
 		assertEquals(0, counterOther);
 		assertTrue(randomness);
-	
-
 	}
 }
