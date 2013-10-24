@@ -19,7 +19,7 @@ public class ComputerPlayer extends Player {
 
 	public ComputerPlayer(String name, String color, int startingRowPosition, int startingColumnPosition, LinkedList<Card> deck) {
 		super(name, color, startingRowPosition, startingColumnPosition);
-		unseenCards = deck;
+		unseenCards = (LinkedList<Card>) deck.clone();
 	}
 
 	public ComputerPlayer() {
@@ -60,7 +60,7 @@ public class ComputerPlayer extends Player {
 
 	@Override
 	public void setUnseenCards(LinkedList<Card> cards){
-		unseenCards = cards;
+		unseenCards = (LinkedList<Card>) cards.clone();
 	}
 
 	//pickTarget: takes a number of steps (dice roll) and Board object
