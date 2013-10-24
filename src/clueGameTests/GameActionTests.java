@@ -100,7 +100,8 @@ public class GameActionTests {
 		Card marsCard = new Card("Mars", CardType.ROOM);
 		Card lightsaberCard = new Card("Lightsaber", CardType.WEAPON);
 		Card androidCard = new Card("Android Orange", CardType.PERSON);
-
+		
+		//Test for one player, one correct match
 		Solution badSuggestion = new Solution(androidCard, lightsaberCard, marsCard);
 		Solution suggestionGoodRoom = new Solution(androidCard, lightsaberCard, jupiterCard);
 		Solution suggestionGoodWeapon = new Solution(androidCard, miniNukeCard, marsCard);
@@ -108,10 +109,13 @@ public class GameActionTests {
 		p.addCardToHand(jupiterCard);
 		p.addCardToHand(miniNukeCard);
 		p.addCardToHand(spaceCadetCard);
-		assertEquals(null, p.disporveSuggestion(badSuggestion));
-		assertEquals(marsCard, p.disporveSuggestion(suggestionGoodRoom));
-		assertEquals(lightsaberCard, p.disporveSuggestion(suggestionGoodWeapon));
-		assertEquals(androidCard, p.disporveSuggestion(suggestionGoodPlayer));	
+		assertEquals(null, p.disproveSuggestion(badSuggestion));
+		assertEquals(jupiterCard, p.disproveSuggestion(suggestionGoodRoom));
+		assertEquals(miniNukeCard, p.disproveSuggestion(suggestionGoodWeapon));
+		assertEquals(spaceCadetCard, p.disproveSuggestion(suggestionGoodPlayer));	
+		
+		//Test for one player, multiple possible matches
+		
 	}
 	
 }

@@ -10,7 +10,12 @@ public class HumanPlayer extends Player {
 		super(name, color, startingRowPosition, startingColumnPosition);
 	}
 	
-	public Card disporveSuggestion(Solution suggestion) {
+	public Card disproveSuggestion(Solution suggestion) {
+		for(Card c: suggestion.getCards()){
+			if(getHand().contains(c)) {
+				return c;
+			}
+		}
 		return null;
 	}
 

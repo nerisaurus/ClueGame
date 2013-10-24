@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.util.ArrayList;
+
 public class Solution {
 	private Card person, weapon, room;
 	
@@ -61,5 +63,12 @@ public class Solution {
 			throw new RuntimeException(room + " is not a room.");
 	}
 
+	public ArrayList<Card> getCards() {
+		ArrayList<Card> soln = new ArrayList<Card>();
+		soln.add(person);
+		soln.add(room);
+		soln.add(weapon);
+		return soln;
+	}
 	
 }
