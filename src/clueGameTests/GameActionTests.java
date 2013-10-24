@@ -201,4 +201,100 @@ public class GameActionTests {
 		assertEquals(0, counterOther);
 		assertTrue(randomness);
 	}
+	
+	@Test
+	public void testMakingSuggestions() {
+		assertTrue(false); //TODO:
+		
+		//Setup
+		Player detective = new Player();
+		
+		//Player is put in a room:
+		Card roomCard = new Card("Jupiter", CardType.ROOM);
+		
+		//Player sees some weapons:
+		//addCardToHand(Card c) should call seesCard(Card c).  Thus, if the weapon
+		//suggested is wrong, we might suspect that addCardToHand is not working properly
+		detective.addCardToHand(new Card("Mini-Nuke", CardType.WEAPON));
+		detective.addCardToHand(new Card("M41A Pulse Rifle", CardType.WEAPON));
+		detective.addCardToHand(new Card("Android Orange", CardType.WEAPON));
+		detective.addCardToHand(new Card("Thermal Detonator", CardType.WEAPON));
+		detective.addCardToHand(new Card("Phaser", CardType.WEAPON));
+		//Player sees some people
+		detective.seesCard(new Card("Cosmonaut Crimson", CardType.PERSON));
+		detective.seesCard(new Card("Space Cadet Grey", CardType.PERSON));
+		detective.seesCard(new Card("Captain Fuschia", CardType.PERSON));
+		detective.seesCard(new Card("Asteroid Miner Magenta", CardType.PERSON));
+		detective.seesCard(new Card("Android Orange", CardType.PERSON));
+		
+		//The only rational suggestion is thus "Galactic Senator Cyan on Jupiter with the Lightsaber"
+		Solution test_1 = detective.makeSuggestion(roomCard);
+		assertEquals("Galactic Senator Cyan", test_1.getPerson().getName());
+		assertEquals("Jupiter", test_1.getRoom().getName());
+		assertEquals("Lightsaber", test_1.getWeapon().getName());
+	}
+
+	@Test
+	public void testMakingSuggestions_Randomness() {
+		assertTrue(false); //TODO:
+	
+		//Setup:
+		Player detective = new Player();
+		
+		//Test randomness of suggestions: Multiple weapons and people are unseen
+		//(specifically, the suspect can be either Space Cadet Grey or Cosmonaut Crimson
+		// and the weapon could be either the Phaser or the Mini-Nuke)
+
+		//Player is put in a room:
+		Card roomCard = new Card("Jupiter", CardType.ROOM);
+
+		//Player sees some weapons:
+		detective.addCardToHand(new Card("Lightsaber", CardType.WEAPON));
+		detective.addCardToHand(new Card("M41A Pulse Rifle", CardType.WEAPON));
+		detective.addCardToHand(new Card("Android Orange", CardType.WEAPON));
+		detective.addCardToHand(new Card("Thermal Detonator", CardType.WEAPON));
+		//Player sees some people
+		detective.seesCard(new Card("Galactic Senator Cyan", CardType.PERSON));
+		detective.seesCard(new Card("Captain Fuschia", CardType.PERSON));
+		detective.seesCard(new Card("Asteroid Miner Magenta", CardType.PERSON));
+		detective.seesCard(new Card("Android Orange", CardType.PERSON));
+		
+		//Now we check for randomness
+		int counterCrimson = 0, counterGrey = 0, counterOtherPerson = 0;
+		int counterPhaser = 0, counterNuke = 0, counterOtherWeapon = 0;
+		
+		for(int i = 1; i < 100; i++) {
+			Solution test_2 = detective.makeSuggestion(roomCard);
+			switch(test_2.getPerson().getName()){
+			case "Cosmonaut Crimson":
+				counterCrimson++;
+				break;
+			case "Space Cadet Grey":
+				counterGrey++;
+				break;
+			default:
+				counterOtherPerson++;
+				break;								
+			}
+			
+			switch(test_2.getWeapon().getName()){
+			case "Phaser":
+				counterPhaser++;
+				break;
+			case "Mini-Nuke":
+				counterNuke++;
+				break;
+			default:
+				counterOtherWeapon++;
+				break;								
+			}
+		}
+		boolean randomness = false;
+		if(counterCrimson > 20 && counterGrey > 20 && counterPhaser > 20 && counterNuke > 20) {
+			randomness = true; //making statisticians cry
+		}
+		assertEquals(0, counterOtherWeapon);
+		assertEquals(0, counterOtherPerson);
+		assertTrue(randomness);	
+	}
 }

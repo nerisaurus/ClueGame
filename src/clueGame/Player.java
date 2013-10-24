@@ -115,4 +115,14 @@ public class Player {
 		
 		return potentialTargetLocations.get(pick);
 	}
+
+	public void seesCard(Card card) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Solution makeSuggestion(Card roomCard) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
