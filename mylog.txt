@@ -1,0 +1,61 @@
+* Fixed silly console printing error.
+* Cleaned up test (using assertTrue/assertFalse rather than assertEquals(true... etc.
+* testAccusations now passes (although I had to fix a misplaced index in the process)
+* testAccusation() failing test implemented.  Also, fixed spelling of Venus in rooms file.
+* Made solution into a Solution.  Added Solution class logic as needed.
+* Changed test logic to avoid emptying deck prematurely.  All tests pass.
+* Changed player names (and adjusted tests to match).
+* Removed players.csv to use just one file for players as cards and as actual players.  Also, logfile might still be causing issues...
+*   Merge branch 'master' of https://github.com/nwunder/ClueGame
+|\  
+| * fixed index error in buildSolutions
+* |   Merge branch 'master' of https://github.com/nwunder/ClueGame
+|\ \  
+| |/  
+| * passing test build solution
+* |   Just getting git to cooperate
+|\ \  
+| |/  
+| * working on solution
+| * failing test to see if there is a good solution
+| * passing allCardsAreDealt test. well commented method too :-P
+| * failing test written to make sure all cards have been dealt.
+| * change deck to a LinkedList to check that specific contents are read from file.
+| * passing setup deck test
+| * card csvs. the person card list is generic. needs a touch of creativity
+| * Two thing here: 1-creating human/computer players and 2-failing test for the deck of cards.
+| * refactored to use java Color lib
+| * passing load players test
+| * failing test for loading players.csv
+| * created a generic players.csv. needs a creative overhaul
+| * Start positions identified. Each player is at least a D6 away from entering a room.
+| * GameSetupTests beforeClass setup done
+* | Nothing to commit here.
+|/  
+* class stubs
+* cleaning up the clueGame package, removing unused libs, cleaning up var names
+* removed warning from board tests. renamed cludBoardTests package to lowercase c.
+* trying to ignore ubuntu temp files
+* removing ubuntu temp files
+* trying to ignore ubuntu temp files
+* all tests green
+* cleaning up target tests. mostly there
+* Working on buggy target logic
+* Overhauled calcAdjacencies logic.
+* Improved walkway detection logic.
+* all CR tests pass after some refactoring
+* replaced all test files and board files with our own
+* filled in idea
+* second attempt
+* No need to clutter code with a lot of repeated calls to calcIndex.  Made a cell variable to keep track of the current cell we're looking at - since we call it so often.  It might be worth it to make 'up', 'down', 'left','right' as well, if they are used so prolifically
+* sample fix for calculateAdjacencies
+* ignoring log.txt
+* Fixed call to nonexistant legend file.  Now only one test fails, and it fails due to a failure rather than due to crashing.
+* Many renamed variables and functions (to make tests and actual code match and to clear up ambiguities).  Removed calcTargets(row,col,steps) and made setupTargets into startTargets(row,col,steps).
+* renamed clueBoard package to clueGame packed per CR tests.
+* replaced CR tests. removed mac token files...need to update .gitignore file
+* removed duplicate test files
+* git repo is now an eclipse project
+* refactored loadBoardConfig
+* Added missing files
+* Initial Commit
