@@ -14,6 +14,7 @@ import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ClueGame;
+import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
 import static org.junit.Assert.*;
@@ -88,7 +89,8 @@ public class GameActionTests {
 	 */
 	
 	@Test
-	public void disprovingASuggestion() {
+	public void disprovingASuggestion() {	
+		HumanPlayer p = new HumanPlayer();
 		//cards for the player
 		Card jupiterCard = new Card("Jupiter", CardType.ROOM);
 		Card miniNukeCard = new Card("Mini-Nuke", CardType.WEAPON);
@@ -102,17 +104,14 @@ public class GameActionTests {
 		Solution badSuggestion = new Solution(androidCard, lightsaberCard, marsCard);
 		Solution suggestionGoodRoom = new Solution(androidCard, lightsaberCard, jupiterCard);
 		Solution suggestionGoodWeapon = new Solution(androidCard, miniNukeCard, marsCard);
-		Solution suggestionGoodPlayer = new Solution(spaceCadetCard, lightsaberCard, marsCard);
-		
-		Player p = new Player();
+		Solution suggestionGoodPlayer = new Solution(spaceCadetCard, lightsaberCard, marsCard);	
 		p.addCardToHand(jupiterCard);
 		p.addCardToHand(miniNukeCard);
 		p.addCardToHand(spaceCadetCard);
-
 		assertEquals(null, p.disporveSuggestion(badSuggestion));
 		assertEquals(marsCard, p.disporveSuggestion(suggestionGoodRoom));
 		assertEquals(lightsaberCard, p.disporveSuggestion(suggestionGoodWeapon));
-		assertEquals(androidCard, p.disporveSuggestion(suggestionGoodPlayer));		
+		assertEquals(androidCard, p.disporveSuggestion(suggestionGoodPlayer));	
 	}
 	
 }

@@ -45,10 +45,6 @@ public class Player {
 		return color;
 	}
 	
-	public Card disporveSuggestion(Solution suggestion) {
-		return null;
-	}
-	
 	public void addCardToHand(Card c) {
 		hand.add(c);
 	}
