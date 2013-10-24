@@ -58,8 +58,8 @@ public class ClueGame {
 	
 	public void loadConfigFiles() {
 		try {
-			loadPlayers();
 			loadDeck();
+			loadPlayers();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -115,7 +115,7 @@ public class ClueGame {
 			}
 			else{
 				ComputerPlayer player = new ComputerPlayer(name, color, 
-						startingRowPosition, startingColumnPosition);
+						startingRowPosition, startingColumnPosition, deck);
 				players.get("Computer").add(player);
 			}
 			row++;

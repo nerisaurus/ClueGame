@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.text.Format.Field;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
@@ -117,12 +118,14 @@ public class Player {
 	}
 
 	public void seesCard(Card card) {
-		// TODO Auto-generated method stub
-		
+		return; //Overridden by ComputerPlayer
+	}
+	
+	public void setUnseenCards(LinkedList<Card> cards){
+		return; //Overridden by ComputerPlayer
 	}
 
 	public Solution makeSuggestion(Card roomCard) {
-		// TODO Auto-generated method stub
-		return null;
+		return null; //Overridden by both HumanPlayer and ComputerPlayer
 	}
 }

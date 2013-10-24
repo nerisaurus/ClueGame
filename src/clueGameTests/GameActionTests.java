@@ -2,6 +2,7 @@ package clueGameTests;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -204,10 +205,11 @@ public class GameActionTests {
 	
 	@Test
 	public void testMakingSuggestions() {
-		assertTrue(false); //TODO:
-		
 		//Setup
 		Player detective = new Player();
+		
+		clue.loadConfigFiles(); //to make the game refresh its deck of cards
+		detective.setUnseenCards(clue.getDeck());
 		
 		//Player is put in a room:
 		Card roomCard = new Card("Jupiter", CardType.ROOM);
@@ -236,10 +238,12 @@ public class GameActionTests {
 
 	@Test
 	public void testMakingSuggestions_Randomness() {
-		assertTrue(false); //TODO:
-	
 		//Setup:
 		Player detective = new Player();
+		
+		clue.loadConfigFiles(); //to make the game refresh its deck of cards
+		detective.setUnseenCards(clue.getDeck());
+		
 		
 		//Test randomness of suggestions: Multiple weapons and people are unseen
 		//(specifically, the suspect can be either Space Cadet Grey or Cosmonaut Crimson
