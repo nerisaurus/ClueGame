@@ -178,6 +178,7 @@ public class GameActionTests {
 		marvin.addCardToHand(protonCard);
 		marvin.addCardToHand(saturnCard);
 		
+		clue.setPlayers();
 		clue.addPlayer("Human", human);
 		clue.addPlayer("Computer", hal);
 		clue.addPlayer("Computer", skynet);

@@ -42,11 +42,7 @@ public class ClueGame {
 		// Added a getAllPlayers() method to make it a little easer
 		// to, well, get all of the players whether or not they 
 		// are human or computer.
-		this.players = new HashMap<String, LinkedList<Player>>();
-		LinkedList<Player> emptyHumanList = new LinkedList<Player>();
-		this.players.put("Human", emptyHumanList);
-		LinkedList<Player> emptyComputerList = new LinkedList<Player>();
-		this.players.put("Computer", emptyComputerList);
+		setPlayers();
 		
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
@@ -97,6 +93,12 @@ public class ClueGame {
 	}
 	
 	public Card handleSuggestion(Player accusingPlayer, Solution suggestion) {
+		for(Player p: getPlayersSansCurrent(accusingPlayer)) {
+			Card c = p.disproveSuggestion(suggestion);
+			if(c != null)
+				return c;
+		}
+		
 		return null;
 	}
 	
@@ -196,6 +198,20 @@ public class ClueGame {
 		}
 		return allPlayers;		
 	}
+	
+	public LinkedList<Player> getPlayersSansCurrent(Player current) {	
+		LinkedList<Player> allPlayers = getAllPlayers();
+		LinkedList<Player> otherPlayers = new LinkedList<Player>();
+		//load bottom
+		for(int i = allPlayers.indexOf(current)+1; i<allPlayers.size(); i++){
+			otherPlayers.add(allPlayers.get(i));
+		}
+		//load top
+		for(int i = 0; i<allPlayers.indexOf(current); i++){
+			otherPlayers.add(allPlayers.get(i));
+		}
+		return otherPlayers;		
+	}
 
 	public boolean checkAccusation(Solution accusation) {
 		if(solution.equals(accusation))
@@ -206,6 +222,14 @@ public class ClueGame {
 	
 	// Used in testing only.
 	public void addPlayer(String playerType, Player player) {
-		
+		this.players.get(playerType).add(player);
+	}
+	
+	public void setPlayers() {
+		this.players = new HashMap<String, LinkedList<Player>>();
+		LinkedList<Player> emptyHumanList = new LinkedList<Player>();
+		this.players.put("Human", emptyHumanList);
+		LinkedList<Player> emptyComputerList = new LinkedList<Player>();
+		this.players.put("Computer", emptyComputerList);
 	}
 }
