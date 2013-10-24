@@ -21,7 +21,8 @@ public class Player {
 	private ArrayList<Card> hand;
 	
 	public Player() {
-		super();
+		super();	
+		this.hand = new ArrayList<Card>();
 	}
 	
 	public Player(String name, String color, int startingRowPosition, int startingColumnPosition) {
