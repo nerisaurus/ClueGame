@@ -8,6 +8,10 @@ package clueGame;
  * Test Selecting a Target Location section.
  */
 public class ComputerPlayer extends Player {
+	
+	public ComputerPlayer(){
+		super();
+	}
 
 	public ComputerPlayer(String name, String color, int startingRowPosition, int startingColumnPosition) {
 		super(name, color, startingRowPosition, startingColumnPosition);

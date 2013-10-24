@@ -96,6 +96,10 @@ public class ClueGame {
 		}while(deck.size() > 1);
 	}
 	
+	public Card handleSuggestion(Player accusingPlayer, Solution suggestion) {
+		return null;
+	}
+	
 	// HELPERS ****************************************************************
 	public void loadPlayers() throws FileNotFoundException {
 		FileReader file = new FileReader(peopleCardsFile);
@@ -198,5 +202,10 @@ public class ClueGame {
 			return true;
 		else
 			return false;
+	}
+	
+	// Used in testing only.
+	public void addPlayer(String playerType, Player player) {
+		
 	}
 }

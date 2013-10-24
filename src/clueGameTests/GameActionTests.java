@@ -14,6 +14,7 @@ import clueGame.Board;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ClueGame;
+import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
 import clueGame.Player;
 import clueGame.Solution;
@@ -89,17 +90,29 @@ public class GameActionTests {
 	 */
 	
 	@Test
-	public void disprovingASuggestion() {	
-		Player p = new Player();
+	public void disprovingASuggestion() {
 		//cards for the player
 		Card jupiterCard = new Card("Jupiter", CardType.ROOM);
 		Card miniNukeCard = new Card("Mini-Nuke", CardType.WEAPON);
 		Card spaceCadetCard = new Card("Space Cadet Grey", CardType.PERSON);		
+
+		//three more sets of cards for testing
+		Card asteroidCard = new Card("Asteroid Miner Magenta", CardType.PERSON);
+		Card cosmonautCard = new Card("Cosmonaut Crimson", CardType.PERSON);
+		Card senatorCard = new Card("Galactic Senator Cyan", CardType.PERSON);
+		Card phaserCard = new Card("Phaser", CardType.WEAPON);
+		Card rifleCard = new Card("M41A Pulse Rifle", CardType.WEAPON);
+		Card protonCard = new Card("Proton Pack", CardType.WEAPON);
+		Card neptuneCard = new Card("Neptune", CardType.ROOM);
+		Card earthCard = new Card("Earth", CardType.ROOM);
+		Card saturnCard = new Card("Saturn", CardType.ROOM);
 		
 		//cards to test suggestion
 		Card marsCard = new Card("Mars", CardType.ROOM);
 		Card lightsaberCard = new Card("Lightsaber", CardType.WEAPON);
-		Card androidCard = new Card("Android Orange", CardType.PERSON);
+		Card androidCard = new Card("Android Orange", CardType.PERSON);		
+		
+		Player p = new Player();
 		
 		//Test for one player, one correct match
 		Solution badSuggestion = new Solution(androidCard, lightsaberCard, marsCard);
@@ -145,10 +158,52 @@ public class GameActionTests {
 		assertTrue(personPick > 1);
 		assertTrue(weaponPick > 1);
 		assertTrue(roomPick > 1);
-		
+				
 		//Test that all players are queried
-		//we need some computer players here
+		//we need some computer players, and a human player
+		HumanPlayer human = new HumanPlayer();
+		human.addCardToHand(asteroidCard);
+		human.addCardToHand(phaserCard);
+		human.addCardToHand(neptuneCard);
+		ComputerPlayer hal = new ComputerPlayer();
+		hal.addCardToHand(cosmonautCard);
+		hal.addCardToHand(rifleCard);
+		hal.addCardToHand(earthCard);
+		ComputerPlayer skynet = new ComputerPlayer();
+		skynet.addCardToHand(spaceCadetCard);
+		skynet.addCardToHand(miniNukeCard);
+		skynet.addCardToHand(jupiterCard);
+		ComputerPlayer marvin = new ComputerPlayer();
+		marvin.addCardToHand(senatorCard);
+		marvin.addCardToHand(protonCard);
+		marvin.addCardToHand(saturnCard);
 		
+		clue.addPlayer("Human", human);
+		clue.addPlayer("Computer", hal);
+		clue.addPlayer("Computer", skynet);
+		clue.addPlayer("Computer", marvin);
+		
+		//made a suggestion which no players could disprove, and ensured that null was returned
+		//Solution badSuggestion = new Solution(androidCard, lightsaberCard, marsCard);
+		assertEquals(null, clue.handleSuggestion(human, badSuggestion));
+		assertEquals(null, clue.handleSuggestion(skynet, badSuggestion));
+		//made a suggestion that only the human could disprove, 
+		//and ensured that the correct Card was returned.
+		Solution onlyHumanSuggestion = new Solution(asteroidCard, lightsaberCard, marsCard);
+		assertEquals(asteroidCard, clue.handleSuggestion(marvin, onlyHumanSuggestion));
+		assertEquals(asteroidCard, clue.handleSuggestion(skynet, onlyHumanSuggestion));
+		
+		//by changing the starting player here and letting the chosen card always come from
+		//the same person (in this case human) shoud insure that we go though all palyers.
+		//current player suggests card in the next player's hand only
+		Solution nextPlayersSuggestion = new Solution(androidCard, lightsaberCard, neptuneCard);
+		assertEquals(neptuneCard, clue.handleSuggestion(marvin, nextPlayersSuggestion));
+		//number of players searched should be 1
+		
+		//current player suggests card in the last player's hand only
+		Solution lastPlayersSuggestion = new Solution(androidCard, lightsaberCard, neptuneCard);
+		assertEquals(neptuneCard, clue.handleSuggestion(hal, lastPlayersSuggestion));
+		//number of players searched should be 3
 	}
 	
 }
