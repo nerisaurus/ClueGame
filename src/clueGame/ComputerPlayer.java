@@ -14,15 +14,8 @@ import java.util.Set;
  * Test Selecting a Target Location section.
  */
 public class ComputerPlayer extends Player {
-<<<<<<< HEAD
 	LinkedList<Card> unseenCards;
 	private char lastVisited;
-=======
-	
-	public ComputerPlayer(){
-		super();
-	}
->>>>>>> suggestion
 
 	public ComputerPlayer(String name, String color, int startingRowPosition, int startingColumnPosition, LinkedList<Card> deck) {
 		super(name, color, startingRowPosition, startingColumnPosition);
