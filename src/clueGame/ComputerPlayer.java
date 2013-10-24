@@ -31,10 +31,6 @@ public class ComputerPlayer extends Player {
 	public void seesCard(Card card) {
 		unseenCards.remove(card);
 	}
-	
-	public LinkedList<Card> getUnseenCards(){
-		return unseenCards;
-	}
 
 	@Override
 	public Solution makeSuggestion(Card roomCard) {
