@@ -174,6 +174,10 @@ public class ClueGame {
 		return deck;
 	}
 	
+	public Board getBoard() {
+		return board;
+	}
+	
 	public Solution getSolution() {
 		return solution;
 	}

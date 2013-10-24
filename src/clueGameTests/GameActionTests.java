@@ -34,14 +34,14 @@ public class GameActionTests {
 	//room_cards.csv format:
 	//	
 	public static final String ROOM_CARDS = "room_cards.csv";
-	
+
 	@Before
 	public void setUp() {
 		clue = new ClueGame(LEGEND, BOARD,  
-							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
+				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.loadConfigFiles();
 	}
-	
+
 	@Test
 	public void testAccusation() {
 		//We first set a Solution
@@ -86,14 +86,14 @@ public class GameActionTests {
 (10) Git log that clearly shows failing/passing process was followed. 
 	Include the name of your repository.
 	 */
-	
+
 	@Test
 	public void disprovingASuggestion() {
 		//cards for the player
 		Card jupiterCard = new Card("Jupiter", CardType.ROOM);
 		Card miniNukeCard = new Card("Mini-Nuke", CardType.WEAPON);
 		Card spaceCadetCard = new Card("Space Cadet Grey", CardType.PERSON);		
-		
+
 		//cards to test suggestion
 		Card marsCard = new Card("Mars", CardType.ROOM);
 		Card lightsaberCard = new Card("Lightsaber", CardType.WEAPON);
@@ -103,17 +103,97 @@ public class GameActionTests {
 		Solution suggestionGoodRoom = new Solution(jupiterCard, lightsaberCard, androidCard);
 		Solution suggestionGoodWeapon = new Solution(marsCard, miniNukeCard, androidCard);
 		Solution suggestionGoodPlayer = new Solution(marsCard, lightsaberCard, spaceCadetCard);
-		
+
 		Player p = new Player();
 		p.addCardToHand(jupiterCard);
 		p.addCardToHand(miniNukeCard);
 		p.addCardToHand(spaceCadetCard);
 
-		assertEquals(null, p.disporveSuggestion(badSuggestion));
-		assertEquals(marsCard, p.disporveSuggestion(suggestionGoodRoom));
-		assertEquals(lightsaberCard, p.disporveSuggestion(suggestionGoodWeapon));
-		assertEquals(androidCard, p.disporveSuggestion(suggestionGoodPlayer));
-		
+		assertEquals(null, p.disproveSuggestion(badSuggestion));
+		assertEquals(marsCard, p.disproveSuggestion(suggestionGoodRoom));
+		assertEquals(lightsaberCard, p.disproveSuggestion(suggestionGoodWeapon));
+		assertEquals(androidCard, p.disproveSuggestion(suggestionGoodPlayer));
+
 	}
+
+
+	@Test
+	public void testRoomTargetPriority() {
+		assertTrue(false); //TODO:
+		
+		Board board = clue.getBoard();
+
+		Player testSubject = new Player();
+		//Target includes a room: 2-step 281 (should pick 279)
+		testSubject.setLocation(11, 6);
+		testSubject.setLastVisited("Mars"); //just to make sure it knows it is far away
+		int target1 = testSubject.pickTarget(1, board);
+		assertEquals('N', board.getRoomCellAt(target1).getInitial());
+		assertEquals("Neptune",testSubject.getLastVisited()); //tests that lastVisited is set properly
+
+		//Target includes a room that's closer than other targets (target logic terminates properly): 4-step 281 (should be in Neptune)
+		testSubject.setLocation(11, 6);
+		testSubject.setLastVisited("Mars"); //just to make sure it knows it is far away
+		int target4 = testSubject.pickTarget(4, board);
+		assertEquals('N', board.getRoomCellAt(target4).getInitial());
+		assertEquals("Neptune",testSubject.getLastVisited());
+
+		//Random target (no rooms possible): 1-step 181 - should randomly pick between 180, 182, 156, 206
+		int counter180 = 0, counter182 =0, counter156 = 0, counter206 = 0, counterOther = 0;
+		for(int i = 1; i < 100; i++) {
+			testSubject.setLocation(7, 6);
+			int target = testSubject.pickTarget(1, board);
+			switch(target){
+			case 180:
+				counter180++;
+				break;
+			case 182:
+				counter182++;
+				break;
+			case 156:
+				counter156++;
+				break;
+			case 206:
+				counter206++;
+				break;
+			default:
+				counterOther++;
+				break;								
+			}
+		}
+		boolean randomness = false;
+		if(counter180 > 10 && counter182 > 10 && counter156 > 10 && counter206 > 10) {
+			randomness = true; //making statisticians cry
+		}	
+		assertEquals(0, counterOther);
+		assertTrue(randomness);
+		
+		//Random target (room was last visited): 1-step 249 - should randomly pick between 248 and 274
+		int counter248 = 0, counter274 = 0;
+		counterOther = 0; //reusing the old counter for the same purpose
+
+		for(int i = 1; i < 100; i++) {
+			testSubject.setLocation(9, 24);
+			int target = testSubject.pickTarget(1, board);
+			switch(target){
+			case 248:
+				counter248++;
+				break;
+			case 274:
+				counter274++;
+				break;
+			default:
+				counterOther++;
+				break;								
+			}
+		}
+		randomness = false;
+		if(counter248 > 20 && counter274 > 20) {
+			randomness = true; //making statisticians cry
+		}
+		assertEquals(0, counterOther);
+		assertTrue(randomness);
 	
+
+	}
 }

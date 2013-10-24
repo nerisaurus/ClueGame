@@ -19,6 +19,7 @@ public class Player {
 	private int startingRow;
 	private int startingColumn;	
 	private ArrayList<Card> hand;
+	private String lastVisited;
 	
 	public Player() {
 		super();
@@ -44,7 +45,7 @@ public class Player {
 		return color;
 	}
 	
-	public Card disporveSuggestion(Solution suggestion) {
+	public Card disproveSuggestion(Solution suggestion) {
 		return null;
 	}
 	
@@ -70,5 +71,26 @@ public class Player {
 	
 	public ArrayList<Card> getHand() {
 		return hand;
+	}
+	
+	public String getLastVisited(){
+		return lastVisited;
+	}
+	
+	public void setLocation(int startingRow, int startingColumn) {
+		this.startingRow = startingRow;
+		this.startingColumn = startingColumn;
+	}
+
+	public void setLastVisited(String room) {
+		lastVisited = room;	
+	}
+
+	//pickTarget: takes a number of steps (dice roll) and Board object
+	//(the surrounding board) and returns the index of the square it
+	//(semi-randomly) chooses to move to
+	public int pickTarget(int steps, Board board) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
