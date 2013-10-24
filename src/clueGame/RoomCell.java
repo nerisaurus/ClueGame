@@ -40,7 +40,7 @@ public class RoomCell extends BoardCell {
 			this.doorDirection = DoorDirection.NONE;
 	}
 	
-	public Object getInitial() {
+	public char getInitial() {
 		return roomInitial;
 	}
 	

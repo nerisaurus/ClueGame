@@ -124,17 +124,17 @@ public class GameActionTests {
 		
 		//Target includes a room: 2-step 281 (should pick 279)
 		testSubject.setLocation(11, 6);
-		testSubject.setLastVisited("Mars"); //just to make sure it knows it is far away
+		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
 		int target1 = testSubject.pickTarget(1, board);
 		assertEquals('N', board.getRoomCellAt(target1).getInitial());
-		assertEquals("Neptune",testSubject.getLastVisited()); //tests that lastVisited is set properly
+		assertEquals('N',testSubject.getLastVisited()); //tests that lastVisited is set properly
 
 		//Target includes a room that's closer than other targets (target logic terminates properly): 4-step 281 (should be in Neptune)
 		testSubject.setLocation(11, 6);
-		testSubject.setLastVisited("Mars"); //just to make sure it knows it is far away
+		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
 		int target4 = testSubject.pickTarget(4, board);
 		assertEquals('N', board.getRoomCellAt(target4).getInitial());
-		assertEquals("Neptune",testSubject.getLastVisited());
+		assertEquals('N',testSubject.getLastVisited());
 	}
 	
 	@Test
@@ -173,6 +173,7 @@ public class GameActionTests {
 		assertTrue(randomness);
 		
 		//Random target (room was last visited): 1-step 249 - should randomly pick between 248 and 274
+		testSubject.setLastVisited('V'); //Making sure it believes this was the last visited room
 		int counter248 = 0, counter274 = 0;
 		counterOther = 0; //reusing the old counter for the same purpose
 

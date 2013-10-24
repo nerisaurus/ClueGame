@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.text.Format.Field;
 import java.util.ArrayList;
+import java.util.Set;
 
 /*
  * The Player class is the super class for the two 
@@ -19,7 +20,7 @@ public class Player {
 	private int startingRow;
 	private int startingColumn;	
 	private ArrayList<Card> hand;
-	private String lastVisited;
+	private char lastVisited;
 	
 	public Player() {
 		super();
@@ -73,7 +74,7 @@ public class Player {
 		return hand;
 	}
 	
-	public String getLastVisited(){
+	public char getLastVisited(){
 		return lastVisited;
 	}
 	
@@ -82,7 +83,7 @@ public class Player {
 		this.startingColumn = startingColumn;
 	}
 
-	public void setLastVisited(String room) {
+	public void setLastVisited(char room) {
 		lastVisited = room;	
 	}
 
@@ -90,6 +91,19 @@ public class Player {
 	//(the surrounding board) and returns the index of the square it
 	//(semi-randomly) chooses to move to
 	public int pickTarget(int steps, Board board) {
+		Set<BoardCell> potentialTargets;
+		
+		board.startTargets(startingRow, startingColumn, steps);
+		potentialTargets = board.getTargets();
+		
+		for(BoardCell target : potentialTargets) {
+			if(target.isRoom()){
+				RoomCell roomTarget = (RoomCell) target;
+				if(roomTarget.getInitial() == lastVisited){
+					
+				}
+			}
+		}
 		// TODO Auto-generated method stub
 		return 0;
 	}
