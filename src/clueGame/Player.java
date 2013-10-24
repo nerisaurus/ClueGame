@@ -49,16 +49,12 @@ public class Player {
 	}
 	
 	public Card disproveSuggestion(Solution suggestion) {
-<<<<<<< HEAD
-		return null;
-=======
 		ArrayList<Card> matches = new ArrayList<Card>();
 		for(Card c: suggestion.getCards()){
 			if(getHand().contains(c)) {
 				matches.add(c);
 			}
 		}
-		//System.out.println(matches);
 		if(matches.size() == 1)
 			return matches.get(0);
 		else if(matches.size() > 1){
@@ -67,7 +63,6 @@ public class Player {
 		}
 		else
 			return null;
->>>>>>> suggestion
 	}
 	
 	public void addCardToHand(Card c) {
