@@ -103,6 +103,7 @@ public class Player {
 			if(target.isRoom()){
 				RoomCell roomTarget = (RoomCell) target;
 				if(roomTarget.getInitial() != lastVisited) {
+					lastVisited = roomTarget.getInitial();
 					return board.calcIndex(roomTarget.getRow(), roomTarget.getCol());
 				}
 			}

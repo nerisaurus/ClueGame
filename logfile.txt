@@ -678,3 +678,27 @@ Line 22 of the file: BAD_COLUMN_board.csv does not have the same dimensions as p
 Cannot process line 9 of BAD_legend.csv - too many or too few entries
 [Wed Oct 23 20:20:55 MDT 2013] ERROR: BadConfigFormatException
 Cannot process line 9 of BAD_legend.csv - too many or too few entries
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+Line 1 of the file: ClueLayoutBadColumns.csv does not have the same dimensions as previous lines.
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+Line 1 of the file: ClueLayoutBadColumns.csv does not have the same dimensions as previous lines.
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+'Z' is not a recognized room. Error in: ClueLayoutBadRoom.csv
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+'Z' is not a recognized room. Error in: ClueLayoutBadRoom.csv
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of ClueLegendBadFormat.txt - too many or too few entries
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 1 of ClueLegendBadFormat.txt - too many or too few entries
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+Line 22 of the file: BAD_COLUMN_board.csv does not have the same dimensions as previous lines.
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+Line 22 of the file: BAD_COLUMN_board.csv does not have the same dimensions as previous lines.
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+'T' is not a recognized room. Error in: BAD_ROOM_board.csv
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+'T' is not a recognized room. Error in: BAD_ROOM_board.csv
+[Wed Oct 23 20:25:58 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 9 of BAD_legend.csv - too many or too few entries
+[Wed Oct 23 20:25:59 MDT 2013] ERROR: BadConfigFormatException
+Cannot process line 9 of BAD_legend.csv - too many or too few entries
