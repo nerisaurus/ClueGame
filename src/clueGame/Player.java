@@ -45,6 +45,24 @@ public class Player {
 		return color;
 	}
 	
+	public Card disproveSuggestion(Solution suggestion) {
+		ArrayList<Card> matches = new ArrayList<Card>();
+		for(Card c: suggestion.getCards()){
+			if(getHand().contains(c)) {
+				matches.add(c);
+			}
+		}
+		//System.out.println(matches);
+		if(matches.size() == 1)
+			return matches.get(0);
+		else if(matches.size() > 1){
+			int index = (int) (0 + (Math.random() * (matches.size())));
+			return matches.get(index);
+		}
+		else
+			return null;
+	}
+	
 	public void addCardToHand(Card c) {
 		hand.add(c);
 	}

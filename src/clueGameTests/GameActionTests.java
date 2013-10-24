@@ -90,7 +90,7 @@ public class GameActionTests {
 	
 	@Test
 	public void disprovingASuggestion() {	
-		HumanPlayer p = new HumanPlayer();
+		Player p = new Player();
 		//cards for the player
 		Card jupiterCard = new Card("Jupiter", CardType.ROOM);
 		Card miniNukeCard = new Card("Mini-Nuke", CardType.WEAPON);
@@ -115,37 +115,39 @@ public class GameActionTests {
 		assertEquals(spaceCadetCard, p.disproveSuggestion(suggestionGoodPlayer));	
 		
 		//Test for one player, multiple possible matches
-		System.out.println("START");
 		Solution allMatchingSuggestion = new Solution(spaceCadetCard, miniNukeCard, jupiterCard);
+		//these guys will keep track of how many time a card is picked from
+		// the player's hand and returned.
 		int personPick = 0;
 		int weaponPick = 0;
 		int roomPick = 0;
+		//loop to test randomness
 		for(int i = 0; i<100; i++){
 			Card pick = p.disproveSuggestion(allMatchingSuggestion);
 			if(pick.equals(spaceCadetCard)) {
-				assertEquals(spaceCadetCard, pick);
+				assertEquals(spaceCadetCard, pick); //just to make sure
 				personPick++;
 			}
 			else if(pick.equals(miniNukeCard)) {
-				assertEquals(miniNukeCard, pick);
+				assertEquals(miniNukeCard, pick); //just to make sure
 				weaponPick++;
 			}
 			else if(pick.equals(jupiterCard)) {
-				assertEquals(jupiterCard, pick);
+				assertEquals(jupiterCard, pick); //just to make sure
 				roomPick++;
 			}
 			else
 				//a catch all in case something goes wrong, should always catch something!
 				assertTrue(false);
 		}
-
-		System.out.println(personPick);
-		System.out.println(weaponPick);
-		System.out.println(roomPick);
+		
 		// testing to see that each card was picked, that is randomly
 		assertTrue(personPick > 1);
 		assertTrue(weaponPick > 1);
 		assertTrue(roomPick > 1);
+		
+		//Test that all players are queried
+		//we need some computer players here
 		
 	}
 	
