@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.text.Format.Field;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Set;
 
 /*
@@ -91,7 +92,9 @@ public class Player {
 	//(the surrounding board) and returns the index of the square it
 	//(semi-randomly) chooses to move to
 	public int pickTarget(int steps, Board board) {
+		Random random = new Random();
 		Set<BoardCell> potentialTargets;
+		ArrayList<Integer> potentialTargetLocations = new ArrayList<Integer>();
 		
 		board.startTargets(startingRow, startingColumn, steps);
 		potentialTargets = board.getTargets();
@@ -99,12 +102,15 @@ public class Player {
 		for(BoardCell target : potentialTargets) {
 			if(target.isRoom()){
 				RoomCell roomTarget = (RoomCell) target;
-				if(roomTarget.getInitial() == lastVisited){
-					
+				if(roomTarget.getInitial() != lastVisited) {
+					return board.calcIndex(roomTarget.getRow(), roomTarget.getCol());
 				}
 			}
+			potentialTargetLocations.add(board.calcIndex(target.getRow(), target.getCol()));
 		}
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int pick = random.nextInt(potentialTargetLocations.size());
+		
+		return potentialTargetLocations.get(pick);
 	}
 }
