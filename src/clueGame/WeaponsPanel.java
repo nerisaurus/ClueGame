@@ -14,23 +14,33 @@ public class WeaponsPanel extends JPanel {
 	JComboBox<String> combo;
 
 	public WeaponsPanel(ArrayList<String> weapons) {
-		setBorder(new TitledBorder (new EtchedBorder(), "People"));
+		setLayout(new GridLayout(1, 2));
+		setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
 		combo = new JComboBox<String>();
 
 		JCheckBox checkBox;
 
-        JPanel checkPanel = new JPanel(new GridLayout(0, 1));
+		JPanel checkPanel_1 = new JPanel(new GridLayout(0, 1));
+		JPanel checkPanel_2 = new JPanel(new GridLayout(0, 1));
 
-        for(String weapon: weapons) {
-            checkBox = new JCheckBox(weapon);
-            //checkBox.setName(weapon);
-            checkboxes.add(checkBox);
-            combo.addItem(weapon);
-            checkPanel.add(checkBox);
-        }
+		int  half_options = weapons.size()/2; //Returns half (rounded) the number of weapons
+		int counter = 0;
+		for(String weapon: weapons) {
+			checkBox = new JCheckBox(weapon);
+			//checkBox.setName(weapon);
+			checkboxes.add(checkBox);
+			combo.addItem(weapon);
+			if(counter < half_options){
+				checkPanel_1.add(checkBox);
+			} else {
+				checkPanel_2.add(checkBox);
+			}
+		}
 
-        add(checkPanel);
-        add(combo);
+		add(checkPanel_1);
+		add(checkPanel_2);
+		add(combo);
 	}
 
 }
+
