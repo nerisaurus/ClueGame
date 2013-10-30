@@ -1,11 +1,11 @@
-H, Mercury
-V, Venus
-E, Earth
-M, Mars
-J, Jupiter
-S, Saturn
-U, Uranus
-N, Neptune
-P, Pluto
-X, Sun
-O, Space
+H, Mercury, CYAN
+V, Venus, CYAN
+E, Earth, CYAN
+M, Mars, CYAN
+J, Jupiter, CYAN
+S, Saturn, CYAN
+U, Uranus, CYAN
+N, Neptune, CYAN
+P, Pluto, CYAN
+X, Sun, YELLOW
+O, Space, BLACK

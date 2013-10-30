@@ -1,7 +1,12 @@
 package clueGame;
 
-public class BoardCell {
-	private int row, col;
+import java.awt.Color;
+import java.awt.Graphics;
+
+public abstract class BoardCell {
+	protected static int cellDimensions;
+	protected int row, col;
+	protected Color color;
 	
 	public BoardCell(int r, int c) {
 		row = r;
@@ -10,7 +15,7 @@ public class BoardCell {
 	
 	@Override
 	public String toString() {
-		return "BoardCell [row=" + row + ", col=" + col + "]";
+		return "BoardCell [row=" + row + ", column =" + col + "]";
 	}
 	public Boolean isWalkway(){ //is the cell a walkway cell?
 		return false;
@@ -30,6 +35,24 @@ public class BoardCell {
 	public int getCol(){
 		return col;
 	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	public static int getCellDimensions() {
+		return cellDimensions;
+	}
+
+	public static void setCellDimensions(int cellDimensions) {
+		BoardCell.cellDimensions = cellDimensions;
+	}
+	
+	abstract void draw(Graphics g);
 	
 	//TODO: add draw function
 	//I would put in a stub, but even the arguments and type are unknown at this point.

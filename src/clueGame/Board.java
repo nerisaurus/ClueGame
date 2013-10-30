@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -11,16 +13,22 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JPanel;
+
 import clueGame.RoomCell.DoorDirection;
 
-public class Board {
+public class Board extends JPanel {
 	private ArrayList<BoardCell> cells;
 	private Map<Character,String> rooms;
+	private Map<Character,Color> roomColors;
 	private int height,width;
 	private String layoutFile, legend;
 	private boolean[] visited;
 	private Set<BoardCell> targets;
 	private Map<Integer, LinkedList<Integer>> adjacencyMatrix;
+	
+	private int panelHeight, panelWidth;
+	private int cellDimensions = 30;
 	
 	//Tells us which character maps to "Space" or "Walkway"
 	private String walkwayChar;
@@ -32,6 +40,7 @@ public class Board {
 	public Board() {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
+		this.roomColors = new HashMap<Character, Color>();
 		this.adjacencyMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		this.targets = new HashSet<BoardCell>();
 		this.layoutFile = "ClueLayout.csv";
@@ -44,6 +53,7 @@ public class Board {
 	public Board(String layout, String legend) {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
+		this.roomColors = new HashMap<Character, Color>();
 		this.adjacencyMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		this.targets = new HashSet<BoardCell>();
 		this.layoutFile = layout;
@@ -63,6 +73,20 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	@Override 
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		//g.setColor(Color.LIGHT_GRAY);
+		for(BoardCell cell : cells) {
+			cell.draw(g);
+		}
+		drawLabels();
+	}
+	
+	public void drawLabels() {
+		
+	}
 
 	public void loadBoard() throws BadConfigFormatException, FileNotFoundException {
 		FileReader file = new FileReader(layoutFile);
@@ -80,6 +104,8 @@ public class Board {
 						cell = new RoomCell(row, col, layoutCell.charAt(0), layoutCell.charAt(1));
 					else
 						cell = new RoomCell(row, col, layoutCell.charAt(0));
+					//now to set the color
+					cell.setColor(roomColors.get(layoutCell.charAt(0)));
 					//now to actually put the cell into our cell collection
 					cells.add(cell);
 					//increment the column
@@ -103,6 +129,14 @@ public class Board {
 			row++;
 		}
 		this.height = row;
+		
+		//and calculate the size of the board:
+		this.panelHeight = height * cellDimensions;
+		this.panelWidth = width * cellDimensions;
+		
+		//and make sure to pass the size of each cell to the cells (static variable)
+		BoardCell.setCellDimensions(cellDimensions);
+		
 		reader.close(); //closes the scanner for the board
 	}	
 	
@@ -113,10 +147,17 @@ public class Board {
 		while(reader.hasNextLine()) {
 			String line = reader.nextLine();
 			String[] individual = line.split(", ");
-			if(individual.length == 2 && individual[0].length() != 0 && individual[1].length() != 0) {
+			if((individual.length == 2 || individual.length == 3) && individual[0].length() != 0 && individual[1].length() != 0) {
 				char key = individual[0].charAt(0);
 				String entry = individual[1];
 				rooms.put(key,entry);
+				if(individual.length == 3) {
+					Color color = convertColor(individual[2]);
+					if(color == null) { 
+						throw new BadConfigFormatException(individual[2] + " cannot be converted to a proper Color.");
+					}
+					roomColors.put(key,color);
+				}
 				if(counter == WHICH_LINE_IS_WALKWAY){
 					walkwayChar = individual[0];
 				}
@@ -300,5 +341,34 @@ public class Board {
 	public int getNumRows() {
 		return height;
 	}
+	
+	public Map<Character, Color> getRoomColors() {
+		return roomColors;
+	}
+
+	public void setRoomColors(Map<Character, Color> roomColors) {
+		this.roomColors = roomColors;
+	}
+
+	public int getPanelHeight() {
+		return panelHeight;
+	}
+
+	public int getPanelWidth() {
+		return panelWidth;
+	}
+
+		// Be sure to trim the color, we don't want spaces around the name
+		public Color convertColor(String strColor){
+			Color color; 
+			try {     
+				// We can use reflection to convert the string to a color
+				java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(strColor.trim());        
+				color = (Color)field.get(null); } 
+			catch (Exception e) {  
+				color = null; // Not defined } 
+			}
+			return color;
+		}
 
 }
