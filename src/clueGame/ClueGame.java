@@ -45,10 +45,14 @@ public class ClueGame extends JFrame{
 	private String roomCardsFile;
 	
 	private DetectiveNotesDialog dNotes;
+	private ArrayList<String> people, rooms, weapons;
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
 		this.board = new Board();
+		this.people = new ArrayList<String>();
+		this.rooms = new ArrayList<String>();
+		this.weapons = new ArrayList<String>();
 		setupFrame();
 	}
 	
@@ -57,6 +61,9 @@ public class ClueGame extends JFrame{
 		this.peopleCardsFile = people;
 		this.weaponCardsFile = weapons;
 		this.roomCardsFile = rooms;
+		this.people = new ArrayList<String>();
+		this.rooms = new ArrayList<String>();
+		this.weapons = new ArrayList<String>();
 		
 		//board loads its own config files
 		this.board = new Board(board, legend);
@@ -89,8 +96,8 @@ public class ClueGame extends JFrame{
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
 		
-		add(board,BorderLayout.CENTER);
-		dNotes = new DetectiveNotesDialog(getAllPlayers());
+		add(board);
+		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
 	}
 	
 	public void loadConfigFiles() {
@@ -183,6 +190,7 @@ public class ClueGame extends JFrame{
 			String[] line = reader.nextLine().split(",");
 			String playerName = line[0];
 			Card card = new Card(playerName, CardType.PERSON);
+			people.add(playerName);
 			deck.add(card);
 			this.numPeople++;
 		}
@@ -193,7 +201,9 @@ public class ClueGame extends JFrame{
 		FileReader file = new FileReader(weaponCardsFile);
 		Scanner reader = new Scanner(file);
 		while(reader.hasNextLine()) {
-			Card card = new Card(reader.nextLine(), CardType.WEAPON);
+			String weaponName = reader.nextLine();
+			Card card = new Card(weaponName, CardType.WEAPON);
+			weapons.add(weaponName);
 			deck.add(card);
 			this.numWeapons++;
 		}
@@ -204,7 +214,9 @@ public class ClueGame extends JFrame{
 		FileReader file = new FileReader(roomCardsFile);
 		Scanner reader = new Scanner(file);
 		while(reader.hasNextLine()) {
-			Card card = new Card(reader.nextLine(), CardType.ROOM);
+			String roomName = reader.nextLine();
+			Card card = new Card(roomName, CardType.ROOM);
+			rooms.add(roomName);
 			deck.add(card);
 			this.numRooms++;
 		}
@@ -317,7 +329,6 @@ public class ClueGame extends JFrame{
 
 	
 	public static void main(String[] args) {
-		//ClueGame clue = new ClueGame();
 		ClueGame clue = new ClueGame(LEGEND, BOARD,
 							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.setVisible(true);

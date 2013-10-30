@@ -8,24 +8,26 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class PeoplePanel extends JPanel {
+public class RoomsPanel extends JPanel {
+
 	ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
 
-	public PeoplePanel(ArrayList<String> people) {
-		setBorder(new TitledBorder (new EtchedBorder(), "People"));
+	public RoomsPanel(ArrayList<String> rooms) {
+		setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
 
 		JCheckBox checkBox;
 
         JPanel checkPanel = new JPanel(new GridLayout(0, 1));
 
-        for(String person: people) {
-            checkBox = new JCheckBox(person);
-            //checkBox.setName(person);
+        for(String room: rooms) {
+            checkBox = new JCheckBox(room);
+            //checkBox.setName(room);
             checkboxes.add(checkBox);
             checkPanel.add(checkBox);
         }
 
         this.add(checkPanel);		
 	}
+
 
 }
