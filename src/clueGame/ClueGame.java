@@ -1,5 +1,7 @@
 package clueGame;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -9,7 +11,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-public class ClueGame {
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+public class ClueGame extends JFrame{
 	private Board board;
 	private Map<String, LinkedList<Player>> players; // see note in constructor
 	private LinkedList<Card> deck;
@@ -23,6 +31,7 @@ public class ClueGame {
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
+		setupFrame();
 	}
 	
 	public ClueGame(String legend, String board, String people, String weapons, String rooms) {
@@ -50,6 +59,17 @@ public class ClueGame {
 		//loadConfigFiles();
 		//buildSolution();
 		//dealCards();
+		setupFrame();
+	}
+	
+	//JFrame initialization methods
+	private void setupFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("SpaceClue");
+		setSize(111, 111);
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.add(createFileMenu());	
 	}
 	
 	public void loadConfigFiles() {
@@ -235,5 +255,49 @@ public class ClueGame {
 		this.players.put("Human", emptyHumanList);
 		LinkedList<Player> emptyComputerList = new LinkedList<Player>();
 		this.players.put("Computer", emptyComputerList);
+	}
+	// MENU
+		private JMenu createFileMenu()
+		{
+			JMenu menu = new JMenu("File"); 
+			menu.add(createFileExitItem());
+			menu.add(createFileNotesItem());
+			return menu;
+		}
+		
+		private JMenuItem createFileExitItem()
+		{
+			JMenuItem exit = new JMenuItem("Exit");
+			class MenuItemListener implements ActionListener {
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					String message = "Exit";
+					JOptionPane.showMessageDialog(null, message);
+				}
+			}
+			exit.addActionListener(new MenuItemListener());
+			return exit;
+		}		
+		private JMenuItem createFileNotesItem()
+		{
+			JMenuItem notes = new JMenuItem("Detective notes");
+			class MenuItemListener implements ActionListener {
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					String message = "Notes";
+					JOptionPane.showMessageDialog(null, message);
+				}
+			}
+			notes.addActionListener(new MenuItemListener());
+			return notes;
+		}
+	
+
+	
+	public static void main(String[] args) {
+		ClueGame clue = new ClueGame();
+		clue.setVisible(true);
 	}
 }
