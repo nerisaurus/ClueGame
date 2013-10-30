@@ -28,6 +28,8 @@ public class ClueGame extends JFrame{
 	private String peopleCardsFile;
 	private String weaponCardsFile;
 	private String roomCardsFile;
+	
+	private DetectiveNotesDialog dNotes;
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
@@ -70,6 +72,8 @@ public class ClueGame extends JFrame{
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
+		
+		dNotes = new DetectiveNotesDialog();
 	}
 	
 	public void loadConfigFiles() {
@@ -286,8 +290,7 @@ public class ClueGame extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					String message = "Notes";
-					JOptionPane.showMessageDialog(null, message);
+					dNotes.setVisible(true);
 				}
 			}
 			notes.addActionListener(new MenuItemListener());
