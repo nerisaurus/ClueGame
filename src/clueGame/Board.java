@@ -74,7 +74,7 @@ public class Board extends JPanel {
 	@Override 
 	public void paintComponent(Graphics g) {
 		for(BoardCell cell : cells) {
-			//cell.draw();
+			cell.draw(g);
 		}
 		drawLabels();
 	}

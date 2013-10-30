@@ -1,8 +1,9 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
-public class BoardCell {
+public abstract class BoardCell {
 	private int row, col;
 	private Color color;
 	
@@ -42,6 +43,7 @@ public class BoardCell {
 		this.color = color;
 	}
 	
+	abstract void draw(Graphics g);
 	
 	//TODO: add draw function
 	//I would put in a stub, but even the arguments and type are unknown at this point.
