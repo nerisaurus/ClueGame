@@ -27,6 +27,9 @@ public class Board extends JPanel {
 	private Set<BoardCell> targets;
 	private Map<Integer, LinkedList<Integer>> adjacencyMatrix;
 	
+	private int panelHeight, panelWidth;
+	private int cellDimensions = 20;
+	
 	//Tells us which character maps to "Space" or "Walkway"
 	private String walkwayChar;
 	//Tells us which element of the legend is 'space' or 'walkway'
@@ -124,6 +127,11 @@ public class Board extends JPanel {
 			row++;
 		}
 		this.height = row;
+		
+		//and calculate the size of the board:
+		this.panelHeight = height * cellDimensions;
+		this.panelWidth = width * cellDimensions;
+		
 		reader.close(); //closes the scanner for the board
 	}	
 	
@@ -329,7 +337,23 @@ public class Board extends JPanel {
 		return height;
 	}
 	
-	// Be sure to trim the color, we don't want spaces around the name
+	public Map<Character, Color> getRoomColors() {
+		return roomColors;
+	}
+
+	public void setRoomColors(Map<Character, Color> roomColors) {
+		this.roomColors = roomColors;
+	}
+
+	public int getPanelHeight() {
+		return panelHeight;
+	}
+
+	public int getPanelWidth() {
+		return panelWidth;
+	}
+
+		// Be sure to trim the color, we don't want spaces around the name
 		public Color convertColor(String strColor){
 			Color color; 
 			try {     

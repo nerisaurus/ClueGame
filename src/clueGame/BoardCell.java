@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public abstract class BoardCell {
-	private int row, col;
-	private Color color;
+	protected int row, col;
+	protected Color color;
 	
 	public BoardCell(int r, int c) {
 		row = r;
