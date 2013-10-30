@@ -1,7 +1,10 @@
 package clueGame;
 
+import java.awt.Color;
+
 public class BoardCell {
 	private int row, col;
+	private Color color;
 	
 	public BoardCell(int r, int c) {
 		row = r;
@@ -10,7 +13,7 @@ public class BoardCell {
 	
 	@Override
 	public String toString() {
-		return "BoardCell [row=" + row + ", col=" + col + "]";
+		return "BoardCell [row=" + row + ", column =" + col + "]";
 	}
 	public Boolean isWalkway(){ //is the cell a walkway cell?
 		return false;
@@ -30,6 +33,15 @@ public class BoardCell {
 	public int getCol(){
 		return col;
 	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
 	
 	//TODO: add draw function
 	//I would put in a stub, but even the arguments and type are unknown at this point.

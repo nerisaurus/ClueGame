@@ -99,6 +99,8 @@ public class Board extends JPanel {
 						cell = new RoomCell(row, col, layoutCell.charAt(0), layoutCell.charAt(1));
 					else
 						cell = new RoomCell(row, col, layoutCell.charAt(0));
+					//now to set the color
+					cell.setColor(roomColors.get(layoutCell.charAt(0)));
 					//now to actually put the cell into our cell collection
 					cells.add(cell);
 					//increment the column
