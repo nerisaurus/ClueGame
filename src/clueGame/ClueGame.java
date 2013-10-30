@@ -33,6 +33,7 @@ public class ClueGame extends JFrame{
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
+		this.board = new Board();
 		setupFrame();
 	}
 	
