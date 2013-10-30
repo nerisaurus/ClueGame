@@ -14,7 +14,7 @@ public class DetectiveNotesDialog extends JDialog {
 
 	public DetectiveNotesDialog(LinkedList<Player> players) {
 		setTitle("Detective Notes");
-		setSize(123, 456);
+		setSize(400, 600);
 		setLayout(new GridLayout(2, 3));
 		
 		PeoplePanel pp = new PeoplePanel(players);

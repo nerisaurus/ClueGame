@@ -73,9 +73,9 @@ public class ClueGame extends JFrame{
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
 		
-		//loadConfigFiles();
-		//buildSolution();
-		//dealCards();
+		loadConfigFiles();
+		buildSolution();
+		dealCards();
 		setupFrame();
 	}
 	
@@ -89,7 +89,6 @@ public class ClueGame extends JFrame{
 		menuBar.add(createFileMenu());	
 		
 		add(board);
-		
 		dNotes = new DetectiveNotesDialog(getAllPlayers());
 	}
 	
