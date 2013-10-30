@@ -52,7 +52,8 @@ public class RoomCell extends BoardCell {
 
 	@Override
 	void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		g.setColor(color);
+		//g.drawRect(cellDimensions * col, cellDimensions * row, cellDimensions, cellDimensions);
+		g.fillRect(cellDimensions * col, cellDimensions * row, cellDimensions, cellDimensions);
 	}
 }

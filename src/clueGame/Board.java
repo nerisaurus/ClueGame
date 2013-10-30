@@ -28,7 +28,7 @@ public class Board extends JPanel {
 	private Map<Integer, LinkedList<Integer>> adjacencyMatrix;
 	
 	private int panelHeight, panelWidth;
-	private int cellDimensions = 20;
+	private int cellDimensions = 30;
 	
 	//Tells us which character maps to "Space" or "Walkway"
 	private String walkwayChar;
@@ -76,6 +76,8 @@ public class Board extends JPanel {
 	
 	@Override 
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		//g.setColor(Color.LIGHT_GRAY);
 		for(BoardCell cell : cells) {
 			cell.draw(g);
 		}
@@ -131,6 +133,9 @@ public class Board extends JPanel {
 		//and calculate the size of the board:
 		this.panelHeight = height * cellDimensions;
 		this.panelWidth = width * cellDimensions;
+		
+		//and make sure to pass the size of each cell to the cells (static variable)
+		BoardCell.setCellDimensions(cellDimensions);
 		
 		reader.close(); //closes the scanner for the board
 	}	

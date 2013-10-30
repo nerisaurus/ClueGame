@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public abstract class BoardCell {
+	protected static int cellDimensions;
 	protected int row, col;
 	protected Color color;
 	
@@ -41,6 +42,14 @@ public abstract class BoardCell {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+	
+	public static int getCellDimensions() {
+		return cellDimensions;
+	}
+
+	public static void setCellDimensions(int cellDimensions) {
+		BoardCell.cellDimensions = cellDimensions;
 	}
 	
 	abstract void draw(Graphics g);
