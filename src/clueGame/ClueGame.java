@@ -73,7 +73,9 @@ public class ClueGame extends JFrame{
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
 		
-		dNotes = new DetectiveNotesDialog();
+		add(board);
+		
+		dNotes = new DetectiveNotesDialog(getAllPlayers());
 	}
 	
 	public void loadConfigFiles() {
