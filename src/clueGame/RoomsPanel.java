@@ -14,6 +14,7 @@ public class RoomsPanel extends JPanel {
 	JComboBox<String> combo;
 
 	public RoomsPanel(ArrayList<String> rooms) {
+		setLayout(new GridLayout(1, 2));
 		setBorder(new TitledBorder (new EtchedBorder(), "Rooms"));
 		combo = new JComboBox<String>();
 		

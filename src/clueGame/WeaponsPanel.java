@@ -14,7 +14,8 @@ public class WeaponsPanel extends JPanel {
 	JComboBox<String> combo;
 
 	public WeaponsPanel(ArrayList<String> weapons) {
-		setBorder(new TitledBorder (new EtchedBorder(), "People"));
+		setLayout(new GridLayout(1, 2));
+		setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
 		combo = new JComboBox<String>();
 
 		JCheckBox checkBox;
