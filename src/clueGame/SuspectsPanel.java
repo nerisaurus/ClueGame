@@ -9,13 +9,13 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 
-public class WeaponsPanel extends JPanel {
+public class SuspectsPanel extends JPanel {
 	ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
 	JComboBox<String> combo;
 
-	public WeaponsPanel(ArrayList<String> weapons) {
+	public SuspectsPanel(ArrayList<String> possible_cards, String name) {
 		setLayout(new GridLayout(1, 3));
-		setBorder(new TitledBorder (new EtchedBorder(), "Weapons"));
+		setBorder(new TitledBorder (new EtchedBorder(), name));
 		combo = new JComboBox<String>();
 
 		JCheckBox checkBox;
@@ -23,13 +23,13 @@ public class WeaponsPanel extends JPanel {
 		JPanel checkPanel_1 = new JPanel(new GridLayout(0, 1));
 		JPanel checkPanel_2 = new JPanel(new GridLayout(0, 1));
 
-		int  half_options = weapons.size()/2; //Returns half (rounded) the number of weapons
+		int  half_options = possible_cards.size()/2; //Returns half (rounded) the number of weapons
 		int counter = 0;
-		for(String weapon: weapons) {
-			checkBox = new JCheckBox(weapon);
+		for(String card: possible_cards) {
+			checkBox = new JCheckBox(card);
 			//checkBox.setName(weapon);
 			checkboxes.add(checkBox);
-			combo.addItem(weapon);
+			combo.addItem(card);
 			if(counter < half_options){
 				checkPanel_1.add(checkBox);
 			} else {
