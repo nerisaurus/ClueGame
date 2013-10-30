@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -83,12 +84,12 @@ public class ClueGame extends JFrame{
 	private void setupFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("SpaceClue");
-		setSize(111, 111);
+		setSize(500, 500);
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
 		
-		add(board);
+		add(board,BorderLayout.CENTER);
 		dNotes = new DetectiveNotesDialog(getAllPlayers());
 	}
 	

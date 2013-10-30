@@ -77,10 +77,10 @@ public class Board extends JPanel {
 	@Override 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		//g.setColor(Color.LIGHT_GRAY);
 		for(BoardCell cell : cells) {
 			cell.draw(g);
 		}
+		
 		drawLabels();
 	}
 	
