@@ -9,7 +9,7 @@ public class DetectiveNotesDialog extends JDialog {
 
 	public DetectiveNotesDialog(ArrayList<String> players, ArrayList<String> rooms, ArrayList<String> weapons) {
 		setTitle("Detective Notes");
-		setSize(500, 600);
+		setSize(600, 600);
 		setLayout(new GridLayout(3, 1));
 		
 		SuspectsPanel pp = new SuspectsPanel(players, "Who");
