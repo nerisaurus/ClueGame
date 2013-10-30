@@ -18,6 +18,20 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class ClueGame extends JFrame{
+	public static final String BOARD = "board.csv";
+	public static final String LEGEND = "legend.csv";
+	//person_cards.csv format:
+	//	name,color,starting row,starting column
+	//the first player in the list is the human player.	
+	public static final String PERSON_CARDS = "person_cards.csv";
+	//weapon_cards.csv format:
+	//	
+	public static final String WEAPON_CARDS = "weapon_cards.csv";
+	//room_cards.csv format:
+	//	
+	public static final String ROOM_CARDS = "room_cards.csv";
+	
+	
 	private Board board;
 	private Map<String, LinkedList<Player>> players; // see note in constructor
 	private LinkedList<Card> deck;
@@ -303,7 +317,9 @@ public class ClueGame extends JFrame{
 
 	
 	public static void main(String[] args) {
-		ClueGame clue = new ClueGame();
+		//ClueGame clue = new ClueGame();
+		ClueGame clue = new ClueGame(LEGEND, BOARD,
+							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.setVisible(true);
 	}
 }
