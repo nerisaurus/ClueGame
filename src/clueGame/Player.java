@@ -1,11 +1,14 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.text.Format.Field;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
+
+import clueGame.RoomCell.DoorDirection;
 
 /*
  * The Player class is the super class for the two 
@@ -19,8 +22,8 @@ import java.util.Set;
 public class Player {
 	private String name;
 	private Color color;
-	private int startingRow;
-	private int startingColumn;	
+	private int row;
+	private int col;	
 	private ArrayList<Card> hand;
 	
 	public Player() {
@@ -31,8 +34,8 @@ public class Player {
 	public Player(String name, String color, int startingRowPosition, int startingColumnPosition) {
 		this.name = name;
 		this.color = convertColor(color);
-		this.startingRow = startingRowPosition;
-		this.startingColumn = startingColumnPosition;	
+		this.row = startingRowPosition;
+		this.col = startingColumnPosition;	
 		this.hand = new ArrayList<Card>();
 	}
 
@@ -79,11 +82,11 @@ public class Player {
 	}
 	
 	public int getStartingRow() {
-		return startingRow;
+		return row;
 	}
 	
 	public int getStartingColumn() {
-		return startingColumn;
+		return col;
 	}
 	
 	public ArrayList<Card> getHand() {
@@ -92,8 +95,8 @@ public class Player {
 	
 	
 	public void setLocation(int startingRow, int startingColumn) {
-		this.startingRow = startingRow;
-		this.startingColumn = startingColumn;
+		this.row = startingRow;
+		this.col = startingColumn;
 	}
 
 	public int pickTarget(int steps, Board board) {
@@ -110,5 +113,11 @@ public class Player {
 
 	public Solution makeSuggestion(Card roomCard) {
 		return null; //Overridden by both HumanPlayer and ComputerPlayer
+	}
+	
+	
+	void draw(Graphics g, int cellDimensions) {
+		g.setColor(color);
+		g.fillOval(cellDimensions * col, cellDimensions * row, cellDimensions, cellDimensions);
 	}
 }

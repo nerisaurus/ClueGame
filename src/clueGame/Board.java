@@ -26,10 +26,15 @@ public class Board extends JPanel {
 	private boolean[] visited;
 	private Set<BoardCell> targets;
 	private Map<Integer, LinkedList<Integer>> adjacencyMatrix;
+	
+	//For Drawing Purposes Only:
+	private Map<String, LinkedList<Player>> players;
 
+	//Handy Size Variables for Drawing Purposes:
 	private int panelHeight, panelWidth;
 	private int cellDimensions = 20;
 
+	//Logic to Allow for different Legends:
 	//Tells us which character maps to "Space" or "Walkway"
 	private String walkwayChar;
 	//Tells us which element of the legend is 'space' or 'walkway'
@@ -77,20 +82,33 @@ public class Board extends JPanel {
 	@Override 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		drawGrid(g);
+		drawPlayers(g);
+		drawLabels(g);
+	}
+	
+	public void drawGrid(Graphics g) {
 		for(BoardCell cell : cells) {
-			cell.draw(g);
+			cell.draw(g, cellDimensions);
 		}
 		//then, to draw on doors:
 		for(BoardCell cell : cells) {
 			if(cell.isDoorway()){
-				cell.draw(g);
+				cell.draw(g, cellDimensions);
 			}
 		}
-
-		drawLabels();
+	}
+	
+	public void drawPlayers(Graphics g) {
+		for(Player player : players.get("Human")){
+			player.draw(g, cellDimensions);
+		}
+		for(Player player : players.get("Computer")){
+			player.draw(g, cellDimensions);
+		}
 	}
 
-	public void drawLabels() {
+	public void drawLabels(Graphics g) {
 
 	}
 
@@ -139,9 +157,6 @@ public class Board extends JPanel {
 		//and calculate the size of the board:
 		this.panelHeight = height * cellDimensions;
 		this.panelWidth = width * cellDimensions;
-
-		//and make sure to pass the size of each cell to the cells (static variable)
-		BoardCell.setCellDimensions(cellDimensions);
 
 		reader.close(); //closes the scanner for the board
 	}	
@@ -354,6 +369,10 @@ public class Board extends JPanel {
 
 	public void setRoomColors(Map<Character, Color> roomColors) {
 		this.roomColors = roomColors;
+	}
+	
+	public void setPlayerMap(Map<String, LinkedList<Player>> players) {
+		this.players = players;
 	}
 
 	public int getPanelHeight() {

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public abstract class BoardCell {
-	protected static int cellDimensions;
 	protected int row, col;
 	protected Color color;
 	
@@ -44,15 +43,7 @@ public abstract class BoardCell {
 		this.color = color;
 	}
 	
-	public static int getCellDimensions() {
-		return cellDimensions;
-	}
-
-	public static void setCellDimensions(int cellDimensions) {
-		BoardCell.cellDimensions = cellDimensions;
-	}
-	
-	abstract void draw(Graphics g);
+	abstract void draw(Graphics g, int cellDimensions);
 	
 	//TODO: add draw function
 	//I would put in a stub, but even the arguments and type are unknown at this point.

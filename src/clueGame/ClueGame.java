@@ -31,8 +31,8 @@ public class ClueGame extends JFrame{
 	//room_cards.csv format:
 	//	
 	public static final String ROOM_CARDS = "room_cards.csv";
-	
-	
+
+
 	private Board board;
 	private Map<String, LinkedList<Player>> players; // see note in constructor
 	private LinkedList<Card> deck;
@@ -43,19 +43,20 @@ public class ClueGame extends JFrame{
 	private String peopleCardsFile;
 	private String weaponCardsFile;
 	private String roomCardsFile;
-	
+
 	private DetectiveNotesDialog dNotes;
 	private ArrayList<String> people, rooms, weapons;
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
 		this.board = new Board();
+		this.board.setPlayerMap(players);
 		this.people = new ArrayList<String>();
 		this.rooms = new ArrayList<String>();
 		this.weapons = new ArrayList<String>();
 		setupFrame();
 	}
-	
+
 	public ClueGame(String legend, String board, String people, String weapons, String rooms) {
 		//files
 		this.peopleCardsFile = people;
@@ -64,10 +65,7 @@ public class ClueGame extends JFrame{
 		this.people = new ArrayList<String>();
 		this.rooms = new ArrayList<String>();
 		this.weapons = new ArrayList<String>();
-		
-		//board loads its own config files
-		this.board = new Board(board, legend);
-		
+
 		//setup empty players hash
 		// NOTE: There may be some coding overhead to maintain this but
 		// it insures that we always know where the human player is
@@ -77,35 +75,39 @@ public class ClueGame extends JFrame{
 		// to, well, get all of the players whether or not they 
 		// are human or computer.
 		setPlayers();
-		
+
+		//board loads its own config files
+		this.board = new Board(board, legend);
+		this.board.setPlayerMap(players);
+
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
-		
+
 		loadConfigFiles();
 		buildSolution();
 		dealCards();
 		setupFrame();
 	}
-	
+
 	//JFrame initialization methods
 	private void setupFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("SpaceClue");
-		
+		setTitle("Clue in SPACE");
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
-		
+
 		add(board);
 		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
-		
+
 		//Setting Frame Size
 		int frameHeight = 0, frameWidth = 0;
 		frameHeight += board.getPanelHeight();
 		frameWidth += board.getPanelWidth();
 		setSize(frameHeight,frameWidth);
 	}
-	
+
 	public void loadConfigFiles() {
 		try {
 			loadDeck();
@@ -113,25 +115,25 @@ public class ClueGame extends JFrame{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void buildSolution() {
 		//prepare deck index for each type of card
 		//then add card to solution and remove from the deck
 		int personIndex = (int) (0 + (Math.random() * (5))); // 6 possible people - 1
 		this.solution.setPerson(deck.get(personIndex));
 		deck.remove(personIndex);
-		
+
 		int weaponIndex = (int) (5 + (Math.random() * (5))); // 6 possible weapons - 1
 		this.solution.setWeapon(deck.get(weaponIndex));
 		deck.remove(weaponIndex);
-		
+
 		int roomIndex = (int) (10 + (Math.random() * (8))); // 9 possible rooms - 1
 		this.solution.setRoom(deck.get(roomIndex));
 		deck.remove(roomIndex);
 	}
-	
+
 	public void dealCards() {	
 		do{
 			for(Player p: getAllPlayers()){
@@ -145,17 +147,17 @@ public class ClueGame extends JFrame{
 			}
 		}while(deck.size() > 1);
 	}
-	
+
 	public Card handleSuggestion(Player accusingPlayer, Solution suggestion) {
 		for(Player p: getPlayersSansCurrent(accusingPlayer)) {
 			Card c = p.disproveSuggestion(suggestion);
 			if(c != null)
 				return c;
 		}
-		
+
 		return null;
 	}
-	
+
 	// HELPERS ****************************************************************
 	public void loadPlayers() throws FileNotFoundException {
 		FileReader file = new FileReader(peopleCardsFile);
@@ -167,7 +169,7 @@ public class ClueGame extends JFrame{
 			String color = line[1];
 			int startingRowPosition = Integer.parseInt(line[2]);
 			int startingColumnPosition = Integer.parseInt(line[3]);			
-			
+
 			if(row == 0){
 				HumanPlayer player = new HumanPlayer(name, color, 
 						startingRowPosition, startingColumnPosition);
@@ -182,13 +184,13 @@ public class ClueGame extends JFrame{
 		}
 		reader.close();
 	}
-	
+
 	public void loadDeck() throws FileNotFoundException {
 		loadPeopleCards();
 		loadWeaponCards();
 		loadRoomCards();
 	}
-	
+
 	public void loadPeopleCards() throws FileNotFoundException {
 		FileReader file = new FileReader(peopleCardsFile);
 		Scanner reader = new Scanner(file);
@@ -202,7 +204,7 @@ public class ClueGame extends JFrame{
 		}
 		reader.close();
 	}
-	
+
 	public void loadWeaponCards() throws FileNotFoundException {
 		FileReader file = new FileReader(weaponCardsFile);
 		Scanner reader = new Scanner(file);
@@ -215,7 +217,7 @@ public class ClueGame extends JFrame{
 		}
 		reader.close();
 	}
-	
+
 	public void loadRoomCards() throws FileNotFoundException {
 		FileReader file = new FileReader(roomCardsFile);
 		Scanner reader = new Scanner(file);
@@ -234,23 +236,23 @@ public class ClueGame extends JFrame{
 	public Map<String, LinkedList<Player>> getPlayers() {
 		return players;
 	}
-	
+
 	public LinkedList<Card> getDeck() {
 		return deck;
 	}
-	
+
 	public Board getBoard() {
 		return board;
 	}
-	
+
 	public Solution getSolution() {
 		return solution;
 	}
-	
+
 	public void setSolution(Solution s) {
 		solution = s;
 	}
-	
+
 	// Return a list of all players human and computer alike.
 	public LinkedList<Player> getAllPlayers() {	
 		LinkedList<Player> allPlayers = new LinkedList<Player>();
@@ -261,7 +263,7 @@ public class ClueGame extends JFrame{
 		}
 		return allPlayers;		
 	}
-	
+
 	public LinkedList<Player> getPlayersSansCurrent(Player current) {	
 		LinkedList<Player> allPlayers = getAllPlayers();
 		LinkedList<Player> otherPlayers = new LinkedList<Player>();
@@ -282,12 +284,12 @@ public class ClueGame extends JFrame{
 		else
 			return false;
 	}
-	
+
 	// Used in testing only.
 	public void addPlayer(String playerType, Player player) {
 		this.players.get(playerType).add(player);
 	}
-	
+
 	public void setPlayers() {
 		this.players = new HashMap<String, LinkedList<Player>>();
 		LinkedList<Player> emptyHumanList = new LinkedList<Player>();
@@ -296,47 +298,47 @@ public class ClueGame extends JFrame{
 		this.players.put("Computer", emptyComputerList);
 	}
 	// MENU
-		private JMenu createFileMenu()
-		{
-			JMenu menu = new JMenu("File"); 
-			menu.add(createFileExitItem());
-			menu.add(createFileNotesItem());
-			return menu;
-		}
-		
-		private JMenuItem createFileExitItem()
-		{
-			JMenuItem exit = new JMenuItem("Exit");
-			class MenuItemListener implements ActionListener {
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					String message = "Exit";
-					JOptionPane.showMessageDialog(null, message);
-				}
-			}
-			exit.addActionListener(new MenuItemListener());
-			return exit;
-		}		
-		private JMenuItem createFileNotesItem()
-		{
-			JMenuItem notes = new JMenuItem("Detective notes");
-			class MenuItemListener implements ActionListener {
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					dNotes.setVisible(true);
-				}
-			}
-			notes.addActionListener(new MenuItemListener());
-			return notes;
-		}
-	
+	private JMenu createFileMenu()
+	{
+		JMenu menu = new JMenu("File"); 
+		menu.add(createFileExitItem());
+		menu.add(createFileNotesItem());
+		return menu;
+	}
 
-	
+	private JMenuItem createFileExitItem()
+	{
+		JMenuItem exit = new JMenuItem("Exit");
+		class MenuItemListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String message = "Exit";
+				JOptionPane.showMessageDialog(null, message);
+			}
+		}
+		exit.addActionListener(new MenuItemListener());
+		return exit;
+	}		
+	private JMenuItem createFileNotesItem()
+	{
+		JMenuItem notes = new JMenuItem("Detective notes");
+		class MenuItemListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				dNotes.setVisible(true);
+			}
+		}
+		notes.addActionListener(new MenuItemListener());
+		return notes;
+	}
+
+
+
 	public static void main(String[] args) {
 		ClueGame clue = new ClueGame(LEGEND, BOARD,
-							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
+				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
 		clue.setVisible(true);
 	}
 }
