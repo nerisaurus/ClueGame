@@ -92,7 +92,6 @@ public class ClueGame extends JFrame{
 	//JFrame initialization methods
 	private void setupFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(625, 625);
 		setTitle("Clue in SPACE");
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -102,10 +101,10 @@ public class ClueGame extends JFrame{
 		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
 
 		//Setting Frame Size
-		//int frameHeight = 0, frameWidth = 0;
-		//frameHeight += board.getPanelHeight();
-		//frameWidth += board.getPanelWidth();
-		//setSize(frameHeight,frameWidth);
+		int frameHeight = 0, frameWidth = 0;
+		frameHeight += board.getPanelHeight();
+		frameWidth += board.getPanelWidth();
+		setSize(frameHeight,frameWidth);
 	}
 
 	public void loadConfigFiles() {
