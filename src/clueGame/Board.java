@@ -326,11 +326,11 @@ public class Board extends JPanel {
 		return rooms;
 	}
 
-	public int getHeight() {
+	public int getBoardHeight() {
 		return height;
 	}
 
-	public int getWidth() {
+	public int getBoardWidth() {
 		return width;
 	}
 
