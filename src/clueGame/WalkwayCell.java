@@ -15,11 +15,11 @@ public class WalkwayCell extends BoardCell {
 	}
 
 	@Override
-	void draw(Graphics g) {
-		g.setColor(Color.DARK_GRAY);
-		g.drawRect(cellDimensions * col, cellDimensions * row, cellDimensions, cellDimensions);
+	void draw(Graphics g, int cellDimensions) {
 		g.setColor(color);
 		g.fillRect(cellDimensions * col, cellDimensions * row, cellDimensions, cellDimensions);
+		g.setColor(Color.DARK_GRAY);
+		g.drawRect(cellDimensions * col, cellDimensions * row, cellDimensions, cellDimensions);
 	}
 
 }

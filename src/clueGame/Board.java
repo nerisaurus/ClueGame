@@ -33,10 +33,15 @@ public class Board extends JPanel {
 	private boolean[] visited;
 	private Set<BoardCell> targets;
 	private Map<Integer, LinkedList<Integer>> adjacencyMatrix;
-	
+
+	//For Drawing Purposes Only:
+	private Map<String, LinkedList<Player>> players;
+
+	//Handy Size Variables for Drawing Purposes:
 	private int panelHeight, panelWidth;
-	private int cellDimensions = 20;
-	
+	private int cellDimensions = 24;
+
+	//Logic to Allow for different Legends:
 	//Tells us which character maps to "Space" or "Walkway"
 	private String walkwayChar;
 	//Tells us which element of the legend is 'space' or 'walkway'
@@ -58,7 +63,7 @@ public class Board extends JPanel {
 		visited = new boolean[cells.size()];
 		calculateAdjacencies();
 	}
-	
+
 	public Board(String layout, String legend) {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
@@ -84,26 +89,44 @@ public class Board extends JPanel {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	@Override 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		for(BoardCell cell : cells) {
-			cell.draw(g);
-		}		
-		
+		drawGrid(g);
+		drawPlayers(g);
 		drawLabels(g);
 	}
-	
+
+	public void drawGrid(Graphics g) {
+		for(BoardCell cell : cells) {
+			cell.draw(g, cellDimensions);
+		}
+		//then, to draw on doors:
+		for(BoardCell cell : cells) {
+			if(cell.isDoorway()){
+				cell.draw(g, cellDimensions);
+			}
+		}
+	}
+
+	public void drawPlayers(Graphics g) {
+		for(Player player : players.get("Human")){
+			player.draw(g, cellDimensions);
+		}
+		for(Player player : players.get("Computer")){
+			player.draw(g, cellDimensions);
+		}
+	}
+
 	public void drawLabels(Graphics g) {
 		Graphics2D g2;
 		for(Character roomInitial: rooms.keySet()){
 			if(roomLabelVerticalLocation.containsKey(roomInitial)){
 				g2 = (Graphics2D)g;
-		        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-		        RenderingHints.VALUE_ANTIALIAS_ON);
-		        g2.setColor(Color.RED);
-		        g2.drawString(rooms.get(roomInitial),roomLabelVerticalLocation.get(roomInitial),roomLabelHorizontalLocation.get(roomInitial)); 
+				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				g2.setColor(Color.BLACK);
+				g2.drawString(rooms.get(roomInitial),roomLabelVerticalLocation.get(roomInitial),roomLabelHorizontalLocation.get(roomInitial)); 
 			}
 		}
 	}
@@ -149,17 +172,14 @@ public class Board extends JPanel {
 			row++;
 		}
 		this.height = row;
-		
+
 		//and calculate the size of the board:
 		this.panelHeight = height * cellDimensions;
 		this.panelWidth = width * cellDimensions;
-		
-		//and make sure to pass the size of each cell to the cells (static variable)
-		BoardCell.setCellDimensions(cellDimensions);
-		
+
 		reader.close(); //closes the scanner for the board
 	}	
-	
+
 	public void loadLegend() throws BadConfigFormatException, FileNotFoundException {
 		FileReader file = new FileReader(legend);
 		Scanner reader = new Scanner(file);
@@ -194,15 +214,15 @@ public class Board extends JPanel {
 			}else {
 				throw new BadConfigFormatException("Cannot process line " + counter + " of " + legend + " - too many or too few entries");
 			}		
-			
+
 		}
 		reader.close();
 	}                      
-	
+
 	public int calcIndex(int row, int col) {
 		return ((row*width) + col);
 	}
-	
+
 	public void startTargets(int vertical, int horizontal, int steps){
 		targets = new HashSet<BoardCell>(); //a blank sheet
 		Arrays.fill(visited,false); //to ensure no issues
@@ -233,14 +253,14 @@ public class Board extends JPanel {
 		}
 		visited[index] = false;
 	}
-	
+
 	public void calculateAdjacencies() {
 		visited = new boolean[cells.size()];
 		for(int row=0; row < height; row++) {
 			for(int column=0; column < width; column++) {
 				LinkedList<Integer> adjacentCells = new LinkedList<Integer>();
 				BoardCell cell = getCellAt(calcIndex(row,column));
-				
+
 				if(cell.isRoom() && cell.isDoorway()) {
 					RoomCell door = (RoomCell) cell;
 					//add the cell that the door opens to
@@ -266,10 +286,10 @@ public class Board extends JPanel {
 						if(cell.isWalkway()){
 							if(getCellAt(row - 1, column).isWalkway() || 
 									getRoomCellAt(row - 1, column).getDoorDirection() == DoorDirection.DOWN)
-							adjacentCells.add(calcIndex(row - 1, column));
+								adjacentCells.add(calcIndex(row - 1, column));
 						}
 						else{ //inside a room
-							
+
 						}
 					}					
 					// NOT bottom row
@@ -277,34 +297,34 @@ public class Board extends JPanel {
 						if(cell.isWalkway()){
 							if(getCellAt(row + 1, column).isWalkway() || 
 									getRoomCellAt(row + 1, column).getDoorDirection() == DoorDirection.UP)
-							adjacentCells.add(calcIndex(row + 1, column));
+								adjacentCells.add(calcIndex(row + 1, column));
 						}
 						else{ //inside a room
-							
+
 						}
-						
+
 					}
 					// NOT left column
 					if(column > 0) {
 						if(cell.isWalkway()){
 							if(getCellAt(row, column - 1).isWalkway() || 
 									getRoomCellAt(row, column -1).getDoorDirection() == DoorDirection.RIGHT)
-							adjacentCells.add(calcIndex(row, column - 1));
+								adjacentCells.add(calcIndex(row, column - 1));
 						}
 						else{ //inside a room
-							
+
 						}
-						
+
 					}
 					// NOT right column
 					if(column < width - 1) {
 						if(cell.isWalkway()){
 							if(getCellAt(row, column + 1).isWalkway() || 
 									getRoomCellAt(row, column + 1).getDoorDirection() == DoorDirection.LEFT)
-							adjacentCells.add(calcIndex(row, column + 1));
+								adjacentCells.add(calcIndex(row, column + 1));
 						}
 						else{ //inside a room
-							
+
 						}	
 					}	
 				}
@@ -312,11 +332,11 @@ public class Board extends JPanel {
 			}
 		}
 	}
-	
+
 	public RoomCell getRoomCellAt(int row, int col) {
 		return getRoomCellAt(calcIndex(row,col));
 	}
-	
+
 	public RoomCell getRoomCellAt(int index){
 		if(cells.get(index).isRoom()) {
 			return (RoomCell) cells.get(index);
@@ -324,7 +344,7 @@ public class Board extends JPanel {
 			return null;
 		}
 	}
-		
+
 	public LinkedList<Integer> getAdjList(int index) {
 		LinkedList<Integer> adjacent_squares = new LinkedList<Integer>();
 		for(int square : adjacencyMatrix.get(index)){
@@ -334,15 +354,15 @@ public class Board extends JPanel {
 		}
 		return adjacent_squares;
 	}
-	
+
 	public BoardCell getCellAt(int row, int col) {
 		return getCellAt(calcIndex(row,col)); //to override for multi-input
 	}
-	
+
 	public BoardCell getCellAt(int index) {
 		return cells.get(index);
 	}
-	
+
 	public Set<BoardCell> getTargets(){
 		return targets;
 	}
@@ -370,13 +390,17 @@ public class Board extends JPanel {
 	public int getNumRows() {
 		return height;
 	}
-	
+
 	public Map<Character, Color> getRoomColors() {
 		return roomColors;
 	}
 
 	public void setRoomColors(Map<Character, Color> roomColors) {
 		this.roomColors = roomColors;
+	}
+
+	public void setPlayerMap(Map<String, LinkedList<Player>> players) {
+		this.players = players;
 	}
 
 	public int getPanelHeight() {
@@ -387,17 +411,17 @@ public class Board extends JPanel {
 		return panelWidth;
 	}
 
-		// Be sure to trim the color, we don't want spaces around the name
-		public Color convertColor(String strColor){
-			Color color; 
-			try {     
-				// We can use reflection to convert the string to a color
-				java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(strColor.trim());        
-				color = (Color)field.get(null); } 
-			catch (Exception e) {  
-				color = null; // Not defined } 
-			}
-			return color;
+	// Be sure to trim the color, we don't want spaces around the name
+	public Color convertColor(String strColor){
+		Color color; 
+		try {     
+			// We can use reflection to convert the string to a color
+			java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(strColor.trim());        
+			color = (Color)field.get(null); } 
+		catch (Exception e) {  
+			color = null; // Not defined } 
 		}
+		return color;
+	}
 
 }
