@@ -57,7 +57,7 @@ public class ClueGame extends JFrame{
 		setupFrame();
 	}
 
-	public ClueGame(String legend, String board, String people, String weapons, String rooms) {
+	public ClueGame(String legend, String board, String people, String weapons, String rooms, boolean runningTest) {
 		//files
 		this.peopleCardsFile = people;
 		this.weaponCardsFile = weapons;
@@ -82,11 +82,15 @@ public class ClueGame extends JFrame{
 
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
-
-		loadConfigFiles();
-		buildSolution();
-		dealCards();
-		setupFrame();
+		
+		//these guys are called in the test, calling them here again doubles the method calls
+		// therefore we skip them if we are running the tests.
+		if(!runningTest){ 
+			loadConfigFiles();
+			buildSolution();
+			dealCards();
+			setupFrame();
+		}
 	}
 
 	//JFrame initialization methods
@@ -341,7 +345,7 @@ public class ClueGame extends JFrame{
 
 	public static void main(String[] args) {
 		ClueGame clue = new ClueGame(LEGEND, BOARD,
-				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
+				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
 		clue.setVisible(true);
 	}
 }
