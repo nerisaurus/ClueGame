@@ -1,11 +1,11 @@
-H, Mercury, LIGHT_GRAY
-V, Venus, LIGHT_GRAY
-E, Earth, LIGHT_GRAY
-M, Mars, LIGHT_GRAY
-J, Jupiter, LIGHT_GRAY
-S, Saturn, LIGHT_GRAY
-U, Uranus, LIGHT_GRAY
-N, Neptune, LIGHT_GRAY
-P, Pluto, LIGHT_GRAY
-X, Sun, YELLOW
-O, Space, BLACK
+H, Mercury, LIGHT_GRAY, 300, 30
+V, Venus, LIGHT_GRAY, 450, 250
+E, Earth, LIGHT_GRAY, 180, 80
+M, Mars, LIGHT_GRAY, 60, 60
+J, Jupiter, LIGHT_GRAY, 400, 450
+S, Saturn, LIGHT_GRAY, 430, 100
+U, Uranus, LIGHT_GRAY, 50, 450
+N, Neptune, LIGHT_GRAY, 30, 220
+P, Pluto, LIGHT_GRAY, 200, 470
+X, Sun, YELLOW, 230, 230
+O, Space, BLACK, 110, 0

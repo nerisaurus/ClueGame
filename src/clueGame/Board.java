@@ -1,7 +1,10 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -14,6 +17,8 @@ import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import clueGame.RoomCell.DoorDirection;
 
@@ -21,6 +26,8 @@ public class Board extends JPanel {
 	private ArrayList<BoardCell> cells;
 	private Map<Character,String> rooms;
 	private Map<Character,Color> roomColors;
+	private Map<Character,Integer> roomLabelVerticalLocation;
+	private Map<Character,Integer> roomLabelHorizontalLocation;
 	private int height,width;
 	private String layoutFile, legend;
 	private boolean[] visited;
@@ -41,6 +48,8 @@ public class Board extends JPanel {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
 		this.roomColors = new HashMap<Character, Color>();
+		this.roomLabelVerticalLocation = new HashMap<Character, Integer>();
+		this.roomLabelHorizontalLocation = new HashMap<Character, Integer>();
 		this.adjacencyMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		this.targets = new HashSet<BoardCell>();
 		this.layoutFile = "ClueLayout.csv";
@@ -54,6 +63,8 @@ public class Board extends JPanel {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
 		this.roomColors = new HashMap<Character, Color>();
+		this.roomLabelVerticalLocation = new HashMap<Character, Integer>();
+		this.roomLabelHorizontalLocation = new HashMap<Character, Integer>();
 		this.adjacencyMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		this.targets = new HashSet<BoardCell>();
 		this.layoutFile = layout;
@@ -79,13 +90,22 @@ public class Board extends JPanel {
 		super.paintComponent(g);
 		for(BoardCell cell : cells) {
 			cell.draw(g);
-		}
+		}		
 		
-		drawLabels();
+		drawLabels(g);
 	}
 	
-	public void drawLabels() {
-		
+	public void drawLabels(Graphics g) {
+		Graphics2D g2;
+		for(Character roomInitial: rooms.keySet()){
+			if(roomLabelVerticalLocation.containsKey(roomInitial)){
+				g2 = (Graphics2D)g;
+		        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		        RenderingHints.VALUE_ANTIALIAS_ON);
+		        g2.setColor(Color.RED);
+		        g2.drawString(rooms.get(roomInitial),roomLabelVerticalLocation.get(roomInitial),roomLabelHorizontalLocation.get(roomInitial)); 
+			}
+		}
 	}
 
 	public void loadBoard() throws BadConfigFormatException, FileNotFoundException {
@@ -147,7 +167,7 @@ public class Board extends JPanel {
 		while(reader.hasNextLine()) {
 			String line = reader.nextLine();
 			String[] individual = line.split(", ");
-			if((individual.length == 2 || individual.length == 3) && individual[0].length() != 0 && individual[1].length() != 0) {
+			if((individual.length == 2 || individual.length == 3 || individual.length == 5 ) && individual[0].length() != 0 && individual[1].length() != 0) {
 				char key = individual[0].charAt(0);
 				String entry = individual[1];
 				rooms.put(key,entry);
@@ -157,6 +177,15 @@ public class Board extends JPanel {
 						throw new BadConfigFormatException(individual[2] + " cannot be converted to a proper Color.");
 					}
 					roomColors.put(key,color);
+				}
+				if(individual.length == 5) {
+					Color color = convertColor(individual[2]);
+					if(color == null) { 
+						throw new BadConfigFormatException(individual[2] + " cannot be converted to a proper Color.");
+					}
+					roomColors.put(key,color);
+					roomLabelVerticalLocation.put(key, Integer.parseInt(individual[3]));
+					roomLabelHorizontalLocation.put(key, Integer.parseInt(individual[4]));
 				}
 				if(counter == WHICH_LINE_IS_WALKWAY){
 					walkwayChar = individual[0];

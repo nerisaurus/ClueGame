@@ -91,7 +91,7 @@ public class ClueGame extends JFrame{
 	private void setupFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("SpaceClue");
-		setSize(500, 500);
+		setSize(625, 625);
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
