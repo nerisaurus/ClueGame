@@ -111,7 +111,7 @@ public class GameSetupTests {
 
 	@Test
 	public void goodSolutionFormed() {
-		//clue.buildSolution();
+		clue.buildSolution();
 		// Just want to make sure that the solution has exactly
 		// one person, one weapon, and one room.
 		// To test this we'll look at each card in the solution,
