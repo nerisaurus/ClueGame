@@ -32,7 +32,7 @@ public class Board extends JPanel {
 
 	//Handy Size Variables for Drawing Purposes:
 	private int panelHeight, panelWidth;
-	private int cellDimensions = 20;
+	private int cellDimensions = 24;
 
 	//Logic to Allow for different Legends:
 	//Tells us which character maps to "Space" or "Walkway"

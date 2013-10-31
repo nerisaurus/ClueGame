@@ -118,6 +118,8 @@ public class Player {
 	
 	void draw(Graphics g, int cellDimensions) {
 		g.setColor(color);
-		g.fillOval(cellDimensions * col, cellDimensions * row, cellDimensions, cellDimensions);
+		int playerSize = cellDimensions / 2; //for aesthetic's sake.
+		int offset = (cellDimensions - playerSize) / 2;
+		g.fillOval(cellDimensions * col + offset, cellDimensions * row + offset, playerSize, playerSize);
 	}
 }
