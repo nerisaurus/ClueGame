@@ -40,6 +40,9 @@ public class Board extends JPanel {
 	//Handy Size Variables for Drawing Purposes:
 	private int panelHeight, panelWidth;
 	private int cellDimensions = 24;
+	
+	//Turn logic:
+	private boolean highlightTargets;
 
 	//Logic to Allow for different Legends:
 	//Tells us which character maps to "Space" or "Walkway"
@@ -96,6 +99,9 @@ public class Board extends JPanel {
 		drawGrid(g);
 		drawPlayers(g);
 		drawLabels(g);
+		if(highlightTargets){
+			drawTargets(g);
+		}
 	}
 
 	public void drawGrid(Graphics g) {
@@ -128,6 +134,12 @@ public class Board extends JPanel {
 				g2.setColor(Color.BLACK);
 				g2.drawString(rooms.get(roomInitial),roomLabelVerticalLocation.get(roomInitial),roomLabelHorizontalLocation.get(roomInitial)); 
 			}
+		}
+	}
+	
+	public void drawTargets(Graphics g) {
+		for(BoardCell target : targets){
+			target.highlight(g, cellDimensions);
 		}
 	}
 

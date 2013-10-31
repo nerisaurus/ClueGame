@@ -69,7 +69,7 @@ public class ComputerPlayer extends Player {
 		ArrayList<Integer> potentialTargetLocations = new ArrayList<Integer>();
 
 		board.startTargets(getStartingRow(), getStartingColumn(), steps);
-		potentialTargets = board.getTargets();
+		potentialTargets = board.getTargets(); 
 
 		for(BoardCell target : potentialTargets) {
 			if(target.isRoom()){

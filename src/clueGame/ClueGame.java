@@ -233,6 +233,12 @@ public class ClueGame extends JFrame{
 		}
 		reader.close();
 	}
+	
+	public int rollDie() { //rolls a 6-sided die (or simulates that, with Random)
+		Random die = new Random();
+		int roll = die.nextInt(6) + 1;
+		return roll;
+	}
 
 	// GETTERS ****************************************************************
 	// Used for testing purposes only. (or are they?)

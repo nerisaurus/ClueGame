@@ -1,3 +1,102 @@
+* Removed some extraneous files.
+* Some minor changes.
+*   Merge branch 'master' of https://github.com/nwunder/ClueGame
+|\  
+| * added a bool to the game constructor to omit certian method calls from running twice in the tests
+* | .
+|/  
+*   Merge branch 'master' of https://github.com/nwunder/ClueGame
+|\  
+| * Added double functionality for legend label coordinates (mostly to have -.5's, so things center slightly better.  This needs the Double vertical and Double horizontal method variables.
+* | getting some tests to pass
+|/  
+* Fixed legend crash.
+*   Merge branch 'master' of https://github.com/nwunder/ClueGame
+|\  
+| * put jframe size back
+| *   fixed conflicts
+| |\  
+| * | added room labels
+* | | Made Exit option on menu actually exit.
+| |/  
+|/|   
+* | Tweaks to variables for aesthetic purposes.
+* | Added player drawing logic.  Player class now has a draw function (and I renamed startingRow and startingColumn to row and col, since those variables still hold location once the player moves - just a little thing that was bugging me).  Board gets passed the list of players when it is created in ClueGame (via setPlayerList or something like that), and Board.paintComponent draws all players.
+* | Made ClueGame setSize base itself on the board's size.  However, this is too small for some reason.
+* | Now with TECHNICOLOR (we make no claim to astronomical accuracy)
+* | Minor graphical changes.
+|/  
+* Resizing.
+* Board fixed.  getHeight and getWidth replaced with method names which don't override anything.
+* Adjusting size, description text, etc. in Detective notes.  Might as well make the probably-not-necessary logic I wrote up look fancy.
+* Finished logic to update the 'best guess' parts of the Detective notes (again - this is all in SuspectsPanel now). ...and, just as I have a really elegant and powerful system working (including an 'Unsure' option which appears whenever there are more than 2 possible suspects)... I take another look at the requirements and, well, it doesn't look like the code actually had to do anything after all.  Oh well, our code is awesome, at least.
+* Reduced the three detective subpanels into one: SuspectsPanel
+*   Merge branch 'master' of https://github.com/nwunder/ClueGame
+|\  
+| * combo box layout consistent
+* | Tests on WeaponPanel
+|/  
+*   Merge branch 'master' of https://github.com/nwunder/ClueGame
+|\  
+| *   Added Space Station drawing logic.  Cannot test appearance due to larger board display errors.
+| |\  
+| * | Started making logic for doorway drawing. Still can't find why board doesn't display correctly.
+* | | added combo boxes. just needs some logic to get suggested play working
+| |/  
+|/|   
+* | all three check box panels up
+|/  
+* people panel is working. constructor issues, it was working as a test but not as an app. needed to beef up the constructor to call setup methods
+* changed constructor call to match constructor call in tests
+* adding files that git commit -a -m didn't add git add -A
+* added call to new board in default constructor
+*   Merge branch 'master' of https://github.com/nwunder/ClueGame
+|\  
+| * Added draw functions for RoomCell and WalkwayCell, which use cellDimensions to size themselves and the BoardCell color to fill in the proper color.
+| * Added panelHeight and panelWidth (with appropriate getter methods) to the Board class.  These are integer values.  There is also a cellDimensions integer variable which is used to calculate these.
+| * Made an abstract method draw in BoardCell.
+| * loadBoard now pushes the color (from the legend) to BoardCells when they are created.
+| * Color changes.
+* | adding a call to board. needs code to work though (with i just need to pull)
+* | detective notes dialog pops up
+* | basic JFrame running in ClueGame. simple menu added.
+|/  
+* Removed an unnecessary function (previously used to check stuff for debugging
+* I was an idiot with Linked Lists.  Fixed that.
+* Removed the print line from GameActionTests - it was annoying me (even though I think I was the one who originally put it in).
+*   (re)Fixed test (accidentally undid an important change in one of my tests)
+|\  
+| * conflicts resolved
+* | Just to get git to cooperate
+|/  
+* Fixed conflicts in ComputerPlayer
+* conflict mess part 1
+*   fixed conflicts
+|\  
+| * passing test ClueGame will look though a linked list of players for suggestions
+| * failing test to look at all players in the game to find a matching suggestion
+| * moved disproveSuggestions method to the player class from humanPlayer. I guess humans can't pick which card to reveal.
+| * passing test for picking a random card. needed to fix test to only get one random card each time through the loop. altered test logic too.
+| * failing test to see that the player picks a random card
+| * passing first disprove human test
+| * updated test to only look at human player for now
+* | Tests for making suggestions now pass.  If git let me use exclamation marks, I would use them here.
+* | Moved a lot of logic from Player into the subclasses.  Tests still pass as before.
+* | Failing tests for making suggestions finished.
+* | Tests for making suggestions added.  Still figuring out setup logistics - so these aren't the finished failing tests yet.
+* |   Merging in the target tests.
+|\ \  
+| |/  
+| * oops fixed call to constructor
+* | Added logic to reset lastVisited upon visiting a new room.  All target tests pass.
+* | Typo in test. No longer throws error (but still fails - progress)
+* | Targeting logic added.  Randomness passes the test, but it's room priority seems to be causing errors.
+* | Bugfixes and initial work on pickTarget logic (still fails tests)
+* | Cleaned up tests (and split into two, for clarity). Still failing, since no changes have been made to the main code.
+* | Failing target tests implemented.
+* | Minor changes to set up for test.  Adding useful getters to Player, ClueGame, etc.
+|/  
+* first failing disprove suggestion test
 * Fixed silly console printing error.
 * Cleaned up test (using assertTrue/assertFalse rather than assertEquals(true... etc.
 * testAccusations now passes (although I had to fix a misplaced index in the process)
