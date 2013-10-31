@@ -125,7 +125,6 @@ public class Board extends JPanel {
 		for(Character roomInitial: rooms.keySet()){
 			if(roomLabelVerticalLocation.containsKey(roomInitial)){
 				g2 = (Graphics2D)g;
-				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 				g2.setColor(Color.BLACK);
 				g2.drawString(rooms.get(roomInitial),roomLabelVerticalLocation.get(roomInitial),roomLabelHorizontalLocation.get(roomInitial)); 
 			}

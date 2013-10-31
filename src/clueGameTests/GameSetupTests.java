@@ -35,7 +35,7 @@ public class GameSetupTests {
 	public void setUp() {
 		clue = new ClueGame(LEGEND, BOARD,
 							PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS);
-		clue.loadConfigFiles();
+		//clue.loadConfigFiles();
 	}
 	
 	@Test
