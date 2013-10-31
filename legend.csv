@@ -1,11 +1,11 @@
-H, Mercury, GRAY
-V, Venus, ORANGE
-E, Earth, GREEN
-M, Mars, RED
-J, Jupiter, MAGENTA
-S, Saturn, PINK
-U, Uranus, CYAN
-N, Neptune, BLUE
-P, Pluto, LIGHT_GRAY
-X, Sun, YELLOW
-O, Space, BLACK
+H, Mercury, GRAY, 300, 30
+V, Venus, ORANGE, 450, 250
+E, Earth, GREEN, 180, 80
+M, Mars, RED, 60, 60
+J, Jupiter, MAGENTA, 400, 450
+S, Saturn, PINK, 430, 100
+U, Uranus, CYAN, 50, 450
+N, Neptune, BLUE, 30, 220
+P, Pluto, LIGHT_GRAY, 200, 470
+X, Sun, YELLOW, 230, 230
+O, Space, BLACK, 110, 0
