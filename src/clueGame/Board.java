@@ -28,7 +28,7 @@ public class Board extends JPanel {
 	private Map<Integer, LinkedList<Integer>> adjacencyMatrix;
 	
 	private int panelHeight, panelWidth;
-	private int cellDimensions = 30;
+	private int cellDimensions = 20;
 	
 	//Tells us which character maps to "Space" or "Walkway"
 	private String walkwayChar;
