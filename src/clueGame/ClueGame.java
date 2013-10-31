@@ -313,8 +313,12 @@ public class ClueGame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				String message = "Exit";
-				JOptionPane.showMessageDialog(null, message);
+				String message = "Are you sure?";
+				String title = "Goodbye?";
+				int exit = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+				if(exit == JOptionPane.YES_OPTION){
+					System.exit(0);
+				}
 			}
 		}
 		exit.addActionListener(new MenuItemListener());

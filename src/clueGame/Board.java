@@ -100,6 +100,7 @@ public class Board extends JPanel {
 	}
 	
 	public void drawPlayers(Graphics g) {
+		int test_counter = 0;
 		for(Player player : players.get("Human")){
 			player.draw(g, cellDimensions);
 		}
