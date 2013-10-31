@@ -203,9 +203,11 @@ public class Board extends JPanel {
 					if(color == null) { 
 						throw new BadConfigFormatException(individual[2] + " cannot be converted to a proper Color.");
 					}
-					roomColors.put(key,color);
-					roomLabelVerticalLocation.put(key, Integer.parseInt(individual[3]));
-					roomLabelHorizontalLocation.put(key, Integer.parseInt(individual[4]));
+					roomColors.put(key,color); 
+					Double vertical = (Double.parseDouble(individual[3]) * cellDimensions);
+					Double horizontal = (Double.parseDouble(individual[4]) * cellDimensions);
+					roomLabelVerticalLocation.put(key, vertical.intValue());
+					roomLabelHorizontalLocation.put(key, horizontal.intValue());
 				}
 				if(counter == WHICH_LINE_IS_WALKWAY){
 					walkwayChar = individual[0];
