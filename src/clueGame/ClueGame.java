@@ -106,10 +106,7 @@ public class ClueGame extends JFrame{
 		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
 
 		//Setting Frame Size
-		int frameHeight = 0, frameWidth = 0;
-		frameHeight += board.getPanelHeight();
-		frameWidth += board.getPanelWidth();
-		board.setPreferredSize(new Dimension(frameWidth, frameHeight));
+		board.setPreferredSize(new Dimension(board.getPanelWidth(), board.getPanelHeight()));
 		pack();
 		//setSize(frameWidth,frameHeight);
 
