@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -108,7 +109,10 @@ public class ClueGame extends JFrame{
 		int frameHeight = 0, frameWidth = 0;
 		frameHeight += board.getPanelHeight();
 		frameWidth += board.getPanelWidth();
-		setSize(frameHeight,frameWidth);
+		board.setPreferredSize(new Dimension(frameWidth, frameHeight));
+		pack();
+		//setSize(frameWidth,frameHeight);
+
 	}
 
 	public void loadConfigFiles() {
