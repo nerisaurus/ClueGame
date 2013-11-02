@@ -20,33 +20,36 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class ClueGame extends JFrame{
+	//File Names
 	public static final String BOARD = "board.csv";
-	public static final String LEGEND = "legend.csv";
-	//person_cards.csv format:
-	//	name,color,starting row,starting column
-	//the first player in the list is the human player.	
-	public static final String PERSON_CARDS = "person_cards.csv";
-	//weapon_cards.csv format:
-	//	
-	public static final String WEAPON_CARDS = "weapon_cards.csv";
-	//room_cards.csv format:
-	//	
-	public static final String ROOM_CARDS = "room_cards.csv";
+	public static final String LEGEND = "legend.csv"; // format: room character, room name, color, label y position, label x position
+	public static final String PERSON_CARDS = "person_cards.csv"; // format: name, color, starting row, starting col. (first player is human)
+	public static final String WEAPON_CARDS = "weapon_cards.csv"; // format: name
+	public static final String ROOM_CARDS = "room_cards.csv"; //format: name
 
-
+	//The important stuff: Board, list of players, deck of cards, Solution
 	private Board board;
 	private Map<String, LinkedList<Player>> players; // see note in constructor
 	private LinkedList<Card> deck;
 	private Solution solution;
 	private int numPeople, numWeapons, numRooms;
 
-	//file strings
+	//These store which file is which:
 	private String peopleCardsFile;
 	private String weaponCardsFile;
 	private String roomCardsFile;
 
+	//Stuff Detective Notes
 	private DetectiveNotesDialog dNotes;
 	private ArrayList<String> people, rooms, weapons;
+	
+	//Boolean Game Logic
+	boolean gameOngoing; //false until game begins, false after someone wins.  Otherwise true.
+	boolean playerTurn; //true if it is the player's turn
+	boolean hasActed; //true if the player has either: made a move, or made an accusation this round
+	boolean suggestionDialogOpen; //set to true when the suggestion dialog is opened, and false when it is closed
+	boolean accusationDialogOpen; //as the above, but for the accusation dialog
+	//(and don't forget Board's highlightTargets boolean, which isn't here but has a similar purpose)
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
@@ -107,9 +110,8 @@ public class ClueGame extends JFrame{
 
 		//Setting Frame Size
 		board.setPreferredSize(new Dimension(board.getPanelWidth(), board.getPanelHeight()));
+		//Add further elements in here...
 		pack();
-		//setSize(frameWidth,frameHeight);
-
 	}
 
 	public void loadConfigFiles() {
@@ -239,6 +241,66 @@ public class ClueGame extends JFrame{
 		Random die = new Random();
 		int roll = die.nextInt(6) + 1;
 		return roll;
+	}
+	
+	//Validity checks: these methods answer the question "Should this click do anything right now?"
+	public boolean isValidEndTurn(){
+		//The player must have a turn to be ending, must have already acted, and can't have other critical dialogs open at the time
+		if(playerTurn && hasActed && !accusationDialogOpen && !suggestionDialogOpen) {
+			return true;
+		} else {
+			String message = null;
+			if(!playerTurn){
+				message = "It is not your turn.";
+			} else if(!hasActed) {
+				message = "Please move or make an accusation first.";
+			} else if(accusationDialogOpen) {
+				message = "You cannot end your turn while making an accusation.";
+			} else if(suggestionDialogOpen){
+				message = "You cannot end your turn while making a suggestion.";
+			}
+			//we give them a notification of what they're doing wrong and then do nothing:
+			JOptionPane.showMessageDialog(null, message);
+			return false;
+		}
+	}
+	
+	public boolean isValidAccusationTime(){
+		//It must be the player's turn, she must have not already
+		//acted (moved or made an earlier accusation) and can't have other critical dialogs open at the time
+		//(suggestionDialogOpen isn't relevant, since suggestions are only made after moves)
+		if(playerTurn && !hasActed && !accusationDialogOpen) {
+			return true;
+		} else {
+			String message = null;
+			if(!playerTurn){
+				message = "It is not your turn.";
+			} else if(hasActed) {
+				message = "You have already acted this round.  Sorry.";
+			} else if(accusationDialogOpen) {
+				message = "You are already making an accusation.";
+			}
+			//we give them a notification of what they're doing wrong and then do nothing:
+			JOptionPane.showMessageDialog(null, message);
+			return false;
+		}
+	}
+	
+	public boolean isValidBoardClick(){
+		//This is just to check whether clicking on the board at all is valid.
+		//This does not check whether the particular click location is a valid
+		//target.  Thus all we need to know is that the player hasn't already moved,
+		//(but that it is his turn), and doesn't have an accusation dialog open.
+		if(playerTurn && !hasActed && !accusationDialogOpen) {
+			return true;
+		} else {
+			//Since the board isn't a button, we don't expect players
+			//to feel it is unresponsive if it doesn't respond to random
+			//clicking.  Instead, having dialogs telling them that they
+			//shouldn't click could be bothersome.  Thus, we just don't
+			//respond at all to invalid clicks.
+			return false;
+		}
 	}
 
 	// GETTERS ****************************************************************
