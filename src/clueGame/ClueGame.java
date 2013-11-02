@@ -243,7 +243,12 @@ public class ClueGame extends JFrame{
 		return roll;
 	}
 	
-	//Validity checks: these methods answer the question "Should this click do anything right now?"
+	public void aiTurn(Player ai) {
+		//TODO:
+	}
+	
+	//BUTTON VALIDITY CHECKS: *************************
+	//these methods answer the question "Should this click do anything right now?"
 	public boolean isValidEndTurn(){
 		//The player must have a turn to be ending, must have already acted, and can't have other critical dialogs open at the time
 		if(playerTurn && hasActed && !accusationDialogOpen && !suggestionDialogOpen) {
@@ -302,6 +307,74 @@ public class ClueGame extends JFrame{
 			return false;
 		}
 	}
+	
+	//BUTTON ACTIONS *******************************************
+	//If the Button or Mouse Click is valid, call these guys:
+	//THESE ASSUME THAT THE ACTION CALLED IS VALID as per the above methods.
+	public void EndTurn(){
+		//The turn ends, so we adjust our logic accordingly:
+		playerTurn = false;
+		
+		for(Player ai : players.get("Computer")){
+			aiTurn(ai);
+		}
+		//Set "Whose Turn" to the player's name
+		//TODO: (note: players.get("Human").getFirst().getName(); will get you the right name)
+		
+		//Roll the die
+		int humanRoll = rollDie();
+		
+		//Set the diePanel to display this roll
+		//TODO: (note: just use humanRoll to set - should be easy as cake)
+		
+		//Calculate Targets:
+		players.get("Human").getFirst().pickTarget(humanRoll, board);
+		
+		//Now we're ready for the player's turn to begin
+		playerTurn = true;
+		board.highlightTargets = true;
+		hasActed = false;
+		
+		//And repaint the board (targets are now highlighted)
+		board.repaint();
+	}
+	
+	public void makeAccusation(){
+		
+	}
+	
+	public void boardClick(int x, int y){ //pass in the raw x,y data of a mouse click.  This'll calculate its board location for you.
+		//Calculate location: the floor of the point divided by cell size
+		int cellX, cellY;
+		cellX = x / board.getCellDimensions();
+		cellY = y / board.getCellDimensions();
+		
+		//Check if location is valid:
+		boolean validTarget = false;
+		for(BoardCell target : board.getTargets()) {
+			if(cellX == target.getCol() && cellY == target.getRow()) {
+				validTarget = true;
+			}
+		}
+		
+		if(validTarget) {
+			//Move the player
+			players.get("Human").getFirst().setLocation(cellX, cellY); 
+			//"getFirst()" Only one human player - but more complicated logic could be used if we wanted to expand for
+			//multiple players.
+			
+			//Since the player has moved, we set our game logic to note this:
+			hasActed = true;
+			board.highlightTargets = false;
+			
+			//Since the board has changed, we repaint the board
+			board.repaint();
+		} else {
+			return;
+		}
+		
+	}
+	
 
 	// GETTERS ****************************************************************
 	// Used for testing purposes only. (or are they?)

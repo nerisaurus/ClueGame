@@ -19,7 +19,7 @@ import clueGame.RoomCell.DoorDirection;
  * Note that more fields will be added when we 
  * program the GUI.
  */
-public class Player {
+public abstract class Player {
 	private String name;
 	private Color color;
 	private int row;
@@ -99,9 +99,7 @@ public class Player {
 		this.col = startingColumn;
 	}
 
-	public int pickTarget(int steps, Board board) {
-		return 0; //Overridden by ComputerPlayer and HumanPlayer
-	}
+	abstract public int pickTarget(int steps, Board board);
 
 	public void seesCard(Card card) {
 		return; //Overridden by ComputerPlayer
@@ -112,7 +110,7 @@ public class Player {
 	}
 
 	public Solution makeSuggestion(Card roomCard) {
-		return null; //Overridden by both HumanPlayer and ComputerPlayer
+		return null; //Overridden by ComputerPlayer
 	}
 	
 	

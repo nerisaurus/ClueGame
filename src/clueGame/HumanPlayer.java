@@ -11,10 +11,11 @@ public class HumanPlayer extends Player {
 	public HumanPlayer(String name, String color, int startingRowPosition, int startingColumnPosition) {
 		super(name, color, startingRowPosition, startingColumnPosition);
 	}
-	
+
 	@Override
-	public Solution makeSuggestion(Card roomCard) {
-		return null; //TODO: Overwrite
+	public int pickTarget(int steps, Board board) { //Calculates possible targets so that the human can pick them:
+		board.startTargets(getStartingRow(), getStartingColumn(), steps);
+		return -1;
 	}
 
 }

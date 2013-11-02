@@ -41,8 +41,8 @@ public class Board extends JPanel {
 	private int panelHeight, panelWidth;
 	private int cellDimensions = 24;
 	
-	//Turn logic:
-	private boolean highlightTargets;
+	//Turn logic: (package variable, since it is used primarily in ClueGame)
+	boolean highlightTargets;
 
 	//Logic to Allow for different Legends:
 	//Tells us which character maps to "Space" or "Walkway"
@@ -347,6 +347,7 @@ public class Board extends JPanel {
 		}
 	}
 
+	//Getters and Setters (rearrange later)
 	public RoomCell getRoomCellAt(int row, int col) {
 		return getRoomCellAt(calcIndex(row,col));
 	}
@@ -416,6 +417,10 @@ public class Board extends JPanel {
 	public void setPlayerMap(Map<String, LinkedList<Player>> players) {
 		this.players = players;
 	}
+	
+	public void setCellDimensions(int cellDimensions){
+		this.cellDimensions = cellDimensions;
+	}
 
 	public int getPanelHeight() {
 		return panelHeight;
@@ -423,6 +428,10 @@ public class Board extends JPanel {
 
 	public int getPanelWidth() {
 		return panelWidth;
+	}
+	
+	public int getCellDimensions() {
+		return cellDimensions;
 	}
 
 	// Be sure to trim the color, we don't want spaces around the name

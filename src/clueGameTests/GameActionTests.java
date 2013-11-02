@@ -114,7 +114,7 @@ public class GameActionTests {
 		Card lightsaberCard = new Card("Lightsaber", CardType.WEAPON);
 		Card androidCard = new Card("Android Orange", CardType.PERSON);		
 		
-		Player p = new Player();
+		Player p = new ComputerPlayer();
 		
 		//Test for one player, one correct match
 		Solution badSuggestion = new Solution(androidCard, lightsaberCard, marsCard);
