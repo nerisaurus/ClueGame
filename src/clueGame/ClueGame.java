@@ -160,12 +160,17 @@ public class ClueGame extends JFrame{
 	public Card handleSuggestion(Player accusingPlayer, Solution suggestion) {
 		for(Player p: getPlayersSansCurrent(accusingPlayer)) {
 			Card c = p.disproveSuggestion(suggestion);
-			if(c != null)
+			if(c != null) {
+				//TODO: Update Suggestion Log:
+				//Add accusingPlayer, suggestion, c, true
 				return c;
+			}
 		}
 		
 		//And if it's not disproven:
 		goodAccusation = suggestion;
+		//TODO: Update Suggestion Log
+		//Add accusingPlayer, suggestion, null, false
 		return null;
 	}
 
@@ -263,26 +268,32 @@ public class ClueGame extends JFrame{
 		//Adjust DiePanel to show this roll
 		//TODO: (just use aiRoll to set it - should be easy as cake)
 		
+		//Timer to simulate gameplay:
+		//TODO: Add a short timer (1 or 2 seconds - long enough so people know it's there, but not long enough that it's annoying)
+		
 		//Should we make an accusation?
 		if(ai.makeAccusation(goodAccusation) != null) {
 			testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
 		} else {
+			//Move:
 			ai.pickTarget(aiRoll, board);
+			
+			//Are they in a room now?
+			if(board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) != null) {
+				//Make a suggestion:
+				//TODO: Convert " board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) " into
+				//a Room CARD to pass to ai.makeSuggestion().  Call it roomCard. Then uncomment this:
+				
+				/*
+				Solution suggestion = ai.makeSuggestion(roomCard);
+				handleSuggestion(ai, suggestion);
+				*/
+				
+			}
+			
+			//And, of course, we have to repaint our board if they moved
+			board.repaint();
 		}
-		
-	/*	roll die
-		change the die picture to match
-
-		should the player make an accusation? If so, make an accusation.
-		If not, continue:
-
-		calculate targets
-		select a valid target
-		move the player to that space
-
-		is this space a room? If not, stop.
-
-		make a suggestion.*/
 	}
 	
 	//BUTTON VALIDITY CHECKS: *************************
@@ -416,6 +427,12 @@ public class ClueGame extends JFrame{
 			
 			//Since the board has changed, we repaint the board
 			board.repaint();
+			
+			if(board.getRoomCellAt(cellY, cellX) != null) {
+				//TODO: Pop up the suggestion dialog.  Set suggestionDialogOpen = true and do
+				//all the other logic associated with starting up a suggestion (although
+				//the suggestion dialog buttons will work out actually moving players and such)
+			}
 		} else {
 			return;
 		}
