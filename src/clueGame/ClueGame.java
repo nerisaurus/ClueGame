@@ -50,6 +50,9 @@ public class ClueGame extends JFrame{
 	boolean suggestionDialogOpen; //set to true when the suggestion dialog is opened, and false when it is closed
 	boolean accusationDialogOpen; //as the above, but for the accusation dialog
 	//(and don't forget Board's highlightTargets boolean, which isn't here but has a similar purpose)
+	
+	//Similarly, here's a bit of logic for the AI:
+	private Solution goodAccusation = null;
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
@@ -160,7 +163,9 @@ public class ClueGame extends JFrame{
 			if(c != null)
 				return c;
 		}
-
+		
+		//And if it's not disproven:
+		goodAccusation = suggestion;
 		return null;
 	}
 
@@ -243,8 +248,41 @@ public class ClueGame extends JFrame{
 		return roll;
 	}
 	
+	public void testAccusation(Solution accusation, String name, boolean isPlayer){
+		if(solution.equals(accusation)) {
+			gameOngoing = false; //The game has ended
+			//TODO: Declare Winner
+		}
+	}
 	public void aiTurn(Player ai) {
-		//TODO:
+		//TODO: Finish implementation:
+		
+		//Roll Die:
+		int aiRoll = rollDie();
+		
+		//Adjust DiePanel to show this roll
+		//TODO: (just use aiRoll to set it - should be easy as cake)
+		
+		//Should we make an accusation?
+		if(ai.makeAccusation(goodAccusation) != null) {
+			testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
+		} else {
+			ai.pickTarget(aiRoll, board);
+		}
+		
+	/*	roll die
+		change the die picture to match
+
+		should the player make an accusation? If so, make an accusation.
+		If not, continue:
+
+		calculate targets
+		select a valid target
+		move the player to that space
+
+		is this space a room? If not, stop.
+
+		make a suggestion.*/
 	}
 	
 	//BUTTON VALIDITY CHECKS: *************************
@@ -340,7 +378,16 @@ public class ClueGame extends JFrame{
 	}
 	
 	public void makeAccusation(){
+		//This necessitates a change to our logic:
+		accusationDialogOpen = true;
+		board.highlightTargets = false; 
 		
+		//And of course a repaint:
+		board.repaint();
+		//TODO: make sure that closing the Accusation Dialog without making an accusation will re-highlight the board
+		
+		//Pop up the Accusation Dialog
+		//TODO:
 	}
 	
 	public void boardClick(int x, int y){ //pass in the raw x,y data of a mouse click.  This'll calculate its board location for you.

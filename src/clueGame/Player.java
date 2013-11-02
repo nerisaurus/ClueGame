@@ -81,11 +81,11 @@ public abstract class Player {
 		return color;
 	}
 	
-	public int getStartingRow() {
+	public int getCurrentRow() {
 		return row;
 	}
 	
-	public int getStartingColumn() {
+	public int getCurrentColumn() {
 		return col;
 	}
 	
@@ -94,9 +94,9 @@ public abstract class Player {
 	}
 	
 	
-	public void setLocation(int startingRow, int startingColumn) {
-		this.row = startingRow;
-		this.col = startingColumn;
+	public void setLocation(int newRow, int newColumn) {
+		this.row = newRow;
+		this.col = newColumn;
 	}
 
 	abstract public int pickTarget(int steps, Board board);
@@ -119,5 +119,9 @@ public abstract class Player {
 		int playerSize = cellDimensions / 2; //for aesthetic's sake.
 		int offset = (cellDimensions - playerSize) / 2;
 		g.fillOval(cellDimensions * col + offset, cellDimensions * row + offset, playerSize, playerSize);
+	}
+
+	public Solution makeAccusation(Solution goodAccusation) {
+		return null; //Overriden by Computer Player
 	}
 }

@@ -61,14 +61,14 @@ public class ComputerPlayer extends Player {
 
 	//pickTarget: takes a number of steps (dice roll) and Board object
 	//(the surrounding board) and returns the index of the square it
-	//(semi-randomly) chooses to move to
+	//(semi-randomly) chooses to move to. (also moves the player there, of course)
 	@Override
 	public int pickTarget(int steps, Board board) {
 		Random random = new Random();
 		Set<BoardCell> potentialTargets;
 		ArrayList<Integer> potentialTargetLocations = new ArrayList<Integer>();
 
-		board.startTargets(getStartingRow(), getStartingColumn(), steps);
+		board.startTargets(getCurrentRow(), getCurrentColumn(), steps);
 		potentialTargets = board.getTargets(); 
 
 		for(BoardCell target : potentialTargets) {
@@ -76,6 +76,7 @@ public class ComputerPlayer extends Player {
 				RoomCell roomTarget = (RoomCell) target;
 				if(roomTarget.getInitial() != lastVisited) {
 					lastVisited = roomTarget.getInitial();
+					setLocation(roomTarget.getRow(), roomTarget.getCol());
 					return board.calcIndex(roomTarget.getRow(), roomTarget.getCol());
 				}
 			}
@@ -84,7 +85,15 @@ public class ComputerPlayer extends Player {
 
 		int pick = random.nextInt(potentialTargetLocations.size());
 
+		//TODO: Get the row and column of potentialTargetLocations.get(pick) and put those into
+		//setLocation(row,column).
 		return potentialTargetLocations.get(pick);
+	}
+	
+	@Override
+	public Solution makeAccusation(Solution goodAccusation) {
+		//TODO: Add logic for other Accusation possibilities.
+		return goodAccusation;
 	}
 	
 	public char getLastVisited(){

@@ -14,7 +14,7 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public int pickTarget(int steps, Board board) { //Calculates possible targets so that the human can pick them:
-		board.startTargets(getStartingRow(), getStartingColumn(), steps);
+		board.startTargets(getCurrentRow(), getCurrentColumn(), steps);
 		return -1;
 	}
 
