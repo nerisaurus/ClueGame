@@ -2,8 +2,11 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -18,6 +21,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import clueGameGUI.ClueControlFrame;
+import clueGameGUI.MyCardsPanel;
 
 public class ClueGame extends JFrame{
 	//File Names
@@ -53,10 +60,18 @@ public class ClueGame extends JFrame{
 	
 	//Similarly, here's a bit of logic for the AI:
 	private Solution goodAccusation = null;
+	
+	//Two Panels for the JFram
+	JPanel mainPanel, sidePanel;
+	public ClueControlFrame ccf = new ClueControlFrame();
+	public MyCardsPanel mcp;
+	
+	//get buttons
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
 		this.board = new Board();
+		
 		this.board.setPlayerMap(players);
 		this.people = new ArrayList<String>();
 		this.rooms = new ArrayList<String>();
@@ -72,7 +87,7 @@ public class ClueGame extends JFrame{
 		this.people = new ArrayList<String>();
 		this.rooms = new ArrayList<String>();
 		this.weapons = new ArrayList<String>();
-
+		
 		//setup empty players hash
 		// NOTE: There may be some coding overhead to maintain this but
 		// it insures that we always know where the human player is
@@ -96,10 +111,22 @@ public class ClueGame extends JFrame{
 			loadConfigFiles();
 			buildSolution();
 			dealCards();
+			this.ccf = new ClueControlFrame();
+			this.mcp = new MyCardsPanel((HumanPlayer)getAllPlayers().getFirst());
+			ccf.giveClueGame(this);
 			setupFrame();
+			addMouseListener(new boardClickListener());
 		}
 	}
-
+	class boardClickListener implements MouseListener{
+		public void mouseClicked(MouseEvent e) {
+			boardClick(e.getX(), e.getY());
+		}
+		public void mouseEntered(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) {}
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
+	}
 	//JFrame initialization methods
 	private void setupFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,13 +134,28 @@ public class ClueGame extends JFrame{
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
-
-		add(board);
+		//two halves
+		mainPanel = new JPanel();
+		mainPanel.add(board, BorderLayout.CENTER);
+		add(mainPanel, BorderLayout.WEST);
+		
+		sidePanel = new JPanel();
+		sidePanel.setLayout(new BorderLayout());
+		sidePanel.add(ccf, BorderLayout.CENTER);
+		sidePanel.add(mcp, BorderLayout.EAST);
+		add(sidePanel, BorderLayout.EAST);
+		
+		
 		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
 
 		//Setting Frame Size
 		board.setPreferredSize(new Dimension(board.getPanelWidth(), board.getPanelHeight()));
 		//Add further elements in here...
+		
+		
+		
+		
+		
 		pack();
 	}
 
@@ -365,13 +407,16 @@ public class ClueGame extends JFrame{
 		playerTurn = false;
 		
 		for(Player ai : players.get("Computer")){
+			ccf.setTurn(ai.getName());
 			aiTurn(ai);
 		}
 		//Set "Whose Turn" to the player's name
 		//TODO: (note: players.get("Human").getFirst().getName(); will get you the right name)
-		
+		ccf.setTurn(players.get("Human").getFirst().getName());
 		//Roll the die
+		
 		int humanRoll = rollDie();
+		ccf.setRoll(humanRoll);
 		
 		//Set the diePanel to display this roll
 		//TODO: (note: just use humanRoll to set - should be easy as cake)
@@ -404,6 +449,7 @@ public class ClueGame extends JFrame{
 	public void boardClick(int x, int y){ //pass in the raw x,y data of a mouse click.  This'll calculate its board location for you.
 		//Calculate location: the floor of the point divided by cell size
 		int cellX, cellY;
+		System.out.println("boardClickMethod");
 		cellX = x / board.getCellDimensions();
 		cellY = y / board.getCellDimensions();
 		
@@ -411,6 +457,7 @@ public class ClueGame extends JFrame{
 		boolean validTarget = false;
 		for(BoardCell target : board.getTargets()) {
 			if(cellX == target.getCol() && cellY == target.getRow()) {
+				
 				validTarget = true;
 			}
 		}
@@ -550,8 +597,18 @@ public class ClueGame extends JFrame{
 
 
 	public static void main(String[] args) {
-		ClueGame clue = new ClueGame(LEGEND, BOARD,
+		//Splash Screen, but will have to change it later
+		if (JOptionPane.showConfirmDialog(null, "Play a game of Clue?", "Clue", JOptionPane.YES_NO_OPTION) == 0){
+			ClueGame clue = new ClueGame(LEGEND, BOARD,
 				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
 		clue.setVisible(true);
+	    Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
+	    Dimension fd = clue.getSize(); 
+	    if (fd.height > sd.height) 
+	      fd.height = sd.height; 
+	    if (fd.width > sd.width) 
+	      fd.width = sd.width; 
+	    clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
+		}
 	}
 }

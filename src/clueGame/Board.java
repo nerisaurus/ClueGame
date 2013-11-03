@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -80,7 +82,10 @@ public class Board extends JPanel {
 		loadConfigFiles();
 		visited = new boolean[cells.size()];
 		calculateAdjacencies();
+		
 	}
+	
+	
 
 	public void loadConfigFiles() {
 		try {
@@ -446,5 +451,7 @@ public class Board extends JPanel {
 		}
 		return color;
 	}
+	
+	
 
 }

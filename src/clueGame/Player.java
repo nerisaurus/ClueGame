@@ -124,4 +124,6 @@ public abstract class Player {
 	public Solution makeAccusation(Solution goodAccusation) {
 		return null; //Overriden by Computer Player
 	}
+	
+
 }

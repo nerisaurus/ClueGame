@@ -17,5 +17,14 @@ public class HumanPlayer extends Player {
 		board.startTargets(getCurrentRow(), getCurrentColumn(), steps);
 		return -1;
 	}
+	
+	public String getCard(CardType type){
+		String s = "";
+		for (Card c : getHand())
+			if (c.getType().equals(type))
+				s += c.getName() + "\n";
+		s.trim();
+		return s;
+	}
 
 }
