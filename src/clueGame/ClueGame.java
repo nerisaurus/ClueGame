@@ -115,18 +115,10 @@ public class ClueGame extends JFrame{
 			this.mcp = new MyCardsPanel((HumanPlayer)getAllPlayers().getFirst());
 			ccf.giveClueGame(this);
 			setupFrame();
-			addMouseListener(new boardClickListener());
+			
 		}
 	}
-	class boardClickListener implements MouseListener{
-		public void mouseClicked(MouseEvent e) {
-			boardClick(e.getX(), e.getY());
-		}
-		public void mouseEntered(MouseEvent e) {}
-		public void mouseExited(MouseEvent e) {}
-		public void mousePressed(MouseEvent e) {}
-		public void mouseReleased(MouseEvent e) {}
-	}
+
 	//JFrame initialization methods
 	private void setupFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -135,9 +127,8 @@ public class ClueGame extends JFrame{
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
 		//two halves
-		mainPanel = new JPanel();
-		mainPanel.add(board, BorderLayout.CENTER);
-		add(mainPanel, BorderLayout.WEST);
+		board.addMouseListener(new boardClickListener());
+		add(board, BorderLayout.WEST);
 		
 		sidePanel = new JPanel();
 		sidePanel.setLayout(new BorderLayout());
@@ -159,6 +150,16 @@ public class ClueGame extends JFrame{
 		pack();
 	}
 
+	class boardClickListener implements MouseListener{
+		public void mouseClicked(MouseEvent e) {
+			boardClick(e.getX(), e.getY());
+		}
+		public void mouseEntered(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) {}
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
+	}
+	
 	public void loadConfigFiles() {
 		try {
 			loadDeck();
@@ -449,7 +450,6 @@ public class ClueGame extends JFrame{
 	public void boardClick(int x, int y){ //pass in the raw x,y data of a mouse click.  This'll calculate its board location for you.
 		//Calculate location: the floor of the point divided by cell size
 		int cellX, cellY;
-		System.out.println("boardClickMethod");
 		cellX = x / board.getCellDimensions();
 		cellY = y / board.getCellDimensions();
 		
