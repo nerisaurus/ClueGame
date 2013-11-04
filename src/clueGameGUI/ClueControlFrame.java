@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -19,26 +20,24 @@ import javax.swing.border.TitledBorder;
 import clueGame.ClueGame;
 
 public class ClueControlFrame extends JPanel{
+	JLabel currentPlayer;
 	JPanel turn;
 	JPanel suggestions;
 	ClueGame clue;
-	private JTextArea currentPlayer;
 	private DiePanel dp;
 	private JTextArea log;
 	private JPanel logger;
-	
+	String s = "rg";
 	public ClueControlFrame() {
 		//setSize(800,300);		
 		setLayout(new BorderLayout());
 		turn = new JPanel();
 		
 		turn.setLayout(new GridLayout(3,1));
-		turn.setBorder(new TitledBorder (new EtchedBorder(), "Turn"));
+		turn.setBorder(new TitledBorder (new EtchedBorder(), s));
 		dp = new DiePanel();
-		currentPlayer = new JTextArea(2, 10);
-		currentPlayer.setEditable(false);
-		currentPlayer.setWrapStyleWord(true);
-		currentPlayer.setLineWrap(true);
+		currentPlayer = new JLabel("");
+
 		turn.add(currentPlayer);
 		currentPlayer.setText(" ... ");
 		JButton nextPlayer = new JButton("End Turn");
@@ -92,7 +91,10 @@ public class ClueControlFrame extends JPanel{
 	
 	public void nextPlayer(){
 		clue.EndTurn();
-		
+	}
+	
+	public void setPlayersTurn(String s){
+		this.s = s;
 	}
 
 	public void giveClueGame(ClueGame clueGame) {
