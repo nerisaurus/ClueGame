@@ -23,7 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import clueGameGUI.ClueControlFrame;
+import clueGameGUI.ClueControlPanel;
 import clueGameGUI.MyCardsPanel;
 
 public class ClueGame extends JFrame{
@@ -61,10 +61,9 @@ public class ClueGame extends JFrame{
 	//Similarly, here's a bit of logic for the AI:
 	private Solution goodAccusation = null;
 	
-	//Two Panels for the JFram
-	JPanel mainPanel, sidePanel;
-	public ClueControlFrame ccf = new ClueControlFrame();
-	public MyCardsPanel mcp;
+	//Two Panels for the JFrame
+	ClueControlPanel controls;
+	//public ClueControlFrame ccf = new ClueControlFrame();
 	
 	//get buttons
 
@@ -111,9 +110,6 @@ public class ClueGame extends JFrame{
 			loadConfigFiles();
 			buildSolution();
 			dealCards();
-			this.ccf = new ClueControlFrame();
-			this.mcp = new MyCardsPanel((HumanPlayer)getAllPlayers().getFirst());
-			ccf.giveClueGame(this);
 			setupFrame();
 			addMouseListener(new boardClickListener());
 		}
@@ -135,27 +131,17 @@ public class ClueGame extends JFrame{
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());	
 		//two halves
-		mainPanel = new JPanel();
-		mainPanel.add(board, BorderLayout.CENTER);
-		add(mainPanel, BorderLayout.WEST);
-		
-		sidePanel = new JPanel();
-		sidePanel.setLayout(new BorderLayout());
-		sidePanel.add(ccf, BorderLayout.CENTER);
-		sidePanel.add(mcp, BorderLayout.EAST);
-		add(sidePanel, BorderLayout.EAST);
+		add(board, BorderLayout.CENTER);
+		controls = new ClueControlPanel(this, (HumanPlayer) players.get("Human").getFirst());
+		//sidePanel.add(mcp, BorderLayout.EAST);
+		add(controls, BorderLayout.EAST);
 		
 		
 		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
 
 		//Setting Frame Size
 		board.setPreferredSize(new Dimension(board.getPanelWidth(), board.getPanelHeight()));
-		//Add further elements in here...
-		
-		
-		
-		
-		
+		//Add further elements in here if needed.
 		pack();
 	}
 
@@ -407,16 +393,16 @@ public class ClueGame extends JFrame{
 		playerTurn = false;
 		
 		for(Player ai : players.get("Computer")){
-			ccf.setTurn(ai.getName());
+			controls.setTurn(ai.getName());
 			aiTurn(ai);
 		}
 		//Set "Whose Turn" to the player's name
 		//TODO: (note: players.get("Human").getFirst().getName(); will get you the right name)
-		ccf.setTurn(players.get("Human").getFirst().getName());
+		controls.setTurn(players.get("Human").getFirst().getName());
 		//Roll the die
 		
 		int humanRoll = rollDie();
-		ccf.setRoll(humanRoll);
+		controls.setRoll(humanRoll);
 		
 		//Set the diePanel to display this roll
 		//TODO: (note: just use humanRoll to set - should be easy as cake)

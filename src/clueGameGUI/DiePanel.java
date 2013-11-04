@@ -10,7 +10,6 @@ public class DiePanel extends JPanel {
 	ImageIcon dieFace;
 	JLabel dieFrame;
 	public DiePanel() { 	
-		setBorder(new TitledBorder (new EtchedBorder(), "Roll"));
 	    dieFace = new ImageIcon("zero.png"); 
 	    dieFrame = new JLabel(); 
 	    dieFrame.setIcon(dieFace); 
@@ -18,6 +17,7 @@ public class DiePanel extends JPanel {
 	    
 	}
 	
+	//TODO: Just Add in the images (or rather, new - slightly smaller - images)
 	public void setFace(int i){
 		switch (i){
 		case 1: {dieFrame.setIcon(new ImageIcon("one.png")); break;}
