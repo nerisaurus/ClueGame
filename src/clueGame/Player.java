@@ -94,7 +94,7 @@ public abstract class Player {
 	}
 	
 	
-	public void setLocation(int newRow, int newColumn) {
+	public void setLocation(int newColumn, int newRow) {
 		this.row = newRow;
 		this.col = newColumn;
 	}

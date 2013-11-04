@@ -53,6 +53,7 @@ public class Board extends JPanel {
 	private static final int WHICH_LINE_IS_WALKWAY = 11;
 	//We assume the 11th line of the legend file is the 'walkway'.
 	//Adjust if you need to.
+	private ClueGame c;
 
 	public Board() {
 		this.cells = new ArrayList<BoardCell>();
@@ -101,12 +102,16 @@ public class Board extends JPanel {
 	@Override 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		
 		drawGrid(g);
 		drawPlayers(g);
 		drawLabels(g);
 		if(highlightTargets){
 			drawTargets(g);
 		}
+		//g.setColor(Color.BLUE);
+		//g.drawRect(23, 23, 23, 23);
 	}
 
 	public void drawGrid(Graphics g) {
@@ -451,6 +456,7 @@ public class Board extends JPanel {
 		}
 		return color;
 	}
+
 	
 	
 
