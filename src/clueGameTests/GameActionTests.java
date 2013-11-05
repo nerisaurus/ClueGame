@@ -323,6 +323,22 @@ public class GameActionTests {
 		assertEquals("Galactic Senator Cyan", test_1.getPerson().getName());
 		assertEquals("Jupiter", test_1.getRoom().getName());
 		assertEquals("Lightsaber", test_1.getWeapon().getName());
+		
+		//Now the player sees some planets:
+		detective.seesCard(new Card("Mercury", CardType.ROOM));
+		detective.seesCard(new Card("Venus", CardType.ROOM));
+		detective.seesCard(new Card("Mars", CardType.ROOM));
+		detective.seesCard(new Card("Jupiter", CardType.ROOM));
+		detective.seesCard(new Card("Saturn", CardType.ROOM));
+		detective.seesCard(new Card("Uranus", CardType.ROOM));
+		detective.seesCard(new Card("Neptune", CardType.ROOM));
+		detective.seesCard(new Card("Pluto", CardType.ROOM));
+			
+		//There's one logical choice now:
+		Solution test_2 = detective.makeAccusation(null);
+		assertEquals("Galactic Senator Cyan", test_2.getPerson().getName());
+		assertEquals("Earth", test_2.getRoom().getName());
+		assertEquals("Lightsaber", test_2.getWeapon().getName());
 	}
 
 	@Test

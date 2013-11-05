@@ -18,7 +18,6 @@ public class MyCardsPanel extends JPanel{
 	
 	public MyCardsPanel(HumanPlayer hp) {
 		this.hp = hp;
-		//TODO:
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBorder(new TitledBorder (new EtchedBorder(), "My Cards"));
 		for(Card card : hp.getHand()) {

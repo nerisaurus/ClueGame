@@ -95,7 +95,28 @@ public class ComputerPlayer extends Player {
 	
 	@Override
 	public Solution makeAccusation(Solution goodAccusation) {
-		//TODO: AI Smartening. Add logic for other Accusation possibilities.
+		ArrayList<Card> unseenWeapons = new ArrayList<Card>(), unseenPeople = new ArrayList<Card>(), unseenRooms = new ArrayList<Card>();
+		for(Card unseen : unseenCards){
+			switch(unseen.getType()) {
+			case WEAPON:
+				unseenWeapons.add(unseen);
+				break;
+			case PERSON:
+				unseenPeople.add(unseen);
+				break;
+			case ROOM:
+				unseenRooms.add(unseen);
+				break;
+			}
+		}
+		
+		//If we only have one possible remaining solution, guess it:
+		if(unseenWeapons.size() == 1 && unseenPeople.size() == 1 && unseenRooms.size() == 1){
+			return new Solution(unseenPeople.get(0), unseenWeapons.get(0), unseenRooms.get(0));
+		}
+		
+		//If nothing else, this will return goodAccusation, which may be something the player "sees"
+		//from the rest of the board (if a suggestion was made but not disproven).
 		return goodAccusation;
 	}
 	
