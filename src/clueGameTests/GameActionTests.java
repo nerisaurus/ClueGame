@@ -2,6 +2,7 @@ package clueGameTests;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -214,6 +215,33 @@ public class GameActionTests {
 	}
 
 
+	@Test
+	public void testPlayerSwap() {
+		//Even with different types of players, can we swap data correctly?
+		ComputerPlayer swapFrom = new ComputerPlayer();
+		swapFrom.setName("Henry");
+		swapFrom.setColor(Color.DARK_GRAY);
+		swapFrom.setLocation(4,5);
+		
+		HumanPlayer swapTo = new HumanPlayer();
+		swapTo.setName("Richard");
+		swapTo.setColor(Color.CYAN);
+		swapTo.setLocation(8,9);
+		
+		swapTo.switchWithPlayer(swapFrom);
+		
+		//Check that Richard is now Henry
+		assertEquals("Henry", swapTo.getName());
+		assertEquals(Color.DARK_GRAY, swapTo.getColor());
+		assertEquals(5, swapTo.getCurrentRow());
+		assertEquals(4, swapTo.getCurrentColumn());
+		
+		//And Henry is now Richard
+		assertEquals("Richard", swapFrom.getName());
+		assertEquals(Color.CYAN, swapFrom.getColor());
+		assertEquals(9, swapFrom.getCurrentRow());
+		assertEquals(8, swapFrom.getCurrentColumn());
+	}
 	@Test
 	public void testTargets_RoomPriority() {
 		Board board = clue.getBoard();

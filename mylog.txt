@@ -1,3 +1,49 @@
+* handleSuggestion now only updates suggestion log if commanded to (mostly so that tests which are checking for its logic don't have to also create the suggestion log and all the GUI stuff that goes with that)
+* Added Disproved info in log.  Some word wrap to deal with, but we just need to change the size a little to deal with that.
+* Removed syso
+*   Merge branch 'Outrageous-Changes' of https://github.com/nerisaurus/ClueGame into Outrageous-Changes
+|\  
+| * Colorful Suggestion Log!
+* | One more compliance thing: a short term fix for Accusations.  Now, when 'accuse' is pressed, targets are highlighted again.  Later, this would only be the action of the 'cancel' option for accusations, but we haven't added that button yet.
+|/  
+* If the player clicks on an invalid target, they are told so. I think this is a bit spammy, but it's in the requirements.
+* Timer works. O_O  A lot of the logic has been moved from EndTurn to the timer itself.  Can you take care of that printline statement somewhere?
+* Fixed tests (we switched x,y/y,x yet again... so another round of swapping all the columns and rows in the test setups)
+* Smartened AI.  Now it can make better accusations.
+* Cleared up a few more TODO's.  Opening the accusations panel will now remove the board highlights (once we put a cancel option to the makeAccusations dialog, that should rehighlight the board).  AI handles a few things more gracefully.
+* Quick addition to the handleSuggestion - it now should also handle suggestions that have not been disproven.
+* Got a few TODO's cleared up.  The starting player is properly displayed on the first turn.  Suggestions are properly added to the log (although that could use some cleaning up).
+* Computer players now will always move when they have moved (that is, they always update their location now).
+*   addSuggestion(Player accuser, Solution suggestion, Card disprovingCard) function added to SuggestionLogPanel class - describes the suggestions and adds them to the scrolling text.
+|\  
+| * Human Starts first
+* | Minor format changes.
+* |   Merge branch 'Outrageous-Changes' of https://github.com/nerisaurus/ClueGame into Outrageous-Changes
+|\ \  
+| |/  
+| * Timer does time, but... doesn't stop =(
+* |   Merge branch 'Outrageous-Changes' of https://github.com/nerisaurus/ClueGame into Outrageous-Changes
+|\ \  
+| |/  
+| * Die Roll displays properly
+* | Cleanup. Deleted extra file, removed a large block of old commented out code.
+|/  
+* Got accusationDialog and suggestionDialog window behaviors
+*   Merged.
+|\  
+| * Before I start working on that huge flowchart thing.
+| * okay board does click. now time to make stuff go correctly
+* | Removed an extraneous file
+* | Interface changes and code cleanup.
+|/  
+* Merged Panels into one class
+* One last bit: checking for humans who enter rooms.
+* Even more background logic added.  There's still a lot of little bits and pieces to put together (especially in regards to actually updating the GUI panels, since I don't have those to touch yet), but it should be fairly straightforward (see all the TODO's for more info).
+* Added some Button clicking logic.  No listeners yet, but the functions that the listeners can call to do their dirty work.  Player is now an abstract class.
+* Added isValid____ methods for BoardClick, EndTurn, and AccusationTime.  Thus, when making action listeners, we can just call one function to check whether the button's actions should be carried out (they also give dialogs to the reader informing them why certain actions are invalid).  I also neatened the instance variables of ClueGame and added a bunch of boolean tags for game flow logic all in one spot.
+* Fit window size the better - not going to break later - way.
+* Fit window size the almost good way.
+* Started on some turn logic - highlighting, dice roll helper method.
 * Removed some extraneous files.
 * Some minor changes.
 *   Merge branch 'master' of https://github.com/nwunder/ClueGame

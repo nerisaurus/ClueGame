@@ -73,6 +73,8 @@ public abstract class Player {
 		seesCard(c);
 	}
 	
+	
+	//Getters:
 	public String getName() {
 		return name;
 	}
@@ -93,10 +95,18 @@ public abstract class Player {
 		return hand;
 	}
 	
-	
+	//Setters:
 	public void setLocation(int newColumn, int newRow) {
 		this.row = newRow;
 		this.col = newColumn;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	abstract public int pickTarget(int steps, Board board);
@@ -113,7 +123,24 @@ public abstract class Player {
 		return null; //Overridden by ComputerPlayer
 	}
 	
-	
+	public void switchWithPlayer(Player other) {
+		//Temporary Holding
+		String tempName = name;
+		Color tempColor = color;
+		int tempRow = row;
+		int tempCol = col;
+		
+		//Then Bring in Other --> Us
+		this.name = other.getName();
+		this.color = other.getColor();
+		this.row = other.getCurrentRow();
+		this.col = other.getCurrentColumn();	
+		
+		//Then temp --> Other
+		other.setLocation(tempCol, tempRow);
+		other.setColor(tempColor);
+		other.setName(tempName);
+	}
 	void draw(Graphics g, int cellDimensions) {
 		g.setColor(color);
 		int playerSize = cellDimensions / 2; //for aesthetic's sake.
