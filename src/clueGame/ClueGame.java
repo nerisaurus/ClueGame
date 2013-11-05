@@ -455,7 +455,6 @@ public class ClueGame extends JFrame{
 		boolean validTarget = false;
 		for(BoardCell target : board.getTargets()) {
 			if(cellX == target.getCol() && cellY == target.getRow()) {
-
 				validTarget = true;
 			}
 		}
@@ -479,6 +478,7 @@ public class ClueGame extends JFrame{
 				//suggestion made
 			}
 		} else {
+			JOptionPane.showMessageDialog(null, "You cannot move there.");
 			return;
 		}
 
