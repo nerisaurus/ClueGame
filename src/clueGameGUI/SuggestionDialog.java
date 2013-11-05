@@ -49,6 +49,8 @@ public class SuggestionDialog extends JDialog{
 		} else {
 			//Add a text field with the room
 			JTextField roomName = new JTextField(room);
+			roomName.setEditable(false);
+			add(roomName);
 		}
 
 		//Add Person Title
