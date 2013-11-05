@@ -188,28 +188,28 @@ public class GameActionTests {
 		
 		//made a suggestion which no players could disprove, and ensured that null was returned
 		//Solution badSuggestion = new Solution(androidCard, lightsaberCard, marsCard);
-		assertEquals(null, clue.handleSuggestion(human, badSuggestion));
+		assertEquals(null, clue.handleSuggestion(human, badSuggestion, false));
 		//TODO: Fix this error.  The problem is just that handleSuggestion now updates the control panel.  Since this test
 		//hasn't created a control panel in clue to update, this causes a null pointer exception.  Either:
 		//1. give handleSuggestion an updatePanel boolean value (set to false here, but true in most other places).
 		//2. initialize a little control panel for the test to update the log in
-		assertEquals(null, clue.handleSuggestion(skynet, badSuggestion));
+		assertEquals(null, clue.handleSuggestion(skynet, badSuggestion, false));
 		//made a suggestion that only the human could disprove, 
 		//and ensured that the correct Card was returned.
 		Solution onlyHumanSuggestion = new Solution(asteroidCard, lightsaberCard, marsCard);
-		assertEquals(asteroidCard, clue.handleSuggestion(marvin, onlyHumanSuggestion));
-		assertEquals(asteroidCard, clue.handleSuggestion(skynet, onlyHumanSuggestion));
+		assertEquals(asteroidCard, clue.handleSuggestion(marvin, onlyHumanSuggestion, false));
+		assertEquals(asteroidCard, clue.handleSuggestion(skynet, onlyHumanSuggestion, false));
 		
 		//by changing the starting player here and letting the chosen card always come from
 		//the same person (in this case human) shoud insure that we go though all palyers.
 		//current player suggests card in the next player's hand only
 		Solution nextPlayersSuggestion = new Solution(androidCard, lightsaberCard, neptuneCard);
-		assertEquals(neptuneCard, clue.handleSuggestion(marvin, nextPlayersSuggestion));
+		assertEquals(neptuneCard, clue.handleSuggestion(marvin, nextPlayersSuggestion, false));
 		//number of players searched should be 1
 		
 		//current player suggests card in the last player's hand only
 		Solution lastPlayersSuggestion = new Solution(androidCard, lightsaberCard, neptuneCard);
-		assertEquals(neptuneCard, clue.handleSuggestion(hal, lastPlayersSuggestion));
+		assertEquals(neptuneCard, clue.handleSuggestion(hal, lastPlayersSuggestion, false));
 		//number of players searched should be 3
 	}
 

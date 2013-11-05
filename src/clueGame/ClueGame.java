@@ -215,12 +215,14 @@ public class ClueGame extends JFrame{
 		}while(deck.size() > 1);
 	}
 
-	public Card handleSuggestion(Player accusingPlayer, Solution suggestion) {
+	public Card handleSuggestion(Player accusingPlayer, Solution suggestion, boolean updatePanel) {
 		for(Player p: getPlayersSansCurrent(accusingPlayer)) {
 			Card c = p.disproveSuggestion(suggestion);
 			if(c != null) {
 				//Update Suggestion Log:
-				controls.addSuggestionToLog(accusingPlayer, suggestion, c);
+				if(updatePanel) {
+					controls.addSuggestionToLog(accusingPlayer, suggestion, c);
+				}
 				//And return the card for further logic (ai logic)
 				return c;
 			}
@@ -229,7 +231,9 @@ public class ClueGame extends JFrame{
 		//And if it's not disproven:
 		goodAccusation = suggestion;
 		//Update Suggestion Log:
-		controls.addSuggestionToLog(accusingPlayer, suggestion, null);
+		if(updatePanel) {
+			controls.addSuggestionToLog(accusingPlayer, suggestion, null);
+		}
 		return null;
 	}
 
@@ -337,7 +341,7 @@ public class ClueGame extends JFrame{
 				Card roomCard = new Card (s, CardType.ROOM);
 				//(First we have to give the ai a room card to start its suggestion from)
 				Solution suggestion = ai.makeSuggestion(roomCard);
-				handleSuggestion(ai, suggestion);
+				handleSuggestion(ai, suggestion, true);
 			}
 
 			//And, of course, we have to repaint our board if they moved
