@@ -116,7 +116,7 @@ public class ClueGame extends JFrame{
 			dealCards();
 			setupFrame();
 			controls.giveClueGame(this);
-			startWithHuman();
+			//startWithHuman();
 		}
 	}
 
@@ -601,8 +601,31 @@ public class ClueGame extends JFrame{
 		//Initialize Just About Everything:
 		ClueGame clue = new ClueGame(LEGEND, BOARD,
 				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
-		//Splash Screen, but will have to change it later
-		if (JOptionPane.showConfirmDialog(null, "Play a game of Clue?", "Clue", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE) == 0){
+		
+		//Figure out who our characters are: (people stores a list of strings of all character names)
+		Object[] characterOptions = clue.people.toArray();
+		//Input Dialog: Pick your Character:
+		String characterPick = (String) JOptionPane.showInputDialog(null, 
+				"Select Your Character:", 
+				"Want to Play Clue?", 
+				JOptionPane.PLAIN_MESSAGE, 
+				null, 
+				characterOptions, 
+				clue.getPlayers().get("Human").getFirst().getName());
+		
+		//If we picked one:
+		if ((characterPick != null) && (characterPick.length() > 0)) {
+			
+			//Change Our Player
+			for(Player p : clue.getPlayers().get("Computer")){
+				if(p.getName().equals(characterPick)) {
+					clue.getPlayers().get("Human").getFirst().switchWithPlayer(p);
+				}
+			}
+			
+			//Last Bit of Setup (since it needs to know who the human is first):
+			clue.startWithHuman();
+
 			//Let us see our board:
 			clue.setVisible(true);
 			
