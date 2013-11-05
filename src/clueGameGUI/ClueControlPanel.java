@@ -26,7 +26,8 @@ public class ClueControlPanel extends JPanel{
 	private TurnPanel currentTurn;
 	private SuggestionLogPanel suggestionLog;
 	private MyCardsPanel cards;
-	private JButton makeAccusation, endTurn;
+	private JButton makeAccusation, endTurn, suggest, accuse;
+	private SuggestionDialog suggestionDialog, accusationDialog;
 	
 	public ClueControlPanel(ClueGame clue, HumanPlayer player) {
 		setLayout(new BorderLayout());
@@ -151,21 +152,19 @@ public class ClueControlPanel extends JPanel{
 			nextPlayer();
 		}
 	}
-	
 	class AccusationListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			//TODO:
-		}
-	}
-	class SuggestionListener implements ActionListener{
-		public void actionPerformed(ActionEvent event){
-			//TODO: 
+			createAccusationDialog();
+			clue.accusationDialogOpen = true;
 		}
 	}
 
-	
 	public void nextPlayer(){
-		clue.EndTurn();
+		if (clue.suggestionDialogOpen == true || clue.accusationDialogOpen == true){
+			return;
+		}
+		else
+			clue.EndTurn();
 		
 	}
 
@@ -184,7 +183,38 @@ public class ClueControlPanel extends JPanel{
 		// TODO Auto-generated method stub
 		currentTurn.setCurrentPlayer(name);
 	}
-
+	///// suggestion dialog
+	class SuggestionLogListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			makeSuggestion();
+		}
+	}
+	class AccusationDialogListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			makeAccusation();
+		}
+	}
+	public void makeSuggestion(){
+		suggestionDialog.setVisible(false);
+		clue.suggestionDialogOpen = false;
+	}
+	public void makeAccusation(){
+		accusationDialog.setVisible(false);
+		clue.accusationDialogOpen = false;
+	}
+	public void createSuggestionDialog(){
+		suggestionDialog = new SuggestionDialog();
+		suggest = new JButton ("Suggest");
+		suggest.addActionListener(new SuggestionLogListener());
+		suggestionDialog.add(suggest);
+	}
+	
+	public void createAccusationDialog(){
+		accusationDialog = new SuggestionDialog();
+		accuse = new JButton ("Accuse");
+		accuse.addActionListener(new AccusationDialogListener());
+		accusationDialog.add(accuse);
+	}
 
 
 }

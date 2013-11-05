@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 
 import clueGameGUI.ClueControlPanel;
 import clueGameGUI.MyCardsPanel;
+import clueGameGUI.SuggestionDialog;
 
 public class ClueGame extends JFrame{
 	//File Names
@@ -54,8 +55,8 @@ public class ClueGame extends JFrame{
 	boolean gameOngoing; //false until game begins, false after someone wins.  Otherwise true.
 	boolean playerTurn; //true if it is the player's turn
 	boolean hasActed; //true if the player has either: made a move, or made an accusation this round
-	boolean suggestionDialogOpen; //set to true when the suggestion dialog is opened, and false when it is closed
-	boolean accusationDialogOpen; //as the above, but for the accusation dialog
+	public boolean suggestionDialogOpen; //set to true when the suggestion dialog is opened, and false when it is closed
+	public boolean accusationDialogOpen; //as the above, but for the accusation dialog
 	//(and don't forget Board's highlightTargets boolean, which isn't here but has a similar purpose)
 	
 	//Similarly, here's a bit of logic for the AI:
@@ -63,6 +64,7 @@ public class ClueGame extends JFrame{
 	
 	//Two Panels for the JFrame
 	ClueControlPanel controls;
+	SuggestionDialog s;
 	//public ClueControlFrame ccf = new ClueControlFrame();
 	
 	//get buttons
@@ -111,7 +113,7 @@ public class ClueGame extends JFrame{
 			buildSolution();
 			dealCards();
 			setupFrame();
-			
+			controls.giveClueGame(this);
 		}
 	}
 
@@ -135,6 +137,7 @@ public class ClueGame extends JFrame{
 
 		//Setting Frame Size
 		board.setPreferredSize(new Dimension(board.getPanelWidth(), board.getPanelHeight()));
+		board.addMouseListener(new boardClickListener());
 		//Add further elements in here if needed.
 		pack();
 	}
@@ -296,7 +299,7 @@ public class ClueGame extends JFrame{
 		
 		//Roll Die:
 		int aiRoll = rollDie();
-		
+		controls.setRoll(aiRoll);
 		//Adjust DiePanel to show this roll
 		//TODO: (just use aiRoll to set it - should be easy as cake)
 		
@@ -468,6 +471,9 @@ public class ClueGame extends JFrame{
 				//TODO: Pop up the suggestion dialog.  Set suggestionDialogOpen = true and do
 				//all the other logic associated with starting up a suggestion (although
 				//the suggestion dialog buttons will work out actually moving players and such)
+				suggestionDialogOpen = true;
+				controls.createSuggestionDialog();
+				//suggestion made
 			}
 		} else {
 			return;
