@@ -130,7 +130,7 @@ public class ClueGame extends JFrame{
 		controls.setRoll(humanRoll);
 
 		//Set "Whose Turn" to the player's name
-		controls.setTurn(players.get("Human").getFirst());
+		controls.setCurrentPlayerTheme(players.get("Human").getFirst());
 
 		//Calculate Targets:
 		players.get("Human").getFirst().pickTarget(humanRoll, getBoard());
@@ -155,7 +155,7 @@ public class ClueGame extends JFrame{
 		//two halves
 
 		add(getBoard(), BorderLayout.CENTER);
-		controls = new ClueControlPanel(this, (HumanPlayer) players.get("Human").getFirst());
+		controls = new ClueControlPanel(this);
 		//sidePanel.add(mcp, BorderLayout.EAST);
 		add(controls, BorderLayout.EAST);
 
@@ -674,7 +674,7 @@ public class ClueGame extends JFrame{
 
 				//Last Bit of Setup (since it needs to know who the human is first):
 				clue.startWithHuman();
-
+				clue.setTheme(clue.getPlayers().get("Human").getFirst());
 				//Let us see our board:
 				clue.setVisible(true);
 
@@ -691,6 +691,13 @@ public class ClueGame extends JFrame{
 			}
 		}
 
+
+		private void setTheme(Player first) {
+		// TODO Auto-generated method stub
+		controls.setHumanTheme(first);
+		controls.setCurrentPlayerTheme(first);
+		
+	}
 
 		public void setBoard(Board board) {
 			this.board = board;
@@ -709,7 +716,7 @@ public class ClueGame extends JFrame{
 				counter = 0;
 
 				this.roll = rollDie();
-				controls.setTurn(bots.get(counter));
+				controls.setCurrentPlayerTheme(bots.get(counter));
 				controls.setRoll(roll);
 			}
 
@@ -720,7 +727,7 @@ public class ClueGame extends JFrame{
 					timerStop = true;
 
 					//Set "Whose Turn" to the player's name
-					controls.setTurn(players.get("Human").getFirst());
+					controls.setCurrentPlayerTheme(players.get("Human").getFirst());
 					//Roll the die
 					int humanRoll = rollDie();
 
@@ -741,7 +748,7 @@ public class ClueGame extends JFrame{
 				counter++;
 				this.roll = rollDie();
 				if(counter < bots.size()) {
-					controls.setTurn(bots.get(counter));
+					controls.setCurrentPlayerTheme(bots.get(counter));
 					controls.setRoll(roll);
 				}
 				getBoard().repaint();

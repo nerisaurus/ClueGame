@@ -67,7 +67,9 @@ public class SuggestionLog extends JTextPane {
 			e.printStackTrace();
 		}
 	}
-	
+	public void setTheme(Player p){
+		
+	}
     protected void paintComponent(Graphics g) {
         BufferedImage image = null;
         try {

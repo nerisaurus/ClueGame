@@ -26,7 +26,7 @@ public class TurnPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setBackground(Color.BLACK);
 		setForeground(Color.WHITE);
-		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.red),"Current Turn", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), Color.WHITE));
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.black),"Current Turn", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), Color.WHITE));
 		die = new DiePanel();
 		currentPlayer = new JTextField();
 		currentPlayer.setEditable(false);
@@ -46,13 +46,17 @@ public class TurnPanel extends JPanel {
 		die.setFace(i);
 	}
 
-	public void setCurrentPlayer(Player p) {
+	public void setCurrentPlayerTheme(Player p) {
 		// TODO Auto-generated method stub
 		currentPlayer.setForeground(p.getColor());
 		currentPlayer.setBorder(new LineBorder(p.getColor().darker(), 3));
 		currentPlayer.setBackground(p.getColor().darker().darker().darker());
 		currentPlayer.setHorizontalAlignment(JTextField.CENTER);
 		currentPlayer.setText(p.getName());
+	}
+	
+	public void setTheme(Player p){
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"Current Turn", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
 	}
 
 }

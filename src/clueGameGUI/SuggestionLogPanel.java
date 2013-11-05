@@ -38,7 +38,7 @@ public class SuggestionLogPanel extends JPanel {
 		//their results
 		setBackground(Color.BLACK);
 		setForeground(Color.WHITE);
-		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.red),"Previous Suggestions", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), Color.WHITE));
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.black),"Previous Suggestions", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), Color.WHITE));
 		log = new SuggestionLog();
 		
 		setSize(300,getSize().height);
@@ -59,6 +59,12 @@ public class SuggestionLogPanel extends JPanel {
 		// TODO Auto-generated method stub
 		 log.addSuggestion(accuser, suggestion, disprovedBy);
 
+	}
+	
+	public void setTheme(Player p){
+		//borders
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"Previous Suggestions", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
+		log.setTheme(p);
 	}
 
 	

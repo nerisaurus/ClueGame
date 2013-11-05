@@ -35,8 +35,8 @@ public class ClueControlPanel extends JPanel{
 	private MyCardsPanel cards;
 	private JButton makeAccusation, endTurn, suggest, accuse;
 	private SuggestionDialog suggestionDialog, accusationDialog;
-	
-	public ClueControlPanel(ClueGame clue, HumanPlayer player) {
+	private HumanPlayer player;
+	public ClueControlPanel(ClueGame clue) {
 		setLayout(new BorderLayout());
 		//Topmost: A panel containing the current player's name and her dice roll:
 		currentTurn = new TurnPanel();
@@ -46,7 +46,7 @@ public class ClueControlPanel extends JPanel{
 		JPanel middlePanel = new JPanel();
 		middlePanel.setLayout(new BorderLayout());
 		suggestionLog = new SuggestionLogPanel();
-		cards = new MyCardsPanel(player);
+		cards = new MyCardsPanel();
 		
 		middlePanel.add(cards, BorderLayout.SOUTH);
 		middlePanel.add(suggestionLog, BorderLayout.CENTER);
@@ -106,11 +106,6 @@ public class ClueControlPanel extends JPanel{
 		//Set the dice panel to display the roll (passed in)
 		currentTurn.setRoll(i);
 	}
-
-	public void setTurn(Player p) {
-		//Set the "Current Turn" text field to display the current player's name (passed in)
-		currentTurn.setCurrentPlayer(p);
-	}
 	
 	public void addSuggestionToLog(Player accuser, Solution suggestion, Card disprovedBy) {
 		suggestionLog.addSuggestion(accuser, suggestion, disprovedBy);
@@ -148,6 +143,21 @@ public class ClueControlPanel extends JPanel{
 			//
 			accusationDialog.submitButton.setText("Accuse");
 			accusationDialog.submitButton.addActionListener(new AccusationDialogListener());
+	}
+	
+	///player theme
+	public void setHumanTheme(Player p){
+		currentTurn.setTheme(p);
+		suggestionLog.setTheme(p);
+		cards.setTheme(p);
+		setBackground(p.getColor());
+		
+	}
+	public void setCurrentPlayerTheme(Player p){
+		//picture
+		
+		//Nameplate
+		currentTurn.setCurrentPlayerTheme(p);
 	}
 
 

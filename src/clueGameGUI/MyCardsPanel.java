@@ -15,18 +15,20 @@ import javax.swing.border.TitledBorder;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.HumanPlayer;
+import clueGame.Player;
 
 
 public class MyCardsPanel extends JPanel{
-	HumanPlayer hp;
-	
-	public MyCardsPanel(HumanPlayer hp) {
-		this.hp = hp;
+	JTextField displayCard;
+	public MyCardsPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(Color.BLACK);
 		setForeground(Color.WHITE);
-		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.red),"My Cards", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), hp.getColor()));
-		for(Card card : hp.getHand()) {
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.BLACK),"My Cards", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), Color.BLACK));
+	}
+	public void setTheme(Player p){
+		//cards 
+		for(Card card : p.getHand()) {
 			//First we describe the card:
 			String cardDescription = "";
 			
@@ -44,14 +46,16 @@ public class MyCardsPanel extends JPanel{
 			cardDescription += card.getName();
 			
 			//Now we put that into a JTextField:
-			JTextField displayCard = new JTextField();
+			displayCard = new JTextField();
 			displayCard.setBackground(Color.BLACK);
-			displayCard.setForeground(hp.getColor());
+			displayCard.setForeground(p.getColor());
 			displayCard.setEditable(false);
 			displayCard.setText(cardDescription);
 			
 			//And finally add that to this Panel
 			add(displayCard);
 		}
+		//borders
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"My Cards", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
 	}
 }
