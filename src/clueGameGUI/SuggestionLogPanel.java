@@ -1,32 +1,44 @@
 package clueGameGUI;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import clueGame.Card;
 import clueGame.Player;
 import clueGame.Solution;
 
 public class SuggestionLogPanel extends JPanel {
-	private JTextArea log;
-
+	private JTextPane log;
+	private JScrollPane scroll;
+	StyledDocument doc;
 	SuggestionLogPanel(){
 		//We add a scrolling text area for
 		//all previous suggestions and
 		//their results
-		log = new JTextArea(20, 40);
+		log = new JTextPane();
 		log.setEditable(false);
-		log.setWrapStyleWord(true);
-		log.setLineWrap(true);
-		add(log);
-
+		log.setSize(200, 200);
+		//log.setWrapStyleWord(true);
+		//log.setLineWrap(true);
+		setLayout(new BorderLayout());
+		add(log, BorderLayout.CENTER);
+		doc = log.getStyledDocument();
 		//the scrolling part:
-		JScrollPane scroll = new JScrollPane(log);
+		scroll = new JScrollPane(log);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
 		add(scroll);
 
 		//and a border to explain the purpose of this
@@ -46,10 +58,21 @@ public class SuggestionLogPanel extends JPanel {
 			disproved = "This was disproven with the card: " + disprovingCard.getName();
 		}
 
-		String logEntry = detective + " " + " suspected " + suspect + " on the planet " + location + " with the " + weapon + ". " + disproved + "\n";
-		
+		//String logEntry = detective + " " + " suspected " + suspect + " on the planet " + location + " with the " + weapon + ". " + disproved + "\n";
 		//Then we add this:
-		log.append(logEntry);
+		SimpleAttributeSet keyWord = new SimpleAttributeSet();
+		StyleConstants.setForeground(keyWord, accuser.getColor());
+		StyleConstants.setBackground(keyWord, accuser.getColor().darker().darker().darker());
+		StyleConstants.setBold(keyWord, true);
+		try {
+			doc.insertString(0, detective, keyWord );
+			doc.insertString(detective.length(), "\n" + suspect + "|" + location + "|" + weapon + "\n", null);
+			
+			
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
