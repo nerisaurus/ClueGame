@@ -44,7 +44,7 @@ public class Board extends JPanel {
 	private int cellDimensions = 24;
 	
 	//Turn logic: (package variable, since it is used primarily in ClueGame)
-	boolean highlightTargets;
+	private boolean highlightTargets;
 
 	//Logic to Allow for different Legends:
 	//Tells us which character maps to "Space" or "Walkway"
@@ -107,7 +107,7 @@ public class Board extends JPanel {
 		drawGrid(g);
 		drawPlayers(g);
 		drawLabels(g);
-		if(highlightTargets){
+		if(isHighlightTargets()){
 			drawTargets(g);
 		}
 		//g.setColor(Color.BLUE);
@@ -455,6 +455,14 @@ public class Board extends JPanel {
 			color = null; // Not defined } 
 		}
 		return color;
+	}
+
+	public boolean isHighlightTargets() {
+		return highlightTargets;
+	}
+
+	public void setHighlightTargets(boolean highlightTargets) {
+		this.highlightTargets = highlightTargets;
 	}
 
 	

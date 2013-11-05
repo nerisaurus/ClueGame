@@ -73,9 +73,9 @@ public class ClueGame extends JFrame{
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
-		this.board = new Board();
+		this.setBoard(new Board());
 
-		this.board.setPlayerMap(players);
+		this.getBoard().setPlayerMap(players);
 		this.people = new ArrayList<String>();
 		this.rooms = new ArrayList<String>();
 		this.weapons = new ArrayList<String>();
@@ -102,8 +102,8 @@ public class ClueGame extends JFrame{
 		setPlayers();
 
 		//board loads its own config files
-		this.board = new Board(board, legend);
-		this.board.setPlayerMap(players);
+		this.setBoard(new Board(board, legend));
+		this.getBoard().setPlayerMap(players);
 
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
@@ -129,15 +129,15 @@ public class ClueGame extends JFrame{
 		controls.setTurn(players.get("Human").getFirst().getName());
 
 		//Calculate Targets:
-		players.get("Human").getFirst().pickTarget(humanRoll, board);
+		players.get("Human").getFirst().pickTarget(humanRoll, getBoard());
 
 		//Now we're ready for the player's turn to begin
 		playerTurn = true;
-		board.highlightTargets = true;
+		getBoard().setHighlightTargets(true);
 		hasActed = false;
 
 		//And repaint the board (targets are now highlighted)
-		board.repaint();
+		getBoard().repaint();
 	}
 
 	//JFrame initialization methods
@@ -149,7 +149,7 @@ public class ClueGame extends JFrame{
 		menuBar.add(createFileMenu());	
 		//two halves
 
-		add(board, BorderLayout.CENTER);
+		add(getBoard(), BorderLayout.CENTER);
 		controls = new ClueControlPanel(this, (HumanPlayer) players.get("Human").getFirst());
 		//sidePanel.add(mcp, BorderLayout.EAST);
 		add(controls, BorderLayout.EAST);
@@ -159,8 +159,8 @@ public class ClueGame extends JFrame{
 		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
 
 		//Setting Frame Size
-		board.setPreferredSize(new Dimension(board.getPanelWidth(), board.getPanelHeight()));
-		board.addMouseListener(new boardClickListener());
+		getBoard().setPreferredSize(new Dimension(getBoard().getPanelWidth(), getBoard().getPanelHeight()));
+		getBoard().addMouseListener(new boardClickListener());
 		//Add further elements in here if needed.
 		pack();
 	}
@@ -327,14 +327,14 @@ public class ClueGame extends JFrame{
 			testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
 		} else {
 			//Move:
-			ai.pickTarget(aiRoll, board);
+			ai.pickTarget(aiRoll, getBoard());
 
 			//Are they in a room now?
-			if(board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) != null) {
+			if(getBoard().getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) != null) {
 				//Make a suggestion:
-				RoomCell r = board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn());
+				RoomCell r = getBoard().getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn());
 				char init = r.getInitial();
-				String s = board.getRooms().get(init);
+				String s = getBoard().getRooms().get(init);
 				Card roomCard = new Card (s, CardType.ROOM);
 				//(First we have to give the ai a room card to start its suggestion from)
 				Solution suggestion = ai.makeSuggestion(roomCard);
@@ -342,7 +342,7 @@ public class ClueGame extends JFrame{
 			}
 
 			//And, of course, we have to repaint our board if they moved
-			board.repaint();
+			getBoard().repaint();
 		}
 	}
 
@@ -435,10 +435,10 @@ public class ClueGame extends JFrame{
 	public void makeAccusation(){
 		//This necessitates a change to our logic:
 		accusationDialogOpen = true;
-		board.highlightTargets = false; 
+		getBoard().setHighlightTargets(false); 
 
 		//And of course a repaint:
-		board.repaint();
+		getBoard().repaint();
 		//TODO: make sure that closing the Accusation Dialog without making an accusation will re-highlight the board
 
 		//Pop up the Accusation Dialog
@@ -448,12 +448,12 @@ public class ClueGame extends JFrame{
 	public void boardClick(int x, int y){ //pass in the raw x,y data of a mouse click.  This'll calculate its board location for you.
 		//Calculate location: the floor of the point divided by cell size
 		int cellX, cellY;
-		cellX = x / board.getCellDimensions();
-		cellY = y / board.getCellDimensions();
+		cellX = x / getBoard().getCellDimensions();
+		cellY = y / getBoard().getCellDimensions();
 
 		//Check if location is valid:
 		boolean validTarget = false;
-		for(BoardCell target : board.getTargets()) {
+		for(BoardCell target : getBoard().getTargets()) {
 			if(cellX == target.getCol() && cellY == target.getRow()) {
 				validTarget = true;
 			}
@@ -467,12 +467,12 @@ public class ClueGame extends JFrame{
 
 			//Since the player has moved, we set our game logic to note this:
 			hasActed = true;
-			board.highlightTargets = false;
+			getBoard().setHighlightTargets(false);
 
 			//Since the board has changed, we repaint the board
-			board.repaint();
+			getBoard().repaint();
 
-			if(board.getRoomCellAt(cellY, cellX) != null) {
+			if(getBoard().getRoomCellAt(cellY, cellX) != null) {
 				suggestionDialogOpen = true;
 				controls.createSuggestionDialog();
 				//suggestion made
@@ -610,6 +610,10 @@ public class ClueGame extends JFrame{
 		}
 	}
 
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
 	//Our Timer:
 	private class TimerListener implements ActionListener {
 		LinkedList<Player> bots;
@@ -642,15 +646,15 @@ public class ClueGame extends JFrame{
 				controls.setRoll(humanRoll);
 
 				//Calculate Targets:
-				players.get("Human").getFirst().pickTarget(humanRoll, board);
+				players.get("Human").getFirst().pickTarget(humanRoll, getBoard());
 
 				//Now we're ready for the player's turn to begin
 				playerTurn = true;
-				board.highlightTargets = true;
+				getBoard().setHighlightTargets(true);
 				hasActed = false;
 
 				//And repaint the board (targets are now highlighted)
-				board.repaint();
+				getBoard().repaint();
 			}
 			counter++;
 			this.roll = rollDie();
@@ -658,7 +662,7 @@ public class ClueGame extends JFrame{
 				controls.setTurn(bots.get(counter).getName());
 				controls.setRoll(roll);
 			}
-			board.repaint();
+			getBoard().repaint();
 		} 
 	}
 

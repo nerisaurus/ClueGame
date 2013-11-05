@@ -123,10 +123,13 @@ public class ClueControlPanel extends JPanel{
 	public void makeSuggestion(){
 		suggestionDialog.setVisible(false);
 		clue.suggestionDialogOpen = false;
+		
 	}
 	public void makeAccusation(){
 		accusationDialog.setVisible(false);
 		clue.accusationDialogOpen = false;
+		clue.getBoard().setHighlightTargets(true); //TODO: replaced with more complicated logic later on
+		clue.getBoard().repaint();
 	}
 	public void createSuggestionDialog(){
 		//if (!accusationDialog.isVisible()){
