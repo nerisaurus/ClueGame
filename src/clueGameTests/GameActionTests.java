@@ -216,14 +216,15 @@ public class GameActionTests {
 		ComputerPlayer testSubject = new ComputerPlayer();
 		
 		//Target includes a room: 2-step 281 (should pick 279)
-		testSubject.setLocation(11, 6);
+		testSubject.setLocation(6,11);
 		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
 		int target1 = testSubject.pickTarget(2, board);
+		
 		assertEquals('N', board.getRoomCellAt(target1).getInitial());
 		assertEquals('N',testSubject.getLastVisited()); //tests that lastVisited is set properly
 
 		//Target includes a room that's closer than other targets (target logic terminates properly): 4-step 281 (should be in Neptune)
-		testSubject.setLocation(11, 6);
+		testSubject.setLocation(6, 11);
 		testSubject.setLastVisited('M'); //just to make sure it knows it is far away
 		int target4 = testSubject.pickTarget(4, board);
 		assertEquals('N', board.getRoomCellAt(target4).getInitial());
@@ -238,7 +239,7 @@ public class GameActionTests {
 		//Random target (no rooms possible): 1-step 181 - should randomly pick between 180, 182, 156, 206
 		int counter180 = 0, counter182 =0, counter156 = 0, counter206 = 0, counterOther = 0;
 		for(int i = 1; i < 100; i++) {
-			testSubject.setLocation(7, 6);
+			testSubject.setLocation(6, 7);
 			int target = testSubject.pickTarget(1, board);
 			switch(target){
 			case 180:
@@ -271,7 +272,7 @@ public class GameActionTests {
 		counterOther = 0; //reusing the old counter for the same purpose
 
 		for(int i = 1; i < 100; i++) {
-			testSubject.setLocation(9, 24);
+			testSubject.setLocation(24, 9);
 			int target = testSubject.pickTarget(1, board);
 			switch(target){
 			case 248:
