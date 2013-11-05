@@ -285,6 +285,7 @@ public class ClueGame extends JFrame{
 	public int rollDie() { //rolls a 6-sided die (or simulates that, with Random)
 		Random die = new Random();
 		int roll = die.nextInt(6) + 1;
+		System.out.println(roll);
 		return roll;
 	}
 	
@@ -314,16 +315,17 @@ public class ClueGame extends JFrame{
 			ai.pickTarget(aiRoll, board);
 			
 			//Are they in a room now?
+			
 			if(board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) != null) {
 				//Make a suggestion:
 				//TODO: Convert " board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) " into
 				//a Room CARD to pass to ai.makeSuggestion().  Call it roomCard. Then uncomment this:
-				
-				/*
+				RoomCell r = board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn());
+				char init = r.getInitial();
+				String s = board.getRooms().get(init);
+				Card roomCard = new Card (s, CardType.ROOM);
 				Solution suggestion = ai.makeSuggestion(roomCard);
 				handleSuggestion(ai, suggestion);
-				*/
-				
 			}
 			
 			//And, of course, we have to repaint our board if they moved

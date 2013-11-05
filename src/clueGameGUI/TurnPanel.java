@@ -1,8 +1,10 @@
 package clueGameGUI;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.LayoutManager;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -16,19 +18,17 @@ public class TurnPanel extends JPanel {
 	public TurnPanel() {
 		super();
 		setBorder(new TitledBorder (new EtchedBorder(), "Current Turn"));
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		die = new DiePanel();
 		currentPlayer = new JTextField();
 		currentPlayer.setEditable(false);
 		currentPlayer.setText("...");
-		
-		add(die, BorderLayout.WEST);
-		add(currentPlayer, BorderLayout.CENTER);
+		add(die);
+		add(currentPlayer);
 	}
 
 
 	public void setRoll(int i) {
-		// TODO Auto-generated method stub
 		die.setFace(i);
 	}
 

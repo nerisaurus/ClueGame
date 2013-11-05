@@ -34,7 +34,6 @@ public class ClueControlPanel extends JPanel{
 		
 		//Topmost: A panel containing the current player's name and her dice roll:
 		currentTurn = new TurnPanel();
-		
 		add(currentTurn, BorderLayout.NORTH);
 		
 		//In the middle, suggestions and cards:
@@ -125,7 +124,7 @@ public class ClueControlPanel extends JPanel{
 		suggestionDialog = new SuggestionDialog();
 		suggest = new JButton ("Suggest");
 		suggest.addActionListener(new SuggestionLogListener());
-		suggestionDialog.add(suggest);
+		suggestionDialog.add(suggest, BorderLayout.SOUTH);
 	}
 	
 	public void createAccusationDialog(){
