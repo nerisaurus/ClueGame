@@ -74,13 +74,15 @@ public class ClueControlPanel extends JPanel{
 	}
 	class AccusationListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			createAccusationDialog();
-			clue.accusationDialogOpen = true;
+			if (clue.isValidAccusationTime()){
+				createAccusationDialog();
+				clue.accusationDialogOpen = true;
+			}
 		}
 	}
 
 	public void nextPlayer(){
-		if (clue.suggestionDialogOpen == true || clue.accusationDialogOpen == true){
+		if (!clue.isValidEndTurn()){
 			return;
 		}
 		else

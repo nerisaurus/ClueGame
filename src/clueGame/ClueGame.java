@@ -54,7 +54,7 @@ public class ClueGame extends JFrame{
 	//Boolean Game Logic
 	boolean gameOngoing; //false until game begins, false after someone wins.  Otherwise true.
 	boolean playerTurn; //true if it is the player's turn
-	boolean hasActed; //true if the player has either: made a move, or made an accusation this round
+	public boolean hasActed; //true if the player has either: made a move, or made an accusation this round
 	public boolean suggestionDialogOpen; //set to true when the suggestion dialog is opened, and false when it is closed
 	public boolean accusationDialogOpen; //as the above, but for the accusation dialog
 	//(and don't forget Board's highlightTargets boolean, which isn't here but has a similar purpose)
@@ -114,7 +114,28 @@ public class ClueGame extends JFrame{
 			dealCards();
 			setupFrame();
 			controls.giveClueGame(this);
+			startWithHuman();
 		}
+	}
+
+	private void startWithHuman() {
+		// TODO Auto-generated method stub
+		int humanRoll = rollDie();
+		controls.setRoll(humanRoll);
+		
+		//Set the diePanel to display this roll
+		//TODO: (note: just use humanRoll to set - should be easy as cake)
+		
+		//Calculate Targets:
+		players.get("Human").getFirst().pickTarget(humanRoll, board);
+		
+		//Now we're ready for the player's turn to begin
+		playerTurn = true;
+		board.highlightTargets = true;
+		hasActed = false;
+		
+		//And repaint the board (targets are now highlighted)
+		board.repaint();
 	}
 
 	//JFrame initialization methods
@@ -306,6 +327,7 @@ public class ClueGame extends JFrame{
 		
 		//Timer to simulate gameplay:
 		//TODO: Add a short timer (1 or 2 seconds - long enough so people know it's there, but not long enough that it's annoying)
+
 		
 		//Should we make an accusation?
 		if(ai.makeAccusation(goodAccusation) != null) {
@@ -606,4 +628,12 @@ public class ClueGame extends JFrame{
 	    clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
 		}
 	}
+
+	private class TimerListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		   } 
+		}
+
+
 }
