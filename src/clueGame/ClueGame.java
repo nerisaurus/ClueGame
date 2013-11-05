@@ -22,6 +22,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import clueGameGUI.ClueControlPanel;
 import clueGameGUI.MyCardsPanel;
@@ -50,7 +51,7 @@ public class ClueGame extends JFrame{
 	//Stuff Detective Notes
 	private DetectiveNotesDialog dNotes;
 	private ArrayList<String> people, rooms, weapons;
-	
+
 	//Boolean Game Logic
 	boolean gameOngoing; //false until game begins, false after someone wins.  Otherwise true.
 	boolean playerTurn; //true if it is the player's turn
@@ -58,21 +59,22 @@ public class ClueGame extends JFrame{
 	public boolean suggestionDialogOpen; //set to true when the suggestion dialog is opened, and false when it is closed
 	public boolean accusationDialogOpen; //as the above, but for the accusation dialog
 	//(and don't forget Board's highlightTargets boolean, which isn't here but has a similar purpose)
-	
+
 	//Similarly, here's a bit of logic for the AI:
 	private Solution goodAccusation = null;
-	
+	public boolean timerStop = true;
+
 	//Two Panels for the JFrame
 	ClueControlPanel controls;
 	SuggestionDialog s;
 	//public ClueControlFrame ccf = new ClueControlFrame();
-	
+
 	//get buttons
 
 	public ClueGame() {
 		this.players = new HashMap<String, LinkedList<Player>>();
 		this.board = new Board();
-		
+
 		this.board.setPlayerMap(players);
 		this.people = new ArrayList<String>();
 		this.rooms = new ArrayList<String>();
@@ -88,7 +90,7 @@ public class ClueGame extends JFrame{
 		this.people = new ArrayList<String>();
 		this.rooms = new ArrayList<String>();
 		this.weapons = new ArrayList<String>();
-		
+
 		//setup empty players hash
 		// NOTE: There may be some coding overhead to maintain this but
 		// it insures that we always know where the human player is
@@ -105,7 +107,7 @@ public class ClueGame extends JFrame{
 
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
-		
+
 		//these guys are called in the test, calling them here again doubles the method calls
 		// therefore we skip them if we are running the tests.
 		if(!runningTest){ 
@@ -122,18 +124,18 @@ public class ClueGame extends JFrame{
 		//We roll the die:
 		int humanRoll = rollDie();
 		controls.setRoll(humanRoll);
-		
+
 		//Set "Whose Turn" to the player's name
 		controls.setTurn(players.get("Human").getFirst().getName());
-				
+
 		//Calculate Targets:
 		players.get("Human").getFirst().pickTarget(humanRoll, board);
-		
+
 		//Now we're ready for the player's turn to begin
 		playerTurn = true;
 		board.highlightTargets = true;
 		hasActed = false;
-		
+
 		//And repaint the board (targets are now highlighted)
 		board.repaint();
 	}
@@ -152,8 +154,8 @@ public class ClueGame extends JFrame{
 		//sidePanel.add(mcp, BorderLayout.EAST);
 		add(controls, BorderLayout.EAST);
 
-		
-		
+
+
 		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
 
 		//Setting Frame Size
@@ -172,7 +174,7 @@ public class ClueGame extends JFrame{
 		public void mousePressed(MouseEvent e) {}
 		public void mouseReleased(MouseEvent e) {}
 	}
-	
+
 	public void loadConfigFiles() {
 		try {
 			loadDeck();
@@ -223,7 +225,7 @@ public class ClueGame extends JFrame{
 				return c;
 			}
 		}
-		
+
 		//And if it's not disproven:
 		goodAccusation = suggestion;
 		//Update Suggestion Log:
@@ -303,40 +305,31 @@ public class ClueGame extends JFrame{
 		}
 		reader.close();
 	}
-	
+
 	public int rollDie() { //rolls a 6-sided die (or simulates that, with Random)
 		Random die = new Random();
 		int roll = die.nextInt(6) + 1;
 		System.out.println(roll);
 		return roll;
 	}
-	
+
 	public void testAccusation(Solution accusation, String name, boolean isPlayer){
 		if(solution.equals(accusation)) {
 			gameOngoing = false; //The game has ended
 			//TODO: Declare Winner
 		}
 	}
-	public void aiTurn(Player ai) {
+	public void aiTurn(Player ai, int aiRoll) {
 		//TODO: Finish implementation:
-		
-		//Roll Die:
-		int aiRoll = rollDie();
-		controls.setRoll(aiRoll);
-		
-		//Timer to simulate gameplay:
-		//TODO: Add a short timer (1 or 2 seconds - long enough so people know it's there, but not long enough that it's annoying)
 
-		
 		//Should we make an accusation?
 		if(ai.makeAccusation(goodAccusation) != null) {
 			testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
 		} else {
 			//Move:
 			ai.pickTarget(aiRoll, board);
-			
+
 			//Are they in a room now?
-			
 			if(board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) != null) {
 				//Make a suggestion:
 				RoomCell r = board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn());
@@ -347,12 +340,12 @@ public class ClueGame extends JFrame{
 				Solution suggestion = ai.makeSuggestion(roomCard);
 				handleSuggestion(ai, suggestion);
 			}
-			
+
 			//And, of course, we have to repaint our board if they moved
 			board.repaint();
 		}
 	}
-	
+
 	//BUTTON VALIDITY CHECKS: *************************
 	//these methods answer the question "Should this click do anything right now?"
 	public boolean isValidEndTurn(){
@@ -375,7 +368,7 @@ public class ClueGame extends JFrame{
 			return false;
 		}
 	}
-	
+
 	public boolean isValidAccusationTime(){
 		//It must be the player's turn, she must have not already
 		//acted (moved or made an earlier accusation) and can't have other critical dialogs open at the time
@@ -396,7 +389,7 @@ public class ClueGame extends JFrame{
 			return false;
 		}
 	}
-	
+
 	public boolean isValidBoardClick(){
 		//This is just to check whether clicking on the board at all is valid.
 		//This does not check whether the particular click location is a valid
@@ -413,80 +406,73 @@ public class ClueGame extends JFrame{
 			return false;
 		}
 	}
-	
+
 	//BUTTON ACTIONS *******************************************
 	//If the Button or Mouse Click is valid, call these guys:
 	//THESE ASSUME THAT THE ACTION CALLED IS VALID as per the above methods.
 	public void EndTurn(){
 		//The turn ends, so we adjust our logic accordingly:
 		playerTurn = false;
-		
+
 		//Run through all the AI turns:
-		for(Player ai : players.get("Computer")){
-			controls.setTurn(ai.getName());
-			aiTurn(ai);
+		//TODO:
+		Timer tick = null;
+		if(timerStop){
+			int delay = 1000; //milliseconds
+			TimerListener timer = new TimerListener(players.get("Computer"), this);
+			tick = new Timer(delay, timer);
+			tick.start();	
+		} else {
+			tick.stop();
+			timerStop = true;
 		}
-		//Set "Whose Turn" to the player's name
-		controls.setTurn(players.get("Human").getFirst().getName());
-		//Roll the die
-		int humanRoll = rollDie();
-		
-		//Set the diePanel to display the roll
-		controls.setRoll(humanRoll);
-		
-		//Calculate Targets:
-		players.get("Human").getFirst().pickTarget(humanRoll, board);
-		
-		//Now we're ready for the player's turn to begin
-		playerTurn = true;
-		board.highlightTargets = true;
-		hasActed = false;
-		
-		//And repaint the board (targets are now highlighted)
-		board.repaint();
+
+
+
+
 	}
-	
+
 	public void makeAccusation(){
 		//This necessitates a change to our logic:
 		accusationDialogOpen = true;
 		board.highlightTargets = false; 
-		
+
 		//And of course a repaint:
 		board.repaint();
 		//TODO: make sure that closing the Accusation Dialog without making an accusation will re-highlight the board
-		
+
 		//Pop up the Accusation Dialog
 		controls.createAccusationDialog();
 	}
-	
+
 	public void boardClick(int x, int y){ //pass in the raw x,y data of a mouse click.  This'll calculate its board location for you.
 		//Calculate location: the floor of the point divided by cell size
 		int cellX, cellY;
 		cellX = x / board.getCellDimensions();
 		cellY = y / board.getCellDimensions();
-		
+
 		//Check if location is valid:
 		boolean validTarget = false;
 		for(BoardCell target : board.getTargets()) {
 			if(cellX == target.getCol() && cellY == target.getRow()) {
-				
+
 				validTarget = true;
 			}
 		}
-		
+
 		if(validTarget) {
 			//Move the player
 			players.get("Human").getFirst().setLocation(cellX, cellY); 
 			//"getFirst()" Only one human player - but more complicated logic could be used if we wanted to expand for
 			//multiple players.
-			
+
 			//Since the player has moved, we set our game logic to note this:
 			hasActed = true;
 			board.highlightTargets = false;
-			
+
 			//Since the board has changed, we repaint the board
 			board.repaint();
-			
+
 			if(board.getRoomCellAt(cellY, cellX) != null) {
 				suggestionDialogOpen = true;
 				controls.createSuggestionDialog();
@@ -495,9 +481,9 @@ public class ClueGame extends JFrame{
 		} else {
 			return;
 		}
-		
+
 	}
-	
+
 
 	// GETTERS ****************************************************************
 	// Used for testing purposes only. (or are they?)
@@ -612,23 +598,69 @@ public class ClueGame extends JFrame{
 		//Splash Screen, but will have to change it later
 		if (JOptionPane.showConfirmDialog(null, "Play a game of Clue?", "Clue", JOptionPane.YES_NO_OPTION) == 0){
 			ClueGame clue = new ClueGame(LEGEND, BOARD,
-				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
-		clue.setVisible(true);
-	    Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
-	    Dimension fd = clue.getSize(); 
-	    if (fd.height > sd.height) 
-	      fd.height = sd.height; 
-	    if (fd.width > sd.width) 
-	      fd.width = sd.width; 
-	    clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
+					PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
+			clue.setVisible(true);
+			Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
+			Dimension fd = clue.getSize(); 
+			if (fd.height > sd.height) 
+				fd.height = sd.height; 
+			if (fd.width > sd.width) 
+				fd.width = sd.width; 
+			clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
 		}
 	}
 
+	//Our Timer:
 	private class TimerListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			
-		   } 
+		LinkedList<Player> bots;
+		ClueGame game;
+		int counter = 0;
+		int roll;
+
+		public TimerListener(LinkedList<Player> bots, ClueGame game) {
+			super();
+			this.bots = bots;
+			counter = 0;
+
+			this.roll = rollDie();
+			controls.setTurn(bots.get(counter).getName());
+			controls.setRoll(roll);
 		}
+
+		public void actionPerformed(ActionEvent e) {
+			if(counter < bots.size()){
+				aiTurn(bots.get(counter), roll);	
+			} else if(counter == bots.size()) {
+				timerStop = true;
+
+				//Set "Whose Turn" to the player's name
+				controls.setTurn(players.get("Human").getFirst().getName());
+				//Roll the die
+				int humanRoll = rollDie();
+
+				//Set the diePanel to display the roll
+				controls.setRoll(humanRoll);
+
+				//Calculate Targets:
+				players.get("Human").getFirst().pickTarget(humanRoll, board);
+
+				//Now we're ready for the player's turn to begin
+				playerTurn = true;
+				board.highlightTargets = true;
+				hasActed = false;
+
+				//And repaint the board (targets are now highlighted)
+				board.repaint();
+			}
+			counter++;
+			this.roll = rollDie();
+			if(counter < bots.size()) {
+				controls.setTurn(bots.get(counter).getName());
+				controls.setRoll(roll);
+			}
+			board.repaint();
+		} 
+	}
 
 
 }
