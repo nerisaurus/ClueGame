@@ -19,8 +19,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import clueGame.Card;
 import clueGame.ClueGame;
 import clueGame.HumanPlayer;
+import clueGame.Player;
+import clueGame.Solution;
 
 public class ClueControlPanel extends JPanel{
 	private ClueGame clue;
@@ -97,13 +100,17 @@ public class ClueControlPanel extends JPanel{
 	}
 
 	public void setRoll(int i) {
-		// TODO Auto-generated method stub
+		//Set the dice panel to display the roll (passed in)
 		currentTurn.setRoll(i);
 	}
 
 	public void setTurn(String name) {
-		// TODO Auto-generated method stub
+		//Set the "Current Turn" text field to display the current player's name (passed in)
 		currentTurn.setCurrentPlayer(name);
+	}
+	
+	public void addSuggestionToLog(Player accuser, Solution suggestion, Card disprovedBy) {
+		suggestionLog.addSuggestion(accuser, suggestion, disprovedBy);
 	}
 	///// suggestion dialog
 	class SuggestionLogListener implements ActionListener{

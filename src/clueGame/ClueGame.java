@@ -119,13 +119,13 @@ public class ClueGame extends JFrame{
 	}
 
 	private void startWithHuman() {
-		// TODO Auto-generated method stub
+		//We roll the die:
 		int humanRoll = rollDie();
 		controls.setRoll(humanRoll);
 		
-		//Set the diePanel to display this roll
-		//TODO: (note: just use humanRoll to set - should be easy as cake)
-		
+		//Set "Whose Turn" to the player's name
+		controls.setTurn(players.get("Human").getFirst().getName());
+				
 		//Calculate Targets:
 		players.get("Human").getFirst().pickTarget(humanRoll, board);
 		
@@ -217,8 +217,9 @@ public class ClueGame extends JFrame{
 		for(Player p: getPlayersSansCurrent(accusingPlayer)) {
 			Card c = p.disproveSuggestion(suggestion);
 			if(c != null) {
-				//TODO: Update Suggestion Log:
-				//Add accusingPlayer, suggestion, c, true
+				//Update Suggestion Log:
+				controls.addSuggestionToLog(accusingPlayer, suggestion, c);
+				//And return the card for further logic (ai logic)
 				return c;
 			}
 		}

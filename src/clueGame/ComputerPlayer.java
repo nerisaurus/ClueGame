@@ -82,10 +82,11 @@ public class ComputerPlayer extends Player {
 			}
 			potentialTargetLocations.add(board.calcIndex(target.getRow(), target.getCol()));
 		}
-		int pick = 0;
-		if (potentialTargetLocations.size()>1)
-			pick = random.nextInt(potentialTargetLocations.size());
+		
+		//Randomly pick a target:
+		int pick = random.nextInt(potentialTargetLocations.size());
 
+		//Find the location that that target is at:
 		int pickIndex = potentialTargetLocations.get(pick);
 		setLocation(board.getCellAt(pickIndex).getCol(), board.getCellAt(pickIndex).getRow());
 		
