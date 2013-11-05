@@ -128,7 +128,8 @@ public class ClueControlPanel extends JPanel{
 	public void makeAccusation(){
 		accusationDialog.setVisible(false);
 		clue.accusationDialogOpen = false;
-		clue.getBoard().setHighlightTargets(true); //TODO: replaced with more complicated logic later on
+		//TODO: replace the next two lines with more complex logic when the actual accusation dialog is made
+		clue.getBoard().setHighlightTargets(true);
 		clue.getBoard().repaint();
 	}
 	public void createSuggestionDialog(){

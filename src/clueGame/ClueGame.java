@@ -309,7 +309,6 @@ public class ClueGame extends JFrame{
 	public int rollDie() { //rolls a 6-sided die (or simulates that, with Random)
 		Random die = new Random();
 		int roll = die.nextInt(6) + 1;
-		System.out.println(roll);
 		return roll;
 	}
 
