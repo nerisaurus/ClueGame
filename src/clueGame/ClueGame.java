@@ -22,7 +22,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import clueGameGUI.ClueControlPanel;
 import clueGameGUI.MyCardsPanel;
@@ -62,7 +61,7 @@ public class ClueGame extends JFrame{
 	
 	//Similarly, here's a bit of logic for the AI:
 	private Solution goodAccusation = null;
-	Timer t;
+	
 	//Two Panels for the JFrame
 	ClueControlPanel controls;
 	SuggestionDialog s;
@@ -401,24 +400,19 @@ public class ClueGame extends JFrame{
 	public void EndTurn(){
 		//The turn ends, so we adjust our logic accordingly:
 		playerTurn = false;
-		t = new Timer(1000, new TimerListener());
-		t.start();
-		//for(Player ai : players.get("Computer")){
-			//Timer t = new Timer(1000, new TimerListener());
-			//t.start();
-			//controls.setTurn(ai.getName());
-			//aiTurn(ai);
-		//}
+		
+		//Run through all the AI turns:
+		for(Player ai : players.get("Computer")){
+			controls.setTurn(ai.getName());
+			aiTurn(ai);
+		}
 		//Set "Whose Turn" to the player's name
-		//TODO: (note: players.get("Human").getFirst().getName(); will get you the right name)
 		controls.setTurn(players.get("Human").getFirst().getName());
 		//Roll the die
-		
 		int humanRoll = rollDie();
-		controls.setRoll(humanRoll);
 		
-		//Set the diePanel to display this roll
-		//TODO: (note: just use humanRoll to set - should be easy as cake)
+		//Set the diePanel to display the roll
+		controls.setRoll(humanRoll);
 		
 		//Calculate Targets:
 		players.get("Human").getFirst().pickTarget(humanRoll, board);
@@ -612,14 +606,4 @@ public class ClueGame extends JFrame{
 	    clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
 		}
 	}
-	private class TimerListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			for(Player ai : players.get("Computer")){
-			controls.setTurn(ai.getName());
-			aiTurn(ai);
-		   }
-
-		}
-		}
-
 }
