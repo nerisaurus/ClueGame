@@ -76,7 +76,7 @@ public class ComputerPlayer extends Player {
 				RoomCell roomTarget = (RoomCell) target;
 				if(roomTarget.getInitial() != lastVisited) {
 					lastVisited = roomTarget.getInitial();
-					setLocation(roomTarget.getRow(), roomTarget.getCol());
+					setLocation(roomTarget.getCol(), roomTarget.getRow());
 					return board.calcIndex(roomTarget.getRow(), roomTarget.getCol());
 				}
 			}
