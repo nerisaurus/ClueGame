@@ -55,10 +55,10 @@ public class SuggestionLogPanel extends JPanel {
 		if(disprovingCard == null) {
 			disproved = "This has not been disproven...";
 		} else {
-			disproved = "This was disproven with the card: " + disprovingCard.getName();
+			disproved = "DISPROVEN:  " + disprovingCard.getName();
 		}
 
-		//String logEntry = detective + " " + " suspected " + suspect + " on the planet " + location + " with the " + weapon + ". " + disproved + "\n";
+		String logEntry = "\n" + suspect + " on " + location + " with the " + weapon + "\n";
 		//Then we add this:
 		SimpleAttributeSet keyWord = new SimpleAttributeSet();
 		StyleConstants.setForeground(keyWord, accuser.getColor());
@@ -66,7 +66,8 @@ public class SuggestionLogPanel extends JPanel {
 		StyleConstants.setBold(keyWord, true);
 		try {
 			doc.insertString(0, detective, keyWord );
-			doc.insertString(detective.length(), "\n" + suspect + "|" + location + "|" + weapon + "\n", null);
+			doc.insertString(detective.length(), logEntry, null);
+			doc.insertString(detective.length() + logEntry.length(), disproved + "\n", null);
 			
 			
 		} catch (BadLocationException e) {
