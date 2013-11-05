@@ -78,8 +78,7 @@ public class ClueControlPanel extends JPanel{
 	class AccusationListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if (clue.isValidAccusationTime()){
-				createAccusationDialog();
-				clue.accusationDialogOpen = true;
+				clue.makeAccusation();
 			}
 		}
 	}
@@ -94,9 +93,7 @@ public class ClueControlPanel extends JPanel{
 	}
 
 	public void giveClueGame(ClueGame clueGame) {
-		// TODO Auto-generated method stub
 		clue = clueGame;
-		//clue.EndTurn();
 	}
 
 	public void setRoll(int i) {

@@ -323,8 +323,6 @@ public class ClueGame extends JFrame{
 		//Roll Die:
 		int aiRoll = rollDie();
 		controls.setRoll(aiRoll);
-		//Adjust DiePanel to show this roll
-		//TODO: (just use aiRoll to set it - should be easy as cake)
 		
 		//Timer to simulate gameplay:
 		//TODO: Add a short timer (1 or 2 seconds - long enough so people know it's there, but not long enough that it's annoying)
@@ -341,12 +339,11 @@ public class ClueGame extends JFrame{
 			
 			if(board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) != null) {
 				//Make a suggestion:
-				//TODO: Convert " board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn()) " into
-				//a Room CARD to pass to ai.makeSuggestion().  Call it roomCard. Then uncomment this:
 				RoomCell r = board.getRoomCellAt(ai.getCurrentRow(), ai.getCurrentColumn());
 				char init = r.getInitial();
 				String s = board.getRooms().get(init);
 				Card roomCard = new Card (s, CardType.ROOM);
+				//(First we have to give the ai a room card to start its suggestion from)
 				Solution suggestion = ai.makeSuggestion(roomCard);
 				handleSuggestion(ai, suggestion);
 			}
@@ -459,7 +456,7 @@ public class ClueGame extends JFrame{
 		//TODO: make sure that closing the Accusation Dialog without making an accusation will re-highlight the board
 		
 		//Pop up the Accusation Dialog
-		//TODO:
+		controls.createAccusationDialog();
 	}
 	
 	public void boardClick(int x, int y){ //pass in the raw x,y data of a mouse click.  This'll calculate its board location for you.
@@ -491,9 +488,6 @@ public class ClueGame extends JFrame{
 			board.repaint();
 			
 			if(board.getRoomCellAt(cellY, cellX) != null) {
-				//TODO: Pop up the suggestion dialog.  Set suggestionDialogOpen = true and do
-				//all the other logic associated with starting up a suggestion (although
-				//the suggestion dialog buttons will work out actually moving players and such)
 				suggestionDialogOpen = true;
 				controls.createSuggestionDialog();
 				//suggestion made
