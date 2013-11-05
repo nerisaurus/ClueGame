@@ -71,6 +71,7 @@ public class Board extends JPanel {
 	}
 
 	public Board(String layout, String legend) {
+		setBackground(Color.BLACK);
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
 		this.roomColors = new HashMap<Character, Color>();

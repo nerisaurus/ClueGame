@@ -1,5 +1,7 @@
 package clueGameGUI;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,6 +12,7 @@ public class DiePanel extends JPanel {
 	ImageIcon dieFace;
 	JLabel dieFrame;
 	public DiePanel() { 	
+		setBackground(Color.BLACK);
 	    dieFace = new ImageIcon("zero.png"); 
 	    dieFrame = new JLabel(); 
 	    dieFrame.setIcon(dieFace); 

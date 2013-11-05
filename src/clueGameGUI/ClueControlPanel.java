@@ -1,6 +1,8 @@
 package clueGameGUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,15 +38,13 @@ public class ClueControlPanel extends JPanel{
 	
 	public ClueControlPanel(ClueGame clue, HumanPlayer player) {
 		setLayout(new BorderLayout());
-		
 		//Topmost: A panel containing the current player's name and her dice roll:
 		currentTurn = new TurnPanel();
 		add(currentTurn, BorderLayout.NORTH);
-		
+		setBackground(Color.BLACK);
 		//In the middle, suggestions and cards:
 		JPanel middlePanel = new JPanel();
 		middlePanel.setLayout(new BorderLayout());
-		
 		suggestionLog = new SuggestionLogPanel();
 		cards = new MyCardsPanel(player);
 		
@@ -55,12 +55,18 @@ public class ClueControlPanel extends JPanel{
 		
 		//At the bottom, the buttons
 		JPanel buttons = new JPanel();
+		buttons.setBackground(Color.BLACK);
 		buttons.setLayout(new GridLayout(1,2));
 		
 		makeAccusation = new JButton("MAKE AN ACCUSATION!");
+		makeAccusation.setFont(new Font("Arial Narrow", Font.BOLD, 12));
+		makeAccusation.setBackground(Color.BLACK);
+		makeAccusation.setForeground(Color.RED);
 		makeAccusation.addActionListener(new AccusationListener());
 		
 		endTurn = new JButton("End Turn");
+		endTurn.setBackground(Color.BLACK);
+		endTurn.setForeground(Color.WHITE);
 		endTurn.addActionListener(new nextPlayerListener());
 		
 		buttons.add(makeAccusation);
@@ -101,9 +107,9 @@ public class ClueControlPanel extends JPanel{
 		currentTurn.setRoll(i);
 	}
 
-	public void setTurn(String name) {
+	public void setTurn(Player p) {
 		//Set the "Current Turn" text field to display the current player's name (passed in)
-		currentTurn.setCurrentPlayer(name);
+		currentTurn.setCurrentPlayer(p);
 	}
 	
 	public void addSuggestionToLog(Player accuser, Solution suggestion, Card disprovedBy) {
@@ -123,39 +129,25 @@ public class ClueControlPanel extends JPanel{
 	public void makeSuggestion(){
 		suggestionDialog.setVisible(false);
 		clue.suggestionDialogOpen = false;
-		
 	}
 	public void makeAccusation(){
 		accusationDialog.setVisible(false);
 		clue.accusationDialogOpen = false;
-		//TODO: replace the next two lines with more complex logic when the actual accusation dialog is made
-		clue.getBoard().setHighlightTargets(true);
-		clue.getBoard().repaint();
 	}
-	public void createSuggestionDialog(){
-		//if (!accusationDialog.isVisible()){
-		suggestionDialog = new SuggestionDialog();
-		suggest = new JButton ("Suggest");
-		suggest.addActionListener(new SuggestionLogListener());
-		suggestionDialog.add(suggest, BorderLayout.SOUTH);
-		//}
-		//else{
-		//	JOptionPane.showMessageDialog(null, "Close Accusation Dialog.");
-		//	return;
-		//}
+	public void createSuggestionDialog(String room){
+		suggestionDialog = new SuggestionDialog(room, clue);
+		suggestionDialog.setTitle("Make a Suggestion");
+		//
+		suggestionDialog.submitButton.setText("Suggest");
+		suggestionDialog.submitButton.addActionListener(new AccusationDialogListener());
 	}
 	
 	public void createAccusationDialog(){
-		//if (!suggestionDialog.isVisible()){
-			accusationDialog = new SuggestionDialog();
-			accuse = new JButton ("Accuse");
-			accuse.addActionListener(new AccusationDialogListener());
-			accusationDialog.add(accuse);
-		//}
-		//else{
-		//	JOptionPane.showMessageDialog(null, "Close Suggestion Dialog.");
-		//	return;
-		//}
+			accusationDialog = new SuggestionDialog(null, clue);
+			accusationDialog.setTitle("Make an Accusation!");
+			//
+			accusationDialog.submitButton.setText("Accuse");
+			accusationDialog.submitButton.addActionListener(new AccusationDialogListener());
 	}
 
 

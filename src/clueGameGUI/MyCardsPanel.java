@@ -1,5 +1,9 @@
 package clueGameGUI;
 
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,7 +23,9 @@ public class MyCardsPanel extends JPanel{
 	public MyCardsPanel(HumanPlayer hp) {
 		this.hp = hp;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(new TitledBorder (new EtchedBorder(), "My Cards"));
+		setBackground(Color.BLACK);
+		setForeground(Color.WHITE);
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.red),"My Cards", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), hp.getColor()));
 		for(Card card : hp.getHand()) {
 			//First we describe the card:
 			String cardDescription = "";
@@ -39,6 +45,8 @@ public class MyCardsPanel extends JPanel{
 			
 			//Now we put that into a JTextField:
 			JTextField displayCard = new JTextField();
+			displayCard.setBackground(Color.BLACK);
+			displayCard.setForeground(hp.getColor());
 			displayCard.setEditable(false);
 			displayCard.setText(cardDescription);
 			

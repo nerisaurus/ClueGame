@@ -2,7 +2,17 @@ package clueGameGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -20,61 +30,38 @@ import clueGame.Player;
 import clueGame.Solution;
 
 public class SuggestionLogPanel extends JPanel {
-	private JTextPane log;
-	private JScrollPane scroll;
-	StyledDocument doc;
+	private SuggestionLog log;
+	
 	SuggestionLogPanel(){
 		//We add a scrolling text area for
 		//all previous suggestions and
 		//their results
-		log = new JTextPane();
-		log.setEditable(false);
-		log.setSize(200, 200);
+		setBackground(Color.BLACK);
+		setForeground(Color.WHITE);
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.red),"Previous Suggestions", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), Color.WHITE));
+		log = new SuggestionLog();
+		
+		setSize(300,getSize().height);
 		//log.setWrapStyleWord(true);
 		//log.setLineWrap(true);
 		setLayout(new BorderLayout());
-		add(log, BorderLayout.CENTER);
-		doc = log.getStyledDocument();
-		//the scrolling part:
-		scroll = new JScrollPane(log);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		add(scroll);
+		add(log, BorderLayout.CENTER);
+		//the scrolling part:
+		
 
 		//and a border to explain the purpose of this
-		setBorder(new TitledBorder (new EtchedBorder(), "Previous Suggestions"));	
+		//setBorder(new TitledBorder (new EtchedBorder(), "Previous Suggestions"));	
 	}
 
-	public void addSuggestion(Player accuser, Solution suggestion, Card disprovingCard) {
-		//First, we generate the new line
-		String detective = accuser.getName(); 
-		String suspect = suggestion.getPerson().getName();
-		String location = suggestion.getRoom().getName();
-		String weapon = suggestion.getWeapon().getName();
-		String disproved;
-		if(disprovingCard == null) {
-			disproved = "This has not been disproven...";
-		} else {
-			disproved = "DISPROVEN:  " + disprovingCard.getName();
-		}
+	public void addSuggestion(Player accuser, Solution suggestion,
+			Card disprovedBy) {
+		// TODO Auto-generated method stub
+		 log.addSuggestion(accuser, suggestion, disprovedBy);
 
-		String logEntry = "\n" + suspect + " on " + location + " with the " + weapon + "\n";
-		//Then we add this:
-		SimpleAttributeSet keyWord = new SimpleAttributeSet();
-		StyleConstants.setForeground(keyWord, accuser.getColor());
-		StyleConstants.setBackground(keyWord, accuser.getColor().darker().darker().darker());
-		StyleConstants.setBold(keyWord, true);
-		try {
-			doc.insertString(0, detective, keyWord );
-			doc.insertString(detective.length(), logEntry, null);
-			doc.insertString(detective.length() + logEntry.length(), disproved + "\n", null);
-			
-			
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
+
+	
 
 }
 
