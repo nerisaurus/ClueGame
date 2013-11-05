@@ -226,8 +226,8 @@ public class ClueGame extends JFrame{
 		
 		//And if it's not disproven:
 		goodAccusation = suggestion;
-		//TODO: Update Suggestion Log
-		//Add accusingPlayer, suggestion, null, false
+		//Update Suggestion Log:
+		controls.addSuggestionToLog(accusingPlayer, suggestion, null);
 		return null;
 	}
 
