@@ -598,11 +598,15 @@ public class ClueGame extends JFrame{
 
 
 	public static void main(String[] args) {
+		//Initialize Just About Everything:
+		ClueGame clue = new ClueGame(LEGEND, BOARD,
+				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
 		//Splash Screen, but will have to change it later
-		if (JOptionPane.showConfirmDialog(null, "Play a game of Clue?", "Clue", JOptionPane.YES_NO_OPTION) == 0){
-			ClueGame clue = new ClueGame(LEGEND, BOARD,
-					PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
+		if (JOptionPane.showConfirmDialog(null, "Play a game of Clue?", "Clue", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE) == 0){
+			//Let us see our board:
 			clue.setVisible(true);
+			
+			//Sets the Screen to Open in the Center of the Screen:
 			Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
 			Dimension fd = clue.getSize(); 
 			if (fd.height > sd.height) 
@@ -610,6 +614,8 @@ public class ClueGame extends JFrame{
 			if (fd.width > sd.width) 
 				fd.width = sd.width; 
 			clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
+		} else {
+			System.exit(0);
 		}
 	}
 
