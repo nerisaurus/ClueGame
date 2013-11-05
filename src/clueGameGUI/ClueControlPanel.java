@@ -9,7 +9,9 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -202,17 +204,29 @@ public class ClueControlPanel extends JPanel{
 		clue.accusationDialogOpen = false;
 	}
 	public void createSuggestionDialog(){
+		//if (!accusationDialog.isVisible()){
 		suggestionDialog = new SuggestionDialog();
 		suggest = new JButton ("Suggest");
 		suggest.addActionListener(new SuggestionLogListener());
 		suggestionDialog.add(suggest, BorderLayout.SOUTH);
+		//}
+		//else{
+		//	JOptionPane.showMessageDialog(null, "Close Accusation Dialog.");
+		//	return;
+		//}
 	}
 	
 	public void createAccusationDialog(){
-		accusationDialog = new SuggestionDialog();
-		accuse = new JButton ("Accuse");
-		accuse.addActionListener(new AccusationDialogListener());
-		accusationDialog.add(accuse);
+		//if (!suggestionDialog.isVisible()){
+			accusationDialog = new SuggestionDialog();
+			accuse = new JButton ("Accuse");
+			accuse.addActionListener(new AccusationDialogListener());
+			accusationDialog.add(accuse);
+		//}
+		//else{
+		//	JOptionPane.showMessageDialog(null, "Close Suggestion Dialog.");
+		//	return;
+		//}
 	}
 
 
