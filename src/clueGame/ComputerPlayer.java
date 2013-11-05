@@ -85,17 +85,16 @@ public class ComputerPlayer extends Player {
 		int pick = 0;
 		if (potentialTargetLocations.size()>1)
 			pick = random.nextInt(potentialTargetLocations.size());
-		else
-			pick = 0;
 
-		//TODO: Get the row and column of potentialTargetLocations.get(pick) and put those into
-		//setLocation(row,column).
-		return potentialTargetLocations.get(pick);
+		int pickIndex = potentialTargetLocations.get(pick);
+		setLocation(board.getCellAt(pickIndex).getCol(), board.getCellAt(pickIndex).getRow());
+		
+		return pickIndex;
 	}
 	
 	@Override
 	public Solution makeAccusation(Solution goodAccusation) {
-		//TODO: Add logic for other Accusation possibilities.
+		//TODO: AI Smartening. Add logic for other Accusation possibilities.
 		return goodAccusation;
 	}
 	
