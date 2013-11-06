@@ -56,7 +56,7 @@ public class DiePanel extends JPanel {
 			default: {dieFrame.setIcon(zero); break;}
 		}*/
 		
-		//
+		//TODO: Old code - works, but not as fancy
 		switch (i){
 		case 1: {dieFrame.setIcon(new ImageIcon("one.png")); break;}
 		case 2: {dieFrame.setIcon(new ImageIcon("two.png")); break;}
@@ -66,6 +66,26 @@ public class DiePanel extends JPanel {
 		case 6: {dieFrame.setIcon(new ImageIcon("six.png")); break;}
 			default: {dieFrame.setIcon(new ImageIcon("zero.png")); break;}
 		}
+		
+		//TODO: Testing
+		ImageIcon n;
+		switch (i){
+		case 1: {n = new ImageIcon(fileLocation + "one.png"); break;}
+		case 2: {n = new ImageIcon(fileLocation + "two.png"); break;}
+		case 3: {n = new ImageIcon(fileLocation + "three.png"); break;}
+		case 4: {n = new ImageIcon(fileLocation + "four.png"); break;}
+		case 5: {n = new ImageIcon(fileLocation + "five.png"); break;}
+		case 6: {n = new ImageIcon(fileLocation + "six.png"); break;}
+			default: {n = new ImageIcon("one.png"); break;}
+		}
+		System.out.println(n.getImageLoadStatus() + " is " + i + "'s load status.");
+		
+		//How to read this test result:
+		/*public static final int	ABORTED	2
+		public static final int	COMPLETE	8
+		public static final int	ERRORED	4
+		public static final int	LOADING	1*/
+
 		
 		//TODO: Testing...
 		//Observed Errors:
