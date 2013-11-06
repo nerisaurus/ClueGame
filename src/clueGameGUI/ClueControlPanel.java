@@ -151,7 +151,6 @@ public class ClueControlPanel extends JPanel{
 		suggestionLog.setTheme(p);
 		cards.setTheme(p);
 		setBackground(p.getColor());
-		
 	}
 	public void setCurrentPlayerTheme(Player p){
 		//picture

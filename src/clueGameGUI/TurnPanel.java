@@ -47,7 +47,6 @@ public class TurnPanel extends JPanel {
 	}
 
 	public void setCurrentPlayerTheme(Player p) {
-		// TODO Auto-generated method stub
 		currentPlayer.setForeground(p.getColor());
 		currentPlayer.setBorder(new LineBorder(p.getColor().darker(), 3));
 		currentPlayer.setBackground(p.getColor().darker().darker().darker());
@@ -56,6 +55,7 @@ public class TurnPanel extends JPanel {
 	}
 	
 	public void setTheme(Player p){
+		die.setTheme(p);
 		setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"Current Turn", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
 	}
 
