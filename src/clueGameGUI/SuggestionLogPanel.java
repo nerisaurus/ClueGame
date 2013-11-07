@@ -31,6 +31,7 @@ import clueGame.Solution;
 
 public class SuggestionLogPanel extends JPanel {
 	private SuggestionLog log;
+	private JScrollPane scroll;
 	
 	SuggestionLogPanel(){
 		//We add a scrolling text area for
@@ -46,9 +47,11 @@ public class SuggestionLogPanel extends JPanel {
 		//log.setLineWrap(true);
 		setLayout(new BorderLayout());
 		
-		add(log, BorderLayout.CENTER);
+		//add(log, BorderLayout.CENTER);
 		//the scrolling part:
-		
+		scroll = new JScrollPane(log);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		add(scroll);
 
 		//and a border to explain the purpose of this
 		//setBorder(new TitledBorder (new EtchedBorder(), "Previous Suggestions"));	

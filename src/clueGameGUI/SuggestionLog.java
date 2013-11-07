@@ -23,7 +23,7 @@ import clueGame.Solution;
 
 public class SuggestionLog extends JTextPane {
 	StyledDocument doc;
-	JScrollPane scroll;
+	
 	String fileLocation;
 	public SuggestionLog(){
 		setBackground(Color.BLACK);
@@ -32,11 +32,6 @@ public class SuggestionLog extends JTextPane {
 		setSize(300, 200);
 		setOpaque(false);
 		doc = getStyledDocument();
-		scroll = new JScrollPane();
-		scroll.setBackground(Color.BLACK);
-		scroll.setForeground(Color.WHITE);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		add(scroll, BorderLayout.EAST);
 	}
 	
 	//A constructor that lets you set the theme in one fell swoop, just in case you want to do that
@@ -48,11 +43,6 @@ public class SuggestionLog extends JTextPane {
 		setSize(300, 200);
 		setOpaque(false);
 		doc = getStyledDocument();
-		scroll = new JScrollPane();
-		scroll.setBackground(Color.BLACK);
-		scroll.setForeground(Color.WHITE);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		add(scroll, BorderLayout.EAST);
 	}
 	
 	public void addSuggestion(Player accuser, Solution suggestion, Card disprovingCard) {
