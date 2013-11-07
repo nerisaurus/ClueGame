@@ -228,8 +228,14 @@ public class ClueGame extends JFrame{
 				if(updatePanel) {
 					controls.addSuggestionToLog(accusingPlayer, suggestion, c);
 				}
+				
+				//Let all the players see it:
+				for(Player seer : players.get("Computer")) {
+					seer.seesCard(c);
+				}
+				
 				//And return the card for further logic (ai logic)
-				return c;
+				return c;		
 			}
 		}
 
@@ -333,6 +339,10 @@ public class ClueGame extends JFrame{
 		//Should we make an accusation?
 		if(ai.makeAccusation(goodAccusation) != null) {
 			testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
+			//Then a reset.  If they didn't win, it must not be the right thing, and
+			//other AI know this (they "know" that any AI will pick that suggestion
+			//right away, so after one turn they already abandon it as the proper idea
+			goodAccusation = null;
 		} else {
 			//Move:
 			ai.pickTarget(aiRoll, getBoard());

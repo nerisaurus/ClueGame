@@ -56,11 +56,16 @@ public class SuggestionLog extends JTextPane {
 	}
 	
 	public void addSuggestion(Player accuser, Solution suggestion, Card disprovingCard) {
-		//First, we generate the new line
+		//First, we figure out all the words we need:
 		String detective = accuser.getName(); 
 		String suspect = suggestion.getPerson().getName();
 		String location = suggestion.getRoom().getName();
 		String weapon = suggestion.getWeapon().getName();
+		
+		//Then we generate the lines to add in: First, the suggestion...
+		String suggested = suspect + " on " + location + " with the " + weapon;
+		
+		//...Then the statement of its disproven-ness
 		String disproved;
 		if(disprovingCard == null) {
 			disproved = "This has not been disproven...";
@@ -76,8 +81,9 @@ public class SuggestionLog extends JTextPane {
 		StyleConstants.setBold(keyWord, true);
 		
 		try {
-			doc.insertString(0, detective, keyWord );
-			doc.insertString(detective.length(), "\n" + suspect + "|" + location + "|" + weapon + "\n", null);
+			doc.insertString(0, detective, keyWord);
+			doc.insertString(detective.length(), "\n" + suggested + "\n", null);
+			doc.insertString(detective.length() + suggested.length() + 1, "\n" + disproved + "\n", null);
 			
 			
 		} catch (BadLocationException e) {
