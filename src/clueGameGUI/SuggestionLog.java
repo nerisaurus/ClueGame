@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultCaret;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -26,6 +27,8 @@ public class SuggestionLog extends JTextPane {
 	
 	String fileLocation;
 	public SuggestionLog(){
+		DefaultCaret caret = (DefaultCaret)this.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		setBackground(Color.BLACK);
 		setForeground(Color.WHITE);
 		setEditable(false);
@@ -36,6 +39,8 @@ public class SuggestionLog extends JTextPane {
 	
 	//A constructor that lets you set the theme in one fell swoop, just in case you want to do that
 	public SuggestionLog(Player p){
+		DefaultCaret caret = (DefaultCaret)this.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		setTheme(p);
 		setBackground(Color.BLACK);
 		setForeground(Color.WHITE);

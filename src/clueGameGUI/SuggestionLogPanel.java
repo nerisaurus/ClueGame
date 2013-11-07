@@ -21,6 +21,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultCaret;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -34,6 +35,7 @@ public class SuggestionLogPanel extends JPanel {
 	private JScrollPane scroll;
 	
 	SuggestionLogPanel(){
+		
 		//We add a scrolling text area for
 		//all previous suggestions and
 		//their results
