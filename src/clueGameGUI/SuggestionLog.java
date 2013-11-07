@@ -23,25 +23,13 @@ import clueGame.Player;
 import clueGame.Solution;
 
 public class SuggestionLog extends JTextPane {
-	StyledDocument doc;
+	private StyledDocument doc;
+	//private int backgroundHeight, backgroundWidth;
 	
 	String fileLocation;
 	public SuggestionLog(){
 		DefaultCaret caret = (DefaultCaret)this.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
-		setBackground(Color.BLACK);
-		setForeground(Color.WHITE);
-		setEditable(false);
-		setSize(300, 200);
-		setOpaque(false);
-		doc = getStyledDocument();
-	}
-	
-	//A constructor that lets you set the theme in one fell swoop, just in case you want to do that
-	public SuggestionLog(Player p){
-		DefaultCaret caret = (DefaultCaret)this.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		setTheme(p);
 		setBackground(Color.BLACK);
 		setForeground(Color.WHITE);
 		setEditable(false);
@@ -86,10 +74,12 @@ public class SuggestionLog extends JTextPane {
 			e.printStackTrace();
 		}
 	}
-	public void setTheme(Player p){
+/*	public void setTheme(Player p){
 		fileLocation = "Themes/" + p.getName() + "/";
-	}
-    protected void paintComponent(Graphics g) {
+		//backgroundHeight = (int) getSize().getHeight();
+		//backgroundWidth = (int) getSize().getWidth();
+	}*/
+  /*  protected void paintComponent(Graphics g) {
         BufferedImage image = null;
         try {
             //
@@ -99,12 +89,17 @@ public class SuggestionLog extends JTextPane {
         	image = ImageIO.read(new File(fileLocation + "logBackground.png"));
         	//RescaleOp op = new RescaleOp(.3f, 0, null);
             //image = op.filter(image, null);
-            g.drawImage(image, 0, 0, (int) getSize().getWidth(),
-                    (int) getSize().getHeight(), this);
+            g.drawImage(image, 0, 0, 
+            		(int) getSize().getWidth(),
+            		(int) getSize().getHeight(), this);
+            
+           // g.drawImage(image, 0, 0, backgroundWidth,
+           //         backgroundHeight, this);
+            super.paintComponent(g);
         } catch (IOException e) {
             e.printStackTrace();
         }
  
         super.paintComponent(g);
-    }
+    }*/
 }
