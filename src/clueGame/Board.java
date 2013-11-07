@@ -41,7 +41,7 @@ public class Board extends JPanel {
 
 	//Handy Size Variables for Drawing Purposes:
 	private int panelHeight, panelWidth;
-	private int cellDimensions = 24;
+	private int cellDimensions = 25;
 	
 	//Turn logic: (package variable, since it is used primarily in ClueGame)
 	private boolean highlightTargets;
