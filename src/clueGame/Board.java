@@ -41,7 +41,7 @@ public class Board extends JPanel {
 
 	//Handy Size Variables for Drawing Purposes:
 	private int panelHeight, panelWidth;
-	private int cellDimensions = 24;
+	private int cellDimensions = 25;
 	
 	//Turn logic: (package variable, since it is used primarily in ClueGame)
 	private boolean highlightTargets;
@@ -71,6 +71,7 @@ public class Board extends JPanel {
 	}
 
 	public Board(String layout, String legend) {
+		setBackground(Color.BLACK);
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
 		this.roomColors = new HashMap<Character, Color>();
@@ -141,7 +142,7 @@ public class Board extends JPanel {
 		for(Character roomInitial: rooms.keySet()){
 			if(roomLabelVerticalLocation.containsKey(roomInitial)){
 				g2 = (Graphics2D)g;
-				g2.setColor(Color.BLACK);
+				g2.setColor(Color.WHITE);
 				g2.drawString(rooms.get(roomInitial),roomLabelVerticalLocation.get(roomInitial),roomLabelHorizontalLocation.get(roomInitial)); 
 			}
 		}
@@ -217,6 +218,8 @@ public class Board extends JPanel {
 					Color color = convertColor(individual[2]);
 					if(color == null) { 
 						throw new BadConfigFormatException(individual[2] + " cannot be converted to a proper Color.");
+					} else {
+						color = color.darker();
 					}
 					roomColors.put(key,color);
 				}
@@ -224,6 +227,8 @@ public class Board extends JPanel {
 					Color color = convertColor(individual[2]);
 					if(color == null) { 
 						throw new BadConfigFormatException(individual[2] + " cannot be converted to a proper Color.");
+					} else {
+						color = color.darker();
 					}
 					roomColors.put(key,color); 
 					Double vertical = (Double.parseDouble(individual[3]) * cellDimensions);

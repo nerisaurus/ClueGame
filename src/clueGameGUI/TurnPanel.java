@@ -1,28 +1,42 @@
 package clueGameGUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.LayoutManager;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import clueGame.Player;
 
 public class TurnPanel extends JPanel {
 	private DiePanel die;
 	private JTextField currentPlayer;
 	
-	
 	public TurnPanel() {
 		super();
-		setBorder(new TitledBorder (new EtchedBorder(), "Current Turn"));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setBackground(Color.BLACK);
+		setForeground(Color.WHITE);
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(Color.black),"Current Turn", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), Color.WHITE));
 		die = new DiePanel();
 		currentPlayer = new JTextField();
 		currentPlayer.setEditable(false);
+		currentPlayer.setFont(new Font("Arial Narrow", Font.BOLD, 23));
+		currentPlayer.setPreferredSize(new Dimension(300, 94));
+		currentPlayer.setMaximumSize(new Dimension(300, 94));
+		
+		currentPlayer.setHorizontalAlignment(JTextField.CENTER);
 		currentPlayer.setText("...");
+		
 		add(die);
 		add(currentPlayer);
 	}
@@ -32,9 +46,17 @@ public class TurnPanel extends JPanel {
 		die.setFace(i);
 	}
 
-	public void setCurrentPlayer(String name) {
-		// TODO Auto-generated method stub
-		currentPlayer.setText(name);
+	public void setCurrentPlayerTheme(Player p) {
+		currentPlayer.setForeground(p.getColor());
+		currentPlayer.setBorder(new LineBorder(p.getColor().darker(), 3));
+		currentPlayer.setBackground(p.getColor().darker().darker().darker());
+		currentPlayer.setHorizontalAlignment(JTextField.CENTER);
+		currentPlayer.setText(p.getName());
+	}
+	
+	public void setTheme(Player p){
+		die.setTheme(p);
+		setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"Current Turn", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
 	}
 
 }
