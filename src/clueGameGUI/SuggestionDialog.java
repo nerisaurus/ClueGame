@@ -15,6 +15,7 @@ public class SuggestionDialog extends JDialog{
 	JButton submitButton;
 
 	JComboBox rooms, people, weapons;
+	JTextField roomName;
 
 	private ClueGame clueGame;
 	public SuggestionDialog(String room, ClueGame clueGame){
@@ -48,7 +49,7 @@ public class SuggestionDialog extends JDialog{
 			add(rooms);
 		} else {
 			//Add a text field with the room
-			JTextField roomName = new JTextField(room);
+			roomName = new JTextField(room);
 			roomName.setEditable(false);
 			add(roomName);
 		}

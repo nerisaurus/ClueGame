@@ -22,6 +22,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import clueGame.Card;
+import clueGame.CardType;
 import clueGame.ClueGame;
 import clueGame.HumanPlayer;
 import clueGame.Player;
@@ -61,7 +62,7 @@ public class ClueControlPanel extends JPanel{
 		makeAccusation = new JButton("MAKE AN ACCUSATION!");
 		makeAccusation.setFont(new Font("Arial Narrow", Font.BOLD, 12));
 		makeAccusation.setBackground(Color.BLACK);
-		makeAccusation.setForeground(Color.RED);
+		makeAccusation.setForeground(Color.WHITE);
 		makeAccusation.addActionListener(new AccusationListener());
 		
 		endTurn = new JButton("End Turn");
@@ -111,7 +112,7 @@ public class ClueControlPanel extends JPanel{
 		suggestionLog.addSuggestion(accuser, suggestion, disprovedBy);
 	}
 	///// suggestion dialog
-	class SuggestionLogListener implements ActionListener{
+	class SuggestionDialogListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			makeSuggestion();
 		}
@@ -122,6 +123,16 @@ public class ClueControlPanel extends JPanel{
 		}
 	}
 	public void makeSuggestion(){
+		//Figure out what the suggestion was:
+		Card room = new Card(suggestionDialog.roomName.getText(), CardType.ROOM);
+		Card suspect = new Card((String) suggestionDialog.people.getSelectedItem(), CardType.PERSON);
+		Card weapon = new Card((String) suggestionDialog.weapons.getSelectedItem(), CardType.WEAPON);
+		
+		Solution suggestion = new Solution(suspect, weapon, room);
+		//Handle it:
+		clue.handleSuggestion(clue.getPlayers().get("Human").getFirst(), suggestion, true);
+		
+		//And, of course, actually close the Dialog:
 		suggestionDialog.setVisible(false);
 		clue.suggestionDialogOpen = false;
 	}
@@ -134,7 +145,7 @@ public class ClueControlPanel extends JPanel{
 		suggestionDialog.setTitle("Make a Suggestion");
 		//
 		suggestionDialog.submitButton.setText("Suggest");
-		suggestionDialog.submitButton.addActionListener(new AccusationDialogListener());
+		suggestionDialog.submitButton.addActionListener(new SuggestionDialogListener());
 	}
 	
 	public void createAccusationDialog(){
@@ -153,8 +164,6 @@ public class ClueControlPanel extends JPanel{
 		setBackground(p.getColor());
 	}
 	public void setCurrentPlayerTheme(Player p){
-		//picture
-		
 		//Nameplate
 		currentTurn.setCurrentPlayerTheme(p);
 	}
