@@ -327,11 +327,15 @@ public class ClueGame extends JFrame{
 		return roll;
 	}
 
-	public void testAccusation(Solution accusation, String name, boolean isPlayer){
+	public boolean testAccusation(Solution accusation, String name, boolean isPlayer){
 		if(solution.equals(accusation)) {
 			gameOngoing = false; //The game has ended
 			//TODO: Declare Winner
+			
+			//And let calling functions know that it worked
+			return true;
 		}
+		return false;
 	}
 	public void aiTurn(Player ai, int aiRoll) {
 		//TODO: Finish implementation:
@@ -703,7 +707,6 @@ public class ClueGame extends JFrame{
 
 
 		private void setTheme(Player first) {
-		// TODO Auto-generated method stub
 		controls.setHumanTheme(first);
 		controls.setCurrentPlayerTheme(first);
 		

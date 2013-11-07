@@ -1,6 +1,8 @@
 package clueGameGUI;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -98,10 +100,26 @@ public class SuggestionDialog extends JDialog{
 		// |      |
 		// |[] [x]|
 		cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new CancelListener());
 		add(cancelButton);
 	}
 
 	//TODO: Cancel Button should exit.
 
 
+
+	private class CancelListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			setVisible(false);
+			if(clueGame.accusationDialogOpen) {
+				clueGame.getBoard().setHighlightTargets(true);
+				clueGame.getBoard().repaint();
+				clueGame.accusationDialogOpen = false;
+			} else if(clueGame.suggestionDialogOpen) {
+				clueGame.suggestionDialogOpen = false;
+			}
+		}
+	}
 }
