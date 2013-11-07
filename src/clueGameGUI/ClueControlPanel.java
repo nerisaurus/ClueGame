@@ -148,7 +148,15 @@ public class ClueControlPanel extends JPanel{
 		boolean won = clue.testAccusation(accusation, clue.getPlayers().get("Human").getFirst().getName(), true);
 		
 		if(won){
-			//Congratulate:
+			//Congratulate: 
+			//TODO: (A showOptionDialog like the one in the else {} statement (except telling them that they were right).
+			//(You could do a simpler dialog as well, but showOptionDialog lets you be creative with the button names and stuff)
+			
+			//TODO: (set the clueGame's gameOngoing boolean to false [since the player won] )
+			
+			//TODO: (Update the SuggestionLog.  Accusations should be put in the log as well.) [I've added the skeleton for an addAccusation
+			//method in SuggestionLog]
+			
 			
 		} else {
 			//Tell them that THEY WERE WRONG
@@ -163,6 +171,8 @@ public class ClueControlPanel extends JPanel{
 	                   null,
 	                   new String[] {"I promise it won't happen again, your Honor!"},
 	                   null);
+			
+			//TODO: (Update the SuggestionLog.  Accusations should be put in the log as well.)
 
 		}
 		//And, of course, actually close the Dialog:

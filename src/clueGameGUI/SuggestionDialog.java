@@ -104,9 +104,6 @@ public class SuggestionDialog extends JDialog{
 		add(cancelButton);
 	}
 
-	//TODO: Cancel Button should exit.
-
-
 
 	private class CancelListener implements ActionListener {
 

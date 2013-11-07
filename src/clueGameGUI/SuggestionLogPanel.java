@@ -62,11 +62,8 @@ public class SuggestionLogPanel extends JPanel {
 		//setBorder(new TitledBorder (new EtchedBorder(), "Previous Suggestions"));	
 	}
 
-	public void addSuggestion(Player accuser, Solution suggestion,
-			Card disprovedBy) {
-		// TODO Auto-generated method stub
+	public void addSuggestion(Player accuser, Solution suggestion, Card disprovedBy) {
 		log.addSuggestion(accuser, suggestion, disprovedBy);
-
 	}
 
 	public void setTheme(Player p){
@@ -82,7 +79,7 @@ public class SuggestionLogPanel extends JPanel {
 		}
 	}
 
-	@Override
+	@Override 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (background != null) {

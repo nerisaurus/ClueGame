@@ -46,7 +46,7 @@ public abstract class BoardCell {
 	public abstract void draw(Graphics g, int cellDimensions);
 	
 	public void highlight(Graphics g, int cellDimensions){
-		g.setColor(Color.WHITE); //TODO: Optional - set according to player color (and change according to different player colors, if we let the players change)
+		g.setColor(Color.WHITE);
 		g.drawOval(cellDimensions * col, cellDimensions * row, cellDimensions, cellDimensions);
 	}
 

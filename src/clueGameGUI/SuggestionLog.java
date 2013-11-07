@@ -38,6 +38,23 @@ public class SuggestionLog extends JTextPane {
 		doc = getStyledDocument();
 	}
 	
+	public void addAccusation(Player accuser, Solution suggestion, boolean correct) {
+		//TODO: (Complete these sections - this works very much like how addSuggestion works)
+		//(Feel free to be creative with the wording and formatting here.  It should be
+		//obvious that an accusation is not a suggestion [in terms of format - maybe invert the colors]
+		//but it shouldn't disrupt the log too much - still keep it to 2 or 3 lines)
+		
+		//First we figure out all the words we need:
+		
+		//Then we generate the lines to add in.  First the accusation...
+		
+		//...Then the statement about whether it was correct or not:
+		
+		
+		//Then we do some formatting:
+		
+		//Then we add the lines to the doc
+	}
 	public void addSuggestion(Player accuser, Solution suggestion, Card disprovingCard) {
 		//First, we figure out all the words we need:
 		String detective = accuser.getName(); 
@@ -70,10 +87,10 @@ public class SuggestionLog extends JTextPane {
 			
 			
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	//TODO: (Remove this code if it's not needed any more.)
 /*	public void setTheme(Player p){
 		fileLocation = "Themes/" + p.getName() + "/";
 		//backgroundHeight = (int) getSize().getHeight();

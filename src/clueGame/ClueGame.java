@@ -221,6 +221,12 @@ public class ClueGame extends JFrame{
 	}
 
 	public Card handleSuggestion(Player accusingPlayer, Solution suggestion, boolean updatePanel) {
+		//TODO: (Before all the rest of this logic, we've got to move the accused player
+		//to the square of the accusingPlayer.  Extract the name of the accused player from
+		//"suggestion" and then find that Player in the big map of players "players".  SetLocation
+		//on that player to the accusingPlayer's getRow and getColumn data)
+		
+		
 		for(Player p: getPlayersSansCurrent(accusingPlayer)) {
 			Card c = p.disproveSuggestion(suggestion);
 			if(c != null) {
@@ -330,7 +336,7 @@ public class ClueGame extends JFrame{
 	public boolean testAccusation(Solution accusation, String name, boolean isPlayer){
 		if(solution.equals(accusation)) {
 			gameOngoing = false; //The game has ended
-			//TODO: Declare Winner
+			//TODO: Declare Winner (Probably by setting a variable in the clue board)
 			
 			//And let calling functions know that it worked
 			return true;
@@ -338,15 +344,18 @@ public class ClueGame extends JFrame{
 		return false;
 	}
 	public void aiTurn(Player ai, int aiRoll) {
-		//TODO: Finish implementation:
-
 		//Should we make an accusation?
 		if(ai.makeAccusation(goodAccusation) != null) {
-			testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
+			//If they do make an accusation, let's test it:
+			boolean won = testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
+			//TODO: (Add the accusation they made to the log via SuggestionLog's addAccusation method)
+			
+			
 			//Then a reset.  If they didn't win, it must not be the right thing, and
 			//other AI know this (they "know" that any AI will pick that suggestion
 			//right away, so after one turn they already abandon it as the proper idea
 			goodAccusation = null;
+			
 		} else {
 			//Move:
 			ai.pickTarget(aiRoll, getBoard());
@@ -437,7 +446,6 @@ public class ClueGame extends JFrame{
 		playerTurn = false;
 
 		//Run through all the AI turns:
-		//TODO:
 		Timer tick = null;
 		if(timerStop){
 			int delay = 1000; //milliseconds
@@ -461,7 +469,6 @@ public class ClueGame extends JFrame{
 
 		//And of course a repaint:
 		getBoard().repaint();
-		//TODO: make sure that closing the Accusation Dialog without making an accusation will re-highlight the board
 
 		//Pop up the Accusation Dialog
 		controls.createAccusationDialog();
@@ -650,16 +657,12 @@ public class ClueGame extends JFrame{
 				}
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
