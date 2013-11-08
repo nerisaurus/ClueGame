@@ -2,6 +2,7 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -225,8 +226,35 @@ public class ClueGame extends JFrame{
 		//to the square of the accusingPlayer.  Extract the name of the accused player from
 		//"suggestion" and then find that Player in the big map of players "players".  SetLocation
 		//on that player to the accusingPlayer's getRow and getColumn data)
-		
-		
+
+				Player accused;
+				if (suggestion.getPerson().getName().equals((players.get("Human")).getFirst().getName())){
+					accused = players.get("Human").getFirst();
+					accused.setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
+					LinkedList<Player> ll = new LinkedList<Player>();
+					ll.add(accused);
+					players.put("Human", ll);
+				}
+				else{
+					for (int i = 0; i < players.get("Computer").size(); i++){
+						if (suggestion.getPerson().getName().equals(players.get("Computer").get(i).getName())){
+							accused = players.get("Computer").get(i);
+							accused.setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
+							LinkedList<Player> ll = new LinkedList<Player>();
+							for (Player p : players.get("Computer")){
+								if (p.getName().equals(accused.getName())){
+									ll.add(accused);
+								}
+								else{
+									ll.add(p);
+								}
+							}
+							players.put("Computer", ll);
+						}
+					}
+				}
+				
+
 		for(Player p: getPlayersSansCurrent(accusingPlayer)) {
 			Card c = p.disproveSuggestion(suggestion);
 			if(c != null) {
@@ -234,12 +262,12 @@ public class ClueGame extends JFrame{
 				if(updatePanel) {
 					controls.addSuggestionToLog(accusingPlayer, suggestion, c);
 				}
-				
+
 				//Let all the players see it:
 				for(Player seer : players.get("Computer")) {
 					seer.seesCard(c);
 				}
-				
+
 				//And return the card for further logic (ai logic)
 				return c;		
 			}
@@ -337,7 +365,7 @@ public class ClueGame extends JFrame{
 		if(solution.equals(accusation)) {
 			gameOngoing = false; //The game has ended
 			//TODO: Declare Winner (Probably by setting a variable in the clue board)
-			
+
 			//And let calling functions know that it worked
 			return true;
 		}
@@ -349,13 +377,13 @@ public class ClueGame extends JFrame{
 			//If they do make an accusation, let's test it:
 			boolean won = testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
 			//TODO: (Add the accusation they made to the log via SuggestionLog's addAccusation method)
-			
-			
+
+
 			//Then a reset.  If they didn't win, it must not be the right thing, and
 			//other AI know this (they "know" that any AI will pick that suggestion
 			//right away, so after one turn they already abandon it as the proper idea
 			goodAccusation = null;
-			
+
 		} else {
 			//Move:
 			ai.pickTarget(aiRoll, getBoard());
@@ -560,8 +588,8 @@ public class ClueGame extends JFrame{
 		}
 		return otherPlayers;		
 	}
-	
-	
+
+
 
 	public ArrayList<String> getPeople() {
 		return people;
@@ -667,109 +695,109 @@ public class ClueGame extends JFrame{
 		}
 
 
-			//Figure out who our characters are: (people stores a list of strings of all character names)
-			Object[] characterOptions = clue.people.toArray();
-			//Input Dialog: Pick your Character:
-			String characterPick = (String) JOptionPane.showInputDialog(null, 
-					"Select Your Character:", 
-					"Want to Play Clue?", 
-					JOptionPane.PLAIN_MESSAGE, 
-					null, 
-					characterOptions, 
-					clue.getPlayers().get("Human").getFirst().getName());
+		//Figure out who our characters are: (people stores a list of strings of all character names)
+		Object[] characterOptions = clue.people.toArray();
+		//Input Dialog: Pick your Character:
+		String characterPick = (String) JOptionPane.showInputDialog(null, 
+				"Select Your Character:", 
+				"Want to Play Clue?", 
+				JOptionPane.PLAIN_MESSAGE, 
+				null, 
+				characterOptions, 
+				clue.getPlayers().get("Human").getFirst().getName());
 
-			//If we picked one:
-			if ((characterPick != null) && (characterPick.length() > 0)) {
+		//If we picked one:
+		if ((characterPick != null) && (characterPick.length() > 0)) {
 
-				//Change Our Player
-				for(Player p : clue.getPlayers().get("Computer")){
-					if(p.getName().equals(characterPick)) {
-						clue.getPlayers().get("Human").getFirst().switchWithPlayer(p);
+			//Change Our Player
+			for(Player p : clue.getPlayers().get("Computer")){
+				if(p.getName().equals(characterPick)) {
+					clue.getPlayers().get("Human").getFirst().switchWithPlayer(p);
 
-					}
 				}
-
-				//Last Bit of Setup (since it needs to know who the human is first):
-				clue.startWithHuman();
-				clue.setTheme(clue.getPlayers().get("Human").getFirst());
-				//Let us see our board:
-				clue.setVisible(true);
-
-				//Sets the Screen to Open in the Center of the Screen:
-				Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
-				Dimension fd = clue.getSize(); 
-				if (fd.height > sd.height) 
-					fd.height = sd.height; 
-				if (fd.width > sd.width) 
-					fd.width = sd.width; 
-				clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
-			} else {
-				System.exit(0);
 			}
+
+			//Last Bit of Setup (since it needs to know who the human is first):
+			clue.startWithHuman();
+			clue.setTheme(clue.getPlayers().get("Human").getFirst());
+			//Let us see our board:
+			clue.setVisible(true);
+
+			//Sets the Screen to Open in the Center of the Screen:
+			Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
+			Dimension fd = clue.getSize(); 
+			if (fd.height > sd.height) 
+				fd.height = sd.height; 
+			if (fd.width > sd.width) 
+				fd.width = sd.width; 
+			clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
+		} else {
+			System.exit(0);
 		}
-
-
-		private void setTheme(Player first) {
-		controls.setHumanTheme(first);
-		controls.setCurrentPlayerTheme(first);
-		
 	}
 
-		public void setBoard(Board board) {
-			this.board = board;
+
+	private void setTheme(Player first) {
+		controls.setHumanTheme(first);
+		controls.setCurrentPlayerTheme(first);
+
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+
+	//Our Timer:
+	private class TimerListener implements ActionListener {
+		LinkedList<Player> bots;
+		ClueGame game;
+		int counter = 0;
+		int roll;
+
+		public TimerListener(LinkedList<Player> bots, ClueGame game) {
+			super();
+			this.bots = bots;
+			counter = 0;
+
+			this.roll = rollDie();
+			controls.setCurrentPlayerTheme(bots.get(counter));
+			controls.setRoll(roll);
 		}
 
-		//Our Timer:
-		private class TimerListener implements ActionListener {
-			LinkedList<Player> bots;
-			ClueGame game;
-			int counter = 0;
-			int roll;
+		public void actionPerformed(ActionEvent e) {
+			if(counter < bots.size()){
+				aiTurn(bots.get(counter), roll);	
+			} else if(counter == bots.size()) {
+				timerStop = true;
 
-			public TimerListener(LinkedList<Player> bots, ClueGame game) {
-				super();
-				this.bots = bots;
-				counter = 0;
+				//Set "Whose Turn" to the player's name
+				controls.setCurrentPlayerTheme(players.get("Human").getFirst());
+				//Roll the die
+				int humanRoll = rollDie();
 
-				this.roll = rollDie();
+				//Set the diePanel to display the roll
+				controls.setRoll(humanRoll);
+
+				//Calculate Targets:
+				players.get("Human").getFirst().pickTarget(humanRoll, getBoard());
+
+				//Now we're ready for the player's turn to begin
+				playerTurn = true;
+				getBoard().setHighlightTargets(true);
+				hasActed = false;
+
+				//And repaint the board (targets are now highlighted)
+				getBoard().repaint();
+			}
+			counter++;
+			this.roll = rollDie();
+			if(counter < bots.size()) {
 				controls.setCurrentPlayerTheme(bots.get(counter));
 				controls.setRoll(roll);
 			}
-
-			public void actionPerformed(ActionEvent e) {
-				if(counter < bots.size()){
-					aiTurn(bots.get(counter), roll);	
-				} else if(counter == bots.size()) {
-					timerStop = true;
-
-					//Set "Whose Turn" to the player's name
-					controls.setCurrentPlayerTheme(players.get("Human").getFirst());
-					//Roll the die
-					int humanRoll = rollDie();
-
-					//Set the diePanel to display the roll
-					controls.setRoll(humanRoll);
-
-					//Calculate Targets:
-					players.get("Human").getFirst().pickTarget(humanRoll, getBoard());
-
-					//Now we're ready for the player's turn to begin
-					playerTurn = true;
-					getBoard().setHighlightTargets(true);
-					hasActed = false;
-
-					//And repaint the board (targets are now highlighted)
-					getBoard().repaint();
-				}
-				counter++;
-				this.roll = rollDie();
-				if(counter < bots.size()) {
-					controls.setCurrentPlayerTheme(bots.get(counter));
-					controls.setRoll(roll);
-				}
-				getBoard().repaint();
-			} 
-		}
-
-
+			getBoard().repaint();
+		} 
 	}
+
+
+}
