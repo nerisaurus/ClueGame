@@ -70,4 +70,8 @@ public class Solution {
 		return soln;
 	}
 	
+	public String toString(){
+		return getPerson() + "||" + getWeapon() + "||" + getRoom();
+	}
+	
 }

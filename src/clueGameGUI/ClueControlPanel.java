@@ -79,12 +79,13 @@ public class ClueControlPanel extends JPanel{
 
 	class nextPlayerListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			nextPlayer();
+			if (clue.gameOngoing)
+				nextPlayer();
 		}
 	}
 	class AccusationListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
-			if (clue.isValidAccusationTime()){
+			if (clue.isValidAccusationTime() && (clue.gameOngoing)){
 				clue.makeAccusation();
 			}
 		}
@@ -114,12 +115,14 @@ public class ClueControlPanel extends JPanel{
 	///// suggestion dialog
 	class SuggestionDialogListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			makeSuggestion();
+			if (clue.gameOngoing)
+				makeSuggestion();
 		}
 	}
 	class AccusationDialogListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			makeAccusation();
+			if (clue.gameOngoing)
+				makeAccusation();
 		}
 	}
 	public void makeSuggestion(){

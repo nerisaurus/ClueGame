@@ -58,7 +58,7 @@ public class ClueGame extends JFrame{
 	private ArrayList<String> people, rooms, weapons;
 
 	//Boolean Game Logic
-	boolean gameOngoing; //false until game begins, false after someone wins.  Otherwise true.
+	public boolean gameOngoing; //false until game begins, false after someone wins.  Otherwise true.
 	boolean playerTurn; //true if it is the player's turn
 	public boolean hasActed; //true if the player has either: made a move, or made an accusation this round
 	public boolean suggestionDialogOpen; //set to true when the suggestion dialog is opened, and false when it is closed
@@ -112,6 +112,7 @@ public class ClueGame extends JFrame{
 
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
+		
 
 		//these guys are called in the test, calling them here again doubles the method calls
 		// therefore we skip them if we are running the tests.
@@ -121,6 +122,7 @@ public class ClueGame extends JFrame{
 			dealCards();
 			setupFrame();
 			controls.giveClueGame(this);
+			gameOngoing = true;
 			//startWithHuman();
 		}
 	}
@@ -205,6 +207,8 @@ public class ClueGame extends JFrame{
 		int roomIndex = (int) (10 + (Math.random() * (8))); // 9 possible rooms - 1
 		this.solution.setRoom(deck.get(roomIndex));
 		deck.remove(roomIndex);
+		
+		System.out.println(this.solution);
 	}
 
 	public void dealCards() {	
@@ -222,11 +226,6 @@ public class ClueGame extends JFrame{
 	}
 
 	public Card handleSuggestion(Player accusingPlayer, Solution suggestion, boolean updatePanel) {
-		//TODO: (Before all the rest of this logic, we've got to move the accused player
-		//to the square of the accusingPlayer.  Extract the name of the accused player from
-		//"suggestion" and then find that Player in the big map of players "players".  SetLocation
-		//on that player to the accusingPlayer's getRow and getColumn data)
-
 				Player accused;
 				if (suggestion.getPerson().getName().equals((players.get("Human")).getFirst().getName())){
 					accused = players.get("Human").getFirst();
@@ -365,7 +364,7 @@ public class ClueGame extends JFrame{
 		if(solution.equals(accusation)) {
 			gameOngoing = false; //The game has ended
 			//TODO: Declare Winner (Probably by setting a variable in the clue board)
-
+			
 			//And let calling functions know that it worked
 			return true;
 		}
@@ -516,7 +515,7 @@ public class ClueGame extends JFrame{
 			}
 		}
 
-		if(validTarget) {
+		if(validTarget && gameOngoing) {
 			//Move the player
 			players.get("Human").getFirst().setLocation(cellX, cellY); 
 			//"getFirst()" Only one human player - but more complicated logic could be used if we wanted to expand for

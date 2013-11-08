@@ -1,6 +1,8 @@
 package clueGameGUI;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -46,7 +48,6 @@ public class SuggestionDialog extends JDialog{
 		// |[]  []|
 		if(room == null) {
 			//Add a combo box with all options for rooms
-			System.out.println(clueGame.getRooms());
 			rooms = new JComboBox(clueGame.getRooms().toArray());
 			add(rooms);
 		} else {
@@ -102,6 +103,13 @@ public class SuggestionDialog extends JDialog{
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new CancelListener());
 		add(cancelButton);
+		Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
+		Dimension fd = getSize(); 
+		if (fd.height > sd.height) 
+			fd.height = sd.height; 
+		if (fd.width > sd.width) 
+			fd.width = sd.width; 
+		setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
 	}
 
 
