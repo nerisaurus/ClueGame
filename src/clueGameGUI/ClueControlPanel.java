@@ -172,7 +172,7 @@ public class ClueControlPanel extends JPanel{
 	                   1,
 	                   JOptionPane.WARNING_MESSAGE,
 	                   null,
-	                   new String[] {"I promise it won't happen again, your Honor!"},
+	                   new String[] {"I promise it won't happen again, your Honour!"},
 	                   null);
 			
 			//TODO: (Update the SuggestionLog.  Accusations should be put in the log as well.)

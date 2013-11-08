@@ -408,44 +408,51 @@ public class ClueGame extends JFrame{
 	//these methods answer the question "Should this click do anything right now?"
 	public boolean isValidEndTurn(){
 		//The player must have a turn to be ending, must have already acted, and can't have other critical dialogs open at the time
-		if(playerTurn && hasActed && !accusationDialogOpen && !suggestionDialogOpen) {
-			return true;
-		} else {
-			String message = null;
-			if(!playerTurn){
-				message = "It is not your turn.";
-			} else if(!hasActed) {
-				message = "Please move or make an accusation first.";
-			} else if(accusationDialogOpen) {
-				message = "You cannot end your turn while making an accusation.";
-			} else if(suggestionDialogOpen){
-				message = "You cannot end your turn while making a suggestion.";
+		if (gameOngoing){
+			if(playerTurn && hasActed && !accusationDialogOpen && !suggestionDialogOpen) {
+				return true;
+			} else {
+				String message = null;
+				if(!playerTurn){
+					message = "It is not your turn.";
+				} else if(!hasActed) {
+					message = "Please move or make an accusation first.";
+				} else if(accusationDialogOpen) {
+					message = "You cannot end your turn while making an accusation.";
+				} else if(suggestionDialogOpen){
+					message = "You cannot end your turn while making a suggestion.";
+				}
+				//we give them a notification of what they're doing wrong and then do nothing:
+				JOptionPane.showMessageDialog(null, message);
+				return false;
 			}
-			//we give them a notification of what they're doing wrong and then do nothing:
-			JOptionPane.showMessageDialog(null, message);
-			return false;
 		}
+		return false;
 	}
 
 	public boolean isValidAccusationTime(){
 		//It must be the player's turn, she must have not already
 		//acted (moved or made an earlier accusation) and can't have other critical dialogs open at the time
 		//(suggestionDialogOpen isn't relevant, since suggestions are only made after moves)
-		if(playerTurn && !hasActed && !accusationDialogOpen) {
-			return true;
-		} else {
-			String message = null;
-			if(!playerTurn){
-				message = "It is not your turn.";
-			} else if(hasActed) {
-				message = "You have already acted this round.  Sorry.";
-			} else if(accusationDialogOpen) {
-				message = "You are already making an accusation.";
+		if (gameOngoing){
+			if(playerTurn && !hasActed && !accusationDialogOpen) {
+				return true;
+			} else {
+				String message = null;
+				if(!playerTurn){
+					message = "It is not your turn.";
+				} else if(hasActed) {
+					message = "You have already acted this round.  Sorry.";
+				} else if(accusationDialogOpen) {
+					message = "You are already making an accusation.";
+				}
+				//we give them a notification of what they're doing wrong and then do nothing:
+				JOptionPane.showMessageDialog(null, message);
+				return false;
 			}
-			//we give them a notification of what they're doing wrong and then do nothing:
-			JOptionPane.showMessageDialog(null, message);
-			return false;
 		}
+		return false;
+
 	}
 
 	public boolean isValidBoardClick(){
@@ -453,7 +460,7 @@ public class ClueGame extends JFrame{
 		//This does not check whether the particular click location is a valid
 		//target.  Thus all we need to know is that the player hasn't already moved,
 		//(but that it is his turn), and doesn't have an accusation dialog open.
-		if(playerTurn && !hasActed && !accusationDialogOpen) {
+		if(playerTurn && !hasActed && !accusationDialogOpen && gameOngoing) {
 			return true;
 		} else {
 			//Since the board isn't a button, we don't expect players
@@ -514,28 +521,29 @@ public class ClueGame extends JFrame{
 				validTarget = true;
 			}
 		}
+		if (gameOngoing){
+			if(validTarget) {
+				//Move the player
+				players.get("Human").getFirst().setLocation(cellX, cellY); 
+				//"getFirst()" Only one human player - but more complicated logic could be used if we wanted to expand for
+				//multiple players.
 
-		if(validTarget && gameOngoing) {
-			//Move the player
-			players.get("Human").getFirst().setLocation(cellX, cellY); 
-			//"getFirst()" Only one human player - but more complicated logic could be used if we wanted to expand for
-			//multiple players.
+				//Since the player has moved, we set our game logic to note this:
+				hasActed = true;
+				getBoard().setHighlightTargets(false);
 
-			//Since the player has moved, we set our game logic to note this:
-			hasActed = true;
-			getBoard().setHighlightTargets(false);
+				//Since the board has changed, we repaint the board
+				getBoard().repaint();
 
-			//Since the board has changed, we repaint the board
-			getBoard().repaint();
-
-			if(getBoard().getRoomCellAt(cellY, cellX) != null) {
-				suggestionDialogOpen = true;
-				controls.createSuggestionDialog(board.getRooms().get(getBoard().getRoomCellAt(cellY, cellX).getInitial()));
-				//suggestion made
+				if(getBoard().getRoomCellAt(cellY, cellX) != null) {
+					suggestionDialogOpen = true;
+					controls.createSuggestionDialog(board.getRooms().get(getBoard().getRoomCellAt(cellY, cellX).getInitial()));
+					//suggestion made
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "You cannot move there.");
+				return;
 			}
-		} else {
-			JOptionPane.showMessageDialog(null, "You cannot move there.");
-			return;
 		}
 
 	}
