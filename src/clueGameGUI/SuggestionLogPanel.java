@@ -65,6 +65,10 @@ public class SuggestionLogPanel extends JPanel {
 	public void addSuggestion(Player accuser, Solution suggestion, Card disprovedBy) {
 		log.addSuggestion(accuser, suggestion, disprovedBy);
 	}
+	
+	public void addAccusationToLog(Player accuser, Solution suggestion, boolean b) {
+		log.addAccusation(accuser, suggestion, b);
+	}
 
 	public void setTheme(Player p){
 		//borders:

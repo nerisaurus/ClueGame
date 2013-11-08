@@ -2,6 +2,7 @@ package clueGameGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
@@ -9,7 +10,15 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.BadLocationException;
@@ -39,21 +48,49 @@ public class SuggestionLog extends JTextPane {
 	}
 	
 	public void addAccusation(Player accuser, Solution suggestion, boolean correct) {
-		//TODO: (Complete these sections - this works very much like how addSuggestion works)
-		//(Feel free to be creative with the wording and formatting here.  It should be
-		//obvious that an accusation is not a suggestion [in terms of format - maybe invert the colors]
-		//but it shouldn't disrupt the log too much - still keep it to 2 or 3 lines)
 		
 		//First we figure out all the words we need:
-		
+		String detective = accuser.getName(); 
+		String suspect = suggestion.getPerson().getName();
+		String location = suggestion.getRoom().getName();
+		String weapon = suggestion.getWeapon().getName();
 		//Then we generate the lines to add in.  First the accusation...
-		
+		String accused = suspect + " on " + location + " with the " + weapon;
 		//...Then the statement about whether it was correct or not:
-		
-		
+		String correctness= "";
+		if (correct)
+			correctness = "is valid!";
+		else
+			correctness = "is invalid!";
 		//Then we do some formatting:
 		
 		//Then we add the lines to the doc
+		SimpleAttributeSet keyWord = new SimpleAttributeSet();
+		StyleConstants.setForeground(keyWord, accuser.getColor());
+		StyleConstants.setBackground(keyWord, accuser.getColor().darker().darker().darker());
+		StyleConstants.setBold(keyWord, true);
+		
+		
+		SimpleAttributeSet accusationAttemptHeader = new SimpleAttributeSet();
+		StyleConstants.setForeground(accusationAttemptHeader, Color.RED);
+		StyleConstants.setBackground(accusationAttemptHeader, Color.BLACK);
+		StyleConstants.setBold(accusationAttemptHeader, true);
+		String attempt = "ACCUSATION ATTEMPT:";
+		
+		SimpleAttributeSet accusationAttempt = new SimpleAttributeSet();
+		StyleConstants.setForeground(accusationAttempt, Color.RED);
+		StyleConstants.setBackground(accusationAttempt, Color.BLACK);
+		
+		try {
+			doc.insertString(0, detective, keyWord);
+			doc.insertString(detective.length(), "\n" + attempt, accusationAttemptHeader);
+			doc.insertString(detective.length() + attempt.length() + 1, " \n" + accused, accusationAttempt);
+			doc.insertString(detective.length() + accused.length() + attempt.length() + 3, "\n" + correctness + "\n", accusationAttempt);
+			
+			
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 	public void addSuggestion(Player accuser, Solution suggestion, Card disprovingCard) {
 		//First, we figure out all the words we need:
@@ -90,33 +127,4 @@ public class SuggestionLog extends JTextPane {
 			e.printStackTrace();
 		}
 	}
-	//TODO: (Remove this code if it's not needed any more.)
-/*	public void setTheme(Player p){
-		fileLocation = "Themes/" + p.getName() + "/";
-		//backgroundHeight = (int) getSize().getHeight();
-		//backgroundWidth = (int) getSize().getWidth();
-	}*/
-  /*  protected void paintComponent(Graphics g) {
-        BufferedImage image = null;
-        try {
-            //
-            // Load an image for the background image of out JTextPane.
-            //
-        	//.get("Human").getFirst().getName() + "/background.bmp"
-        	image = ImageIO.read(new File(fileLocation + "logBackground.png"));
-        	//RescaleOp op = new RescaleOp(.3f, 0, null);
-            //image = op.filter(image, null);
-            g.drawImage(image, 0, 0, 
-            		(int) getSize().getWidth(),
-            		(int) getSize().getHeight(), this);
-            
-           // g.drawImage(image, 0, 0, backgroundWidth,
-           //         backgroundHeight, this);
-            super.paintComponent(g);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
- 
-        super.paintComponent(g);
-    }*/
 }

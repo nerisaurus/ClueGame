@@ -361,8 +361,12 @@ public class ClueGame extends JFrame{
 	}
 
 	public boolean testAccusation(Solution accusation, Player p, boolean isPlayer){
+		boolean won = false;
+		
 		if(solution.equals(accusation)) {
+			won = true;
 			gameOngoing = false; //The game has ended
+			//dialogs only pop up if the human player made the accusations
 			String name = p.getName();
 			if (p.getName().equals(players.get("Human").getFirst().getName()))
 				name = "You";
@@ -370,8 +374,10 @@ public class ClueGame extends JFrame{
 				setVisible(false);
 				ClueGame.main(null);
 			}
+			else
+				System.exit(0);
 			//And let calling functions know that it worked
-			return true;
+			controls.addAccusationToLog(p, accusation, won);
 		}
 		else{
 			if (p.getName().equals(players.get("Human").getFirst().getName())){
@@ -386,10 +392,11 @@ public class ClueGame extends JFrame{
 						null,
 						new String[] {"I promise it won't happen again, your Honour!"},
 						null);
+				controls.addAccusationToLog(p, accusation, won);
 			}
-			handleSuggestion(p, accusation, isPlayer );
-			return false;
 		}
+		return won;
+		
 	}
 	public void aiTurn(Player ai, int aiRoll) {
 		//Should we make an accusation?
@@ -397,7 +404,7 @@ public class ClueGame extends JFrame{
 			//If they do make an accusation, let's test it:
 			boolean won = testAccusation(ai.makeAccusation(goodAccusation), ai, false);
 			//TODO: (Add the accusation they made to the log via SuggestionLog's addAccusation method)
-
+			
 
 			//Then a reset.  If they didn't win, it must not be the right thing, and
 			//other AI know this (they "know" that any AI will pick that suggestion

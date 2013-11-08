@@ -112,6 +112,10 @@ public class ClueControlPanel extends JPanel{
 	public void addSuggestionToLog(Player accuser, Solution suggestion, Card disprovedBy) {
 		suggestionLog.addSuggestion(accuser, suggestion, disprovedBy);
 	}
+	
+	public void addAccusationToLog(Player accuser, Solution suggestion, boolean b) {
+		suggestionLog.addAccusationToLog(accuser, suggestion, b);
+	}
 	///// suggestion dialog
 	class SuggestionDialogListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
