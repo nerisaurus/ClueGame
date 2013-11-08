@@ -146,42 +146,13 @@ public class ClueControlPanel extends JPanel{
 		Card weapon = new Card((String) accusationDialog.weapons.getSelectedItem(), CardType.WEAPON);
 
 		Solution accusation = new Solution(suspect, weapon, room);
-
-		//Handle it:
-		boolean won = clue.testAccusation(accusation, clue.getPlayers().get("Human").getFirst().getName(), true);
+		//moved it up here so that it will close the dialog box right away, but the internal work will still continue!
 		
-		if(won){
-			//Congratulate: 
-			//TODO: (A showOptionDialog like the one in the else {} statement (except telling them that they were right).
-			//(You could do a simpler dialog as well, but showOptionDialog lets you be creative with the button names and stuff)
-			
-			//TODO: (set the clueGame's gameOngoing boolean to false [since the player won] )
-			
-			//TODO: (Update the SuggestionLog.  Accusations should be put in the log as well.) [I've added the skeleton for an addAccusation
-			//method in SuggestionLog]
-			
-			
-		} else {
-			//Tell them that THEY WERE WRONG
-			String message = "You give an impassioned indictment that the foul deed was committed by:\n" 
-			+"\""+ suspect.getName() + " on the planet " + room.getName() + " with the " + weapon.getName() + "!\"" +
-			"\n" + "But... you are wrong.";
-			JOptionPane.showOptionDialog(null,
-	                   message,
-	                   "A Failure of a Detective!",
-	                   1,
-	                   JOptionPane.WARNING_MESSAGE,
-	                   null,
-	                   new String[] {"I promise it won't happen again, your Honour!"},
-	                   null);
-			
-			//TODO: (Update the SuggestionLog.  Accusations should be put in the log as well.)
-
-		}
-		//And, of course, actually close the Dialog:
 		accusationDialog.setVisible(false);
 		clue.accusationDialogOpen = false;
 		clue.hasActed = true;
+		//Handle it:
+		clue.testAccusation(accusation, clue.getPlayers().get("Human").getFirst(), true);
 	}
 	public void createSuggestionDialog(String room){
 		suggestionDialog = new SuggestionDialog(room, clue);

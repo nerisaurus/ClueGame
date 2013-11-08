@@ -112,7 +112,7 @@ public class ClueGame extends JFrame{
 
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
-		
+
 
 		//these guys are called in the test, calling them here again doubles the method calls
 		// therefore we skip them if we are running the tests.
@@ -207,7 +207,7 @@ public class ClueGame extends JFrame{
 		int roomIndex = (int) (10 + (Math.random() * (8))); // 9 possible rooms - 1
 		this.solution.setRoom(deck.get(roomIndex));
 		deck.remove(roomIndex);
-		
+
 		System.out.println(this.solution);
 	}
 
@@ -226,33 +226,33 @@ public class ClueGame extends JFrame{
 	}
 
 	public Card handleSuggestion(Player accusingPlayer, Solution suggestion, boolean updatePanel) {
-				Player accused;
-				if (suggestion.getPerson().getName().equals((players.get("Human")).getFirst().getName())){
-					accused = players.get("Human").getFirst();
+		Player accused;
+		if (suggestion.getPerson().getName().equals((players.get("Human")).getFirst().getName())){
+			accused = players.get("Human").getFirst();
+			accused.setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
+			LinkedList<Player> ll = new LinkedList<Player>();
+			ll.add(accused);
+			players.put("Human", ll);
+		}
+		else{
+			for (int i = 0; i < players.get("Computer").size(); i++){
+				if (suggestion.getPerson().getName().equals(players.get("Computer").get(i).getName())){
+					accused = players.get("Computer").get(i);
 					accused.setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
 					LinkedList<Player> ll = new LinkedList<Player>();
-					ll.add(accused);
-					players.put("Human", ll);
-				}
-				else{
-					for (int i = 0; i < players.get("Computer").size(); i++){
-						if (suggestion.getPerson().getName().equals(players.get("Computer").get(i).getName())){
-							accused = players.get("Computer").get(i);
-							accused.setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
-							LinkedList<Player> ll = new LinkedList<Player>();
-							for (Player p : players.get("Computer")){
-								if (p.getName().equals(accused.getName())){
-									ll.add(accused);
-								}
-								else{
-									ll.add(p);
-								}
-							}
-							players.put("Computer", ll);
+					for (Player p : players.get("Computer")){
+						if (p.getName().equals(accused.getName())){
+							ll.add(accused);
+						}
+						else{
+							ll.add(p);
 						}
 					}
+					players.put("Computer", ll);
 				}
-				
+			}
+		}
+
 
 		for(Player p: getPlayersSansCurrent(accusingPlayer)) {
 			Card c = p.disproveSuggestion(suggestion);
@@ -360,21 +360,42 @@ public class ClueGame extends JFrame{
 		return roll;
 	}
 
-	public boolean testAccusation(Solution accusation, String name, boolean isPlayer){
+	public boolean testAccusation(Solution accusation, Player p, boolean isPlayer){
 		if(solution.equals(accusation)) {
 			gameOngoing = false; //The game has ended
-			//TODO: Declare Winner (Probably by setting a variable in the clue board)
-			
+			String name = p.getName();
+			if (p.getName().equals(players.get("Human").getFirst().getName()))
+				name = "You";
+			if (JOptionPane.showConfirmDialog(null, name + " won the game!" + "\n" + "Play again?", "End Game Result", JOptionPane.YES_NO_OPTION) == 0){
+				setVisible(false);
+				ClueGame.main(null);
+			}
 			//And let calling functions know that it worked
 			return true;
 		}
-		return false;
+		else{
+			if (p.getName().equals(players.get("Human").getFirst().getName())){
+				String message = "You give an impassioned indictment that the foul deed was committed by:\n" 
+						+"\""+ accusation.getPerson().getName() + " on the planet " + accusation.getRoom().getName() + " with the " + accusation.getWeapon().getName() + "!\"" +
+						"\n" + "But... you are wrong.";
+				JOptionPane.showOptionDialog(null,
+						message,
+						"A Failure of a Detective!",
+						1,
+						JOptionPane.WARNING_MESSAGE,
+						null,
+						new String[] {"I promise it won't happen again, your Honour!"},
+						null);
+			}
+			handleSuggestion(p, accusation, isPlayer );
+			return false;
+		}
 	}
 	public void aiTurn(Player ai, int aiRoll) {
 		//Should we make an accusation?
 		if(ai.makeAccusation(goodAccusation) != null) {
 			//If they do make an accusation, let's test it:
-			boolean won = testAccusation(ai.makeAccusation(goodAccusation), ai.getName(), false);
+			boolean won = testAccusation(ai.makeAccusation(goodAccusation), ai, false);
 			//TODO: (Add the accusation they made to the log via SuggestionLog's addAccusation method)
 
 
@@ -740,7 +761,7 @@ public class ClueGame extends JFrame{
 			clue.setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
 		} else {
 			System.exit(0);
-		}
+		}	
 	}
 
 
