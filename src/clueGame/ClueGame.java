@@ -22,6 +22,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.LookAndFeel;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -359,7 +360,7 @@ public class ClueGame extends JFrame{
 
 	public boolean testAccusation(Solution accusation, Player accuser, boolean isPlayer){
 		boolean won = false;
-		
+
 		if(solution.equals(accusation)) {
 			won = true;
 			gameOngoing = false; //The game has ended
@@ -378,7 +379,7 @@ public class ClueGame extends JFrame{
 			else {
 				System.exit(0);
 			}
-			
+
 		}
 		else{
 			if (accuser.getName().equals(players.get("Human").getFirst().getName())){
@@ -397,7 +398,7 @@ public class ClueGame extends JFrame{
 			}
 		}
 		return won;
-		
+
 	}
 	public void aiTurn(Player ai, int aiRoll) {
 		//Should we make an accusation?
@@ -430,6 +431,27 @@ public class ClueGame extends JFrame{
 
 			//And, of course, we have to repaint our board if they moved
 			getBoard().repaint();
+		}
+	}
+	
+	//TODO: Add here
+	public static void setGUILookAndFeel(String laf) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
+				if (laf.equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -708,28 +730,21 @@ public class ClueGame extends JFrame{
 
 
 	public static void main(String[] args) {
+		//Set the Basic GUI to Metal (Java's default) Look and Feel:
+		// - File Menu
+		// - Detective Panel
+		// - Scrollbar
+		// - Buttons
+		ClueGame.setGUILookAndFeel("Metal");
+		
 		//Initialize Just About Everything:
 		ClueGame clue = new ClueGame(LEGEND, BOARD,
 				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
 
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
-				if ("CDE/Motif".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-
+		//Set the rest of the GUI to CDE/Motif:
+		//- Dialogs
+		//- JOptionPane Dialogs
+		ClueGame.setGUILookAndFeel("CDE/Motif");
 
 		//Figure out who our characters are: (people stores a list of strings of all character names)
 		Object[] characterOptions = clue.people.toArray();
