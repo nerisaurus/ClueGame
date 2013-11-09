@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
@@ -33,7 +35,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import clueGameGUI.ClueControlPanel;
 import clueGameGUI.SuggestionDialog;
 
-public class ClueGame extends JFrame{
+public class ClueGame extends JFrame implements ComponentListener {
 	//File Names
 	public static final String BOARD = "board.csv";
 	public static final String LEGEND = "legend.csv"; // format: room character, room name, color, label y position, label x position
@@ -110,6 +112,22 @@ public class ClueGame extends JFrame{
 		this.setBoard(new Board(board, legend));
 		this.getBoard().setPlayerMap(players);
 
+		/*board.addComponentListener();
+		board.addComponentListener(new ComponentListener() 
+		{  
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				
+			}
+		
+			//And then the ones we don't care about:
+			@Override
+			public void componentHidden(ComponentEvent arg0) {}
+			@Override
+			public void componentMoved(ComponentEvent arg0) {}
+			@Override
+			public void componentShown(ComponentEvent arg0) {}
+		});*/
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
 
@@ -157,6 +175,9 @@ public class ClueGame extends JFrame{
 		menuBar.add(createFileMenu());	
 		//two halves
 
+		//Let's let the board keep track of its size:
+		board.addComponentListener(this);
+		
 		add(getBoard(), BorderLayout.CENTER);
 		controls = new ClueControlPanel(this);
 		//sidePanel.add(mcp, BorderLayout.EAST);
@@ -366,7 +387,7 @@ public class ClueGame extends JFrame{
 		if(solution.equals(accusation)) {
 			won = true;
 			gameOngoing = false; //The game has ended
-			
+
 			board.setWinnerColor(accuser.getColor());
 			board.repaint();
 
@@ -912,5 +933,22 @@ public class ClueGame extends JFrame{
 		} 
 	}
 
+
+	//Component Listener Events:
+	@Override
+	public void componentResized(ComponentEvent e) { 
+		board.setPanelHeight(board.getHeight());
+		board.setPanelWidth(board.getWidth());
+		board.resetCellDimensions();
+		board.repaint();	
+	}
+	
+	//(the ones we don't care about:)
+	@Override
+	public void componentHidden(ComponentEvent e) {	}
+	@Override
+	public void componentMoved(ComponentEvent e) {	}
+	@Override
+	public void componentShown(ComponentEvent e) { }
 
 }

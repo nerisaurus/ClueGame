@@ -1,12 +1,9 @@
 package clueGame;
 
 import java.awt.Color;
-import java.awt.Font;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -19,8 +16,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
 
 import clueGame.RoomCell.DoorDirection;
 
@@ -28,8 +24,8 @@ public class Board extends JPanel {
 	private ArrayList<BoardCell> cells;
 	private Map<Character,String> rooms;
 	private Map<Character,Color> roomColors;
-	private Map<Character,Integer> roomLabelVerticalLocation;
-	private Map<Character,Integer> roomLabelHorizontalLocation;
+	private Map<Character,Double> roomLabelVerticalLocation;
+	private Map<Character,Double> roomLabelHorizontalLocation;
 	private int height,width;
 	private String layoutFile, legend;
 	private boolean[] visited;
@@ -60,8 +56,8 @@ public class Board extends JPanel {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
 		this.roomColors = new HashMap<Character, Color>();
-		this.roomLabelVerticalLocation = new HashMap<Character, Integer>();
-		this.roomLabelHorizontalLocation = new HashMap<Character, Integer>();
+		this.roomLabelVerticalLocation = new HashMap<Character, Double>();
+		this.roomLabelHorizontalLocation = new HashMap<Character, Double>();
 		this.adjacencyMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		this.targets = new HashSet<BoardCell>();
 		this.layoutFile = "ClueLayout.csv";
@@ -76,8 +72,8 @@ public class Board extends JPanel {
 		this.cells = new ArrayList<BoardCell>();
 		this.rooms = new HashMap<Character,String>();
 		this.roomColors = new HashMap<Character, Color>();
-		this.roomLabelVerticalLocation = new HashMap<Character, Integer>();
-		this.roomLabelHorizontalLocation = new HashMap<Character, Integer>();
+		this.roomLabelVerticalLocation = new HashMap<Character, Double>();
+		this.roomLabelHorizontalLocation = new HashMap<Character, Double>();
 		this.adjacencyMatrix = new HashMap<Integer, LinkedList<Integer>>();
 		this.targets = new HashSet<BoardCell>();
 		this.layoutFile = layout;
@@ -85,7 +81,6 @@ public class Board extends JPanel {
 		loadConfigFiles();
 		visited = new boolean[cells.size()];
 		calculateAdjacencies();
-
 	}
 
 
@@ -148,7 +143,9 @@ public class Board extends JPanel {
 			if(roomLabelVerticalLocation.containsKey(roomInitial)){
 				g2 = (Graphics2D)g;
 				g2.setColor(Color.WHITE);
-				g2.drawString(rooms.get(roomInitial),roomLabelVerticalLocation.get(roomInitial),roomLabelHorizontalLocation.get(roomInitial)); 
+				Double roomLabelY = (roomLabelVerticalLocation.get(roomInitial) * cellDimensions);
+				Double roomLabelX = (roomLabelHorizontalLocation.get(roomInitial) * cellDimensions);
+				g2.drawString(rooms.get(roomInitial),roomLabelY.intValue(),roomLabelX.intValue()); 
 			}
 		}
 	}
@@ -236,10 +233,10 @@ public class Board extends JPanel {
 						color = color.darker();
 					}
 					roomColors.put(key,color); 
-					Double vertical = (Double.parseDouble(individual[3]) * cellDimensions);
-					Double horizontal = (Double.parseDouble(individual[4]) * cellDimensions);
-					roomLabelVerticalLocation.put(key, vertical.intValue());
-					roomLabelHorizontalLocation.put(key, horizontal.intValue());
+					Double vertical = (Double.parseDouble(individual[3]));
+					Double horizontal = (Double.parseDouble(individual[4]));
+					roomLabelVerticalLocation.put(key, vertical);
+					roomLabelHorizontalLocation.put(key, horizontal);
 				}
 				if(counter == WHICH_LINE_IS_WALKWAY){
 					walkwayChar = individual[0];
@@ -255,6 +252,10 @@ public class Board extends JPanel {
 
 	public int calcIndex(int row, int col) {
 		return ((row*width) + col);
+	}
+
+	public void resetCellDimensions() {
+		cellDimensions = Math.min(panelHeight / height, panelWidth / width);
 	}
 
 	public void startTargets(int vertical, int horizontal, int steps){
@@ -483,7 +484,13 @@ public class Board extends JPanel {
 		this.highlightTargets = highlightTargets;
 	}
 
-
+	public void setPanelHeight(int height) {
+		this.panelHeight = height;
+	}
+	
+	public void setPanelWidth(int width) {
+		this.panelWidth = width;
+	}
 
 
 }
