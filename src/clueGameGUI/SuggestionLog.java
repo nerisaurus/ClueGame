@@ -59,9 +59,9 @@ public class SuggestionLog extends JTextPane {
 		//...Then the statement about whether it was correct or not:
 		String correctness= "";
 		if (correct)
-			correctness = "is valid!";
+			correctness = "(Correct) ";
 		else
-			correctness = "is invalid!";
+			correctness = "(FAILED) ";
 		//Then we do some formatting:
 		
 		//Then we add the lines to the doc
@@ -72,20 +72,21 @@ public class SuggestionLog extends JTextPane {
 		
 		
 		SimpleAttributeSet accusationAttemptHeader = new SimpleAttributeSet();
-		StyleConstants.setForeground(accusationAttemptHeader, Color.RED);
-		StyleConstants.setBackground(accusationAttemptHeader, Color.BLACK);
+		StyleConstants.setForeground(accusationAttemptHeader, Color.WHITE);
+		//StyleConstants.setBackground(accusationAttemptHeader, Color.BLACK);
 		StyleConstants.setBold(accusationAttemptHeader, true);
-		String attempt = "ACCUSATION ATTEMPT:";
+		StyleConstants.setItalic(accusationAttemptHeader, true);
+		String attempt = "ACCUSATION:";
 		
 		SimpleAttributeSet accusationAttempt = new SimpleAttributeSet();
-		StyleConstants.setForeground(accusationAttempt, Color.RED);
-		StyleConstants.setBackground(accusationAttempt, Color.BLACK);
+		StyleConstants.setForeground(accusationAttempt, Color.WHITE);
+		StyleConstants.setItalic(accusationAttempt, true);
+		//StyleConstants.setBackground(accusationAttempt, Color.BLACK);
 		
 		try {
 			doc.insertString(0, detective, keyWord);
-			doc.insertString(detective.length(), "\n" + attempt, accusationAttemptHeader);
-			doc.insertString(detective.length() + attempt.length() + 1, " \n" + accused, accusationAttempt);
-			doc.insertString(detective.length() + accused.length() + attempt.length() + 3, "\n" + correctness + "\n", accusationAttempt);
+			doc.insertString(detective.length(), "\n" + correctness + attempt + "\n", accusationAttemptHeader);
+			doc.insertString(detective.length() + attempt.length() + correctness.length() + 1, " \n" + accused + "\n", accusationAttempt);
 			
 			
 		} catch (BadLocationException e) {

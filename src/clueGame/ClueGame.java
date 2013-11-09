@@ -376,6 +376,7 @@ public class ClueGame extends JFrame{
 			if (JOptionPane.showConfirmDialog(null, name + " won the game!" + "\n" + "Play again?", "End Game Result", JOptionPane.YES_NO_OPTION) == 0){
 				setVisible(false);
 				ClueGame.main(null);
+				//TODO: Several things need to be reset here.  The font changes, for one.  It might not always realize that the new game isn't over yet, as well.
 			}
 			else {
 				System.exit(0);
