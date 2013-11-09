@@ -25,12 +25,12 @@ public abstract class Player {
 	private int row;
 	private int col;	
 	private ArrayList<Card> hand;
-	
+
 	public Player() {
 		super();	
 		this.hand = new ArrayList<Card>();
 	}
-	
+
 	public Player(String name, String color, int startingRowPosition, int startingColumnPosition) {
 		this.name = name;
 		this.color = convertColor(color);
@@ -50,7 +50,7 @@ public abstract class Player {
 		}
 		return color;
 	}
-	
+
 	public Card disproveSuggestion(Solution suggestion) {
 		ArrayList<Card> matches = new ArrayList<Card>();
 		for(Card c: suggestion.getCards()){
@@ -67,34 +67,34 @@ public abstract class Player {
 		else
 			return null;
 	}
-	
+
 	public void addCardToHand(Card c) {
 		hand.add(c);
 		seesCard(c);
 	}
-	
-	
+
+
 	//Getters:
 	public String getName() {
 		return name;
 	}
-	
+
 	public Color getColor() {
 		return color;
 	}
-	
+
 	public int getCurrentRow() {
 		return row;
 	}
-	
+
 	public int getCurrentColumn() {
 		return col;
 	}
-	
+
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
-	
+
 	//Setters:
 	public void setLocation(int newColumn, int newRow) {
 		this.row = newRow;
@@ -114,7 +114,7 @@ public abstract class Player {
 	public void seesCard(Card card) {
 		return; //Overridden by ComputerPlayer
 	}
-	
+
 	public void setUnseenCards(LinkedList<Card> cards){
 		return; //Overridden by ComputerPlayer
 	}
@@ -122,20 +122,20 @@ public abstract class Player {
 	public Solution makeSuggestion(Card roomCard) {
 		return null; //Overridden by ComputerPlayer
 	}
-	
+
 	public void switchWithPlayer(Player other) {
 		//Temporary Holding
 		String tempName = name;
 		Color tempColor = color;
 		int tempRow = row;
 		int tempCol = col;
-		
+
 		//Then Bring in Other --> Us
 		this.name = other.getName();
 		this.color = other.getColor();
 		this.row = other.getCurrentRow();
 		this.col = other.getCurrentColumn();	
-		
+
 		//Then temp --> Other
 		other.setLocation(tempCol, tempRow);
 		other.setColor(tempColor);
@@ -151,6 +151,6 @@ public abstract class Player {
 	public Solution makeAccusation(Solution goodAccusation) {
 		return null; //Overriden by Computer Player
 	}
-	
+
 
 }

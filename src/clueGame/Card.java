@@ -23,7 +23,7 @@ public class Card {
 	public String getName() {
 		return name;
 	}
-	
+
 	public CardType getType() {
 		return type;
 	}
@@ -32,7 +32,7 @@ public class Card {
 	public String toString() {
 		return "Card [name=" + name + ", type=" + type + "]";
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
 		if(!(other instanceof Card)) {
@@ -46,6 +46,6 @@ public class Card {
 			}
 		}
 	}
-	
-	
+
+
 }

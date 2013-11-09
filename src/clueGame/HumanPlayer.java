@@ -3,7 +3,7 @@ package clueGame;
 import java.util.ArrayList;
 
 public class HumanPlayer extends Player {
-	
+
 	public HumanPlayer() {
 		super();
 	}
@@ -17,7 +17,7 @@ public class HumanPlayer extends Player {
 		board.startTargets(getCurrentRow(), getCurrentColumn(), steps);
 		return -1;
 	}
-	
+
 	public String getCard(CardType type){
 		String s = "";
 		for (Card c : getHand())

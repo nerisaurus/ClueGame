@@ -767,7 +767,7 @@ public class ClueGame extends JFrame implements ComponentListener {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				//dNotes.setTheme(getPlayers().get("Human").getFirst());
+				dNotes.setTheme(getPlayers().get("Human").getFirst());
 				dNotes.setVisible(true);
 			}
 		}
@@ -778,54 +778,7 @@ public class ClueGame extends JFrame implements ComponentListener {
 
 
 	public static void main(String[] args) {
-		UI=new UIManager();
-
-
-		UI.put("MenuItem.selectionBackground",new ColorUIResource(255,255,255));
-		UI.put("MenuItem.selectionForeground",new ColorUIResource(0,0,0));
-		UI.put("Menu.selectionBackground",new ColorUIResource(255,255,255));
-		UI.put("Menu.selectionForeground",new ColorUIResource(0,0,0));
-
-		UI.put("OptionPane.background",new ColorUIResource(0,0,0));
-		UI.put("OptionPane.messageForeground",new ColorUIResource(255,255,255));
-
-		UI.put("Panel.background",new ColorUIResource(0,0,0));
-		UI.put("Panel.foreground",new ColorUIResource(255,255,255));
-
-		UI.put("Button.background",new ColorUIResource(0,0,0));
-		UI.put("Button.foreground",new ColorUIResource(255,255,255));
-		UI.put("Button.select",new ColorUIResource(0,0,0));
-		UI.put("Button.highlight",new ColorUIResource(255,255,255));
-		UI.put("Button.shadow",new ColorUIResource(255,255,255));
-
-		UI.put("ComboBox.background",new ColorUIResource(0,0,0));
-		UI.put("ComboBox.foreground",new ColorUIResource(255,255,255));
-		UI.put("ComboBox.selectionBackground",new ColorUIResource(255,255,255));
-		UI.put("ComboBox.selectionForeground",new ColorUIResource(0));
-
-		UI.put("CheckBox.background",new ColorUIResource(0,0,0));
-		UI.put("CheckBox.foreground",new ColorUIResource(255,255,255));
-
-		UI.put("Label.background",new ColorUIResource(0,0,0));
-		UI.put("Label.foreground",new ColorUIResource(255,255,255));
-
-		UI.put("TextArea.background",new ColorUIResource(0,0,0));
-		UI.put("TextArea.foreground",new ColorUIResource(255,255,255));
-
-		UI.put("TextField.background",new ColorUIResource(0,0,0));
-		UI.put("TextField.foreground",new ColorUIResource(255,255,255));
-
-		UI.put("TextPane.font", new Font("Arial ", 12, 12));
-
-		UI.put("ScrollBar.background",new ColorUIResource(0,0,0));
-		UI.put("ScrollBar.foreground",new ColorUIResource(255,255,255));
-		UI.put("ScrollBar.darkShadow",new ColorUIResource(255,255,255));
-		UI.put("ScrollBar.track",new ColorUIResource(0,0,0));
-		UI.put("ScrollBar.thumb",new ColorUIResource(0,0,0));
-		UI.put("ScrollBar.thumbHighlight",new ColorUIResource(255,255,255));
-		UI.put("ScrollBar.thumbShadow",new ColorUIResource(255,255,255));
-		UI.put("ScrollBar.trackHighlight",new ColorUIResource(255,255,255));
-		UI.put("ScrollBar.trackShadow",new ColorUIResource(255,255,255));
+		UIStuff();
 
 
 
@@ -973,5 +926,57 @@ public class ClueGame extends JFrame implements ComponentListener {
 	public void componentMoved(ComponentEvent e) {	}
 	@Override
 	public void componentShown(ComponentEvent e) { }
+	
+	//UI Monstrosity Function
+	private static void UIStuff() {
+		UI=new UIManager();
+
+
+		UI.put("MenuItem.selectionBackground",new ColorUIResource(255,255,255));
+		UI.put("MenuItem.selectionForeground",new ColorUIResource(0,0,0));
+		UI.put("Menu.selectionBackground",new ColorUIResource(255,255,255));
+		UI.put("Menu.selectionForeground",new ColorUIResource(0,0,0));
+
+		UI.put("OptionPane.background",new ColorUIResource(0,0,0));
+		UI.put("OptionPane.messageForeground",new ColorUIResource(255,255,255));
+
+		UI.put("Panel.background",new ColorUIResource(0,0,0));
+		UI.put("Panel.foreground",new ColorUIResource(255,255,255));
+
+		UI.put("Button.background",new ColorUIResource(0,0,0));
+		UI.put("Button.foreground",new ColorUIResource(255,255,255));
+		UI.put("Button.select",new ColorUIResource(0,0,0));
+		UI.put("Button.highlight",new ColorUIResource(255,255,255));
+		UI.put("Button.shadow",new ColorUIResource(255,255,255));
+
+		UI.put("ComboBox.background",new ColorUIResource(0,0,0));
+		UI.put("ComboBox.foreground",new ColorUIResource(255,255,255));
+		UI.put("ComboBox.selectionBackground",new ColorUIResource(255,255,255));
+		UI.put("ComboBox.selectionForeground",new ColorUIResource(0));
+
+		UI.put("CheckBox.background",new ColorUIResource(0,0,0));
+		UI.put("CheckBox.foreground",new ColorUIResource(255,255,255));
+
+		UI.put("Label.background",new ColorUIResource(0,0,0));
+		UI.put("Label.foreground",new ColorUIResource(255,255,255));
+
+		UI.put("TextArea.background",new ColorUIResource(0,0,0));
+		UI.put("TextArea.foreground",new ColorUIResource(255,255,255));
+
+		UI.put("TextField.background",new ColorUIResource(0,0,0));
+		UI.put("TextField.foreground",new ColorUIResource(255,255,255));
+
+		UI.put("TextPane.font", new Font("Arial ", 12, 12));
+
+		UI.put("ScrollBar.background",new ColorUIResource(0,0,0));
+		UI.put("ScrollBar.foreground",new ColorUIResource(255,255,255));
+		UI.put("ScrollBar.darkShadow",new ColorUIResource(255,255,255));
+		UI.put("ScrollBar.track",new ColorUIResource(0,0,0));
+		UI.put("ScrollBar.thumb",new ColorUIResource(0,0,0));
+		UI.put("ScrollBar.thumbHighlight",new ColorUIResource(255,255,255));
+		UI.put("ScrollBar.thumbShadow",new ColorUIResource(255,255,255));
+		UI.put("ScrollBar.trackHighlight",new ColorUIResource(255,255,255));
+		UI.put("ScrollBar.trackShadow",new ColorUIResource(255,255,255));
+	}
 
 }

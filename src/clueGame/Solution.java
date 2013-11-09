@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Solution {
 	private Card person, weapon, room;
-	
+
 	@Override
 	public boolean equals(Object other) {
 		if(!(other instanceof Solution)) {
@@ -21,7 +21,7 @@ public class Solution {
 	public Solution() {
 		super();
 	}
-	
+
 	public Solution(Card person, Card weapon, Card room) {
 		super();
 		setPerson(person);
@@ -69,9 +69,9 @@ public class Solution {
 		soln.add(weapon);
 		return soln;
 	}
-	
+
 	public String toString(){
 		return getPerson() + "||" + getWeapon() + "||" + getRoom();
 	}
-	
+
 }

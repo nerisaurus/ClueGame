@@ -365,7 +365,7 @@ public class Board extends JPanel {
 			}
 		}
 	}
-	
+
 	// Be sure to trim the color, we don't want spaces around the name
 	public Color convertColor(String strColor){
 		Color color; 
@@ -441,7 +441,7 @@ public class Board extends JPanel {
 	public Map<Character, Color> getRoomColors() {
 		return roomColors;
 	}
-	
+
 	public Color getWinnerColor() {
 		return winnerColor;
 	}
@@ -470,7 +470,7 @@ public class Board extends JPanel {
 	public void setCellDimensions(int cellDimensions){
 		this.cellDimensions = cellDimensions;
 	}
-	
+
 	public void setWinnerColor(Color winnerColor) {
 		this.winnerColor = winnerColor;
 	}
@@ -486,7 +486,7 @@ public class Board extends JPanel {
 	public void setPanelHeight(int height) {
 		this.panelHeight = height;
 	}
-	
+
 	public void setPanelWidth(int width) {
 		this.panelWidth = width;
 	}

@@ -2,13 +2,17 @@ package clueGame;
 
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JDialog;
+import javax.swing.border.TitledBorder;
 
 public class DetectiveNotesDialog extends JDialog {
+	private SuspectsPanel pp, rp, wp;
 
 	public DetectiveNotesDialog(ArrayList<String> players, ArrayList<String> rooms, ArrayList<String> weapons) {
 		setTitle("Detective Notes");
@@ -35,6 +39,16 @@ public class DetectiveNotesDialog extends JDialog {
 		if (fd.width > sd.width) 
 			fd.width = sd.width; 
 		setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2);
+	}
+
+	public void setTheme(Player p){
+
+		pp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"Who", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
+
+		rp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"Where", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
+
+		wp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"How", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
+
 	}
 
 }

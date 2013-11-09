@@ -30,10 +30,10 @@ public class MyCardsPanel extends JPanel{
 		for(Card card : p.getHand()) {
 			//First we describe the card:
 			String cardDescription = "";
-			
+
 			//Then pick its image:
 			cardIcon = new JLabel();
-			
+
 			switch(card.getType()) {
 			case ROOM:
 				cardIcon.setIcon(new ImageIcon("roomCardIcon.png"));
@@ -49,7 +49,7 @@ public class MyCardsPanel extends JPanel{
 				break;
 			}
 			cardDescription += card.getName();
-			
+
 			//Now we put the description we made into a JTextField
 			displayCard = new JTextField();
 			displayCard.setBackground(Color.BLACK);
@@ -57,7 +57,7 @@ public class MyCardsPanel extends JPanel{
 			displayCard.setEditable(false);
 			displayCard.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
 			displayCard.setText(cardDescription);
-			
+
 			//And add it and the icon into a JPanel
 			JPanel cardLine = new JPanel();
 			cardLine.setBackground(Color.BLACK);
@@ -65,7 +65,7 @@ public class MyCardsPanel extends JPanel{
 			cardLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 			cardLine.add(cardIcon);
 			cardLine.add(displayCard);
-			
+
 			//And finally add that to this Panel
 			add(cardLine);
 		}

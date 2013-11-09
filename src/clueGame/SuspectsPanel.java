@@ -56,14 +56,6 @@ public class SuspectsPanel extends JPanel {
 		combo = new DefaultComboBoxModel<String>();
 		comboList = new JComboBox<String>(combo);
 
-		//comboList.setAlignmentY(java.awt.Component.CENTER_ALIGNMENT);
-
-		/*	 DefaultListCellRenderer centerer = new DefaultListCellRenderer();
-		 centerer.setVerticalAlignment(DefaultListCellRenderer.CENTER);
-		 comboList.setRenderer(centerer);*/ 
-		//Not even this code works to center the comboList options 
-		// (in the y direction - it's not too hard to center them in the x direction)
-
 		JCheckBox checkBox;
 
 		JPanel checkPanel_1 = new JPanel(new GridLayout(0, 1));
