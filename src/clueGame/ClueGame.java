@@ -161,7 +161,7 @@ public class ClueGame extends JFrame{
 		add(controls, BorderLayout.EAST);
 
 
-
+		setGUILookAndFeel("CDE/Motif");
 		dNotes = new DetectiveNotesDialog(people, rooms, weapons);
 
 		//Setting Frame Size
@@ -364,19 +364,72 @@ public class ClueGame extends JFrame{
 		if(solution.equals(accusation)) {
 			won = true;
 			gameOngoing = false; //The game has ended
-			//dialogs only pop up if the human player made the accusations
-			String name = accuser.getName();
-			if (accuser.getName().equals(players.get("Human").getFirst().getName()))
-				name = "You";
+
 			//Adds the accusation to the log:
 			controls.addAccusationToLog(accuser, accusation, won);
-			//Pops up a dialog: Do you want to play again?
-			if (JOptionPane.showConfirmDialog(null, name + " won the game!" + "\n" + "Play again?", "End Game Result", JOptionPane.YES_NO_OPTION) == 0){
+
+			//Now to make a Dialog:
+			
+			//First, we have to do some setup:
+			String message, title, name, action;
+			String murderer, murderWeapon, murderRoom;
+			
+			//Get the name of our lucky detective and his discoveries:
+			name = accuser.getName();
+			murderer = accusation.getPerson().getName();
+			murderWeapon = accusation.getWeapon().getName();
+			murderRoom = accusation.getRoom().getName();
+			action = " was on the case!"; //Default action statement
+			
+			if(name.equals(murderer)){
+				//Since all of our characters have unisex names, let's have some fun randomness.
+				boolean male = new Random().nextBoolean();
+				if(male){
+					action = " turned himself in.";
+				} else {
+					action = " turned herself in.";
+				}
+			}
+			
+			//Adjust text based on whether the human won:
+			if (name.equals(players.get("Human").getFirst().getName())) {
+				name = "you";
+				title = "You won!";
+				action = " were on the case!";
+				//And if you're also the murderer:
+				if(murderer.equals(players.get("Human").getFirst().getName())){
+					murderer = "you";
+					action = " ...turned yourself in?";
+					title = "You won...?";
+				}
+			} else {
+				title = "You were outwitted!";
+				//And if you're also the murderer:
+				if(murderer.equals(players.get("Human").getFirst().getName())){
+					murderer = "you";
+					action = " could put you behind bars.";
+					title = "You were caught!";
+				}
+			}
+
+			//Get the accusation he made and string it all into a sentence.
+			message = "Turns out, the murderer was " + murderer + " all along!  "
+					+ "Yes, " + murderer + " on the planet " + murderRoom
+					+ "\n" + "with the " + murderWeapon + ".  "
+					+ "Good thing " + name + action;
+			int option = JOptionPane.showOptionDialog(null,
+					message,
+					title,
+					2,
+					JOptionPane.PLAIN_MESSAGE,
+					null,
+					new String[] {"Play Again", "Goodbye"},
+					null);
+			if (option == 0){ //Play Again
 				setVisible(false);
 				ClueGame.main(null);
-				//TODO: Several things need to be reset here.  The font changes, for one.  It might not always realize that the new game isn't over yet, as well.
 			}
-			else {
+			else { //Goodbye
 				System.exit(0);
 			}
 
@@ -433,8 +486,9 @@ public class ClueGame extends JFrame{
 			getBoard().repaint();
 		}
 	}
-	
-	//This checks without the laf (Look and Feel) can be implemented.
+
+	//This checks without the laf (Look and Feel) can be implemented.  If so, it sets it up.
+	//This is just to move the rather bulky piece of code out of main()
 	public static void setGUILookAndFeel(String laf) {
 		try {
 			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -736,7 +790,7 @@ public class ClueGame extends JFrame{
 		// - Scrollbar
 		// - Buttons
 		ClueGame.setGUILookAndFeel("Metal");
-		
+
 		//Initialize Just About Everything:
 		ClueGame clue = new ClueGame(LEGEND, BOARD,
 				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);

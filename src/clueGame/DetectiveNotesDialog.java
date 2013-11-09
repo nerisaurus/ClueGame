@@ -1,6 +1,8 @@
 package clueGame;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JDialog;
@@ -20,6 +22,15 @@ public class DetectiveNotesDialog extends JDialog {
 				
 		SuspectsPanel wp = new SuspectsPanel(weapons, "How", "with the ");
 		add(wp);
+		
+		//Logic to load it in the middle of the screen:
+		Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
+		Dimension fd = getSize(); 
+		if (fd.height > sd.height) 
+			fd.height = sd.height; 
+		if (fd.width > sd.width) 
+			fd.width = sd.width; 
+		setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
 		
 	}
 

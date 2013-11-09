@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -55,6 +56,11 @@ public class SuspectsPanel extends JPanel {
 		combo = new DefaultComboBoxModel<String>();
 		comboList = new JComboBox<String>(combo);
 		
+		comboList.setAlignmentY(java.awt.Component.CENTER_ALIGNMENT);
+		
+	/*	 DefaultListCellRenderer centerer = new DefaultListCellRenderer();
+		 centerer.setVerticalAlignment(DefaultListCellRenderer.CENTER);
+		 comboList.setRenderer(centerer);*/
 
 		JCheckBox checkBox;
 
