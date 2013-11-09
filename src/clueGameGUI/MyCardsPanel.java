@@ -38,8 +38,8 @@ public class MyCardsPanel extends JPanel{
 			
 			//Then pick its image:
 			cardIcon = new JLabel();
-			cardIcon.setBackground(Color.BLACK);
-			cardIcon.setForeground(p.getColor());
+			//cardIcon.setBackground(Color.BLACK);
+			//cardIcon.setForeground(p.getColor());
 			
 			switch(card.getType()) {
 			case ROOM:
