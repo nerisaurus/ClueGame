@@ -456,7 +456,7 @@ public class ClueGame extends JFrame implements ComponentListener {
 						message,
 						"A Failure of a Detective!",
 						1,
-						JOptionPane.WARNING_MESSAGE,
+						JOptionPane.PLAIN_MESSAGE,
 						null,
 						new String[] {"I promise it won't happen again, your Honour!"},
 						null);
