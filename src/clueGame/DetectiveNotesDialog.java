@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
 
 
 public class DetectiveNotesDialog extends JDialog {
-SuspectsPanel pp, rp, wp;
+	SuspectsPanel pp, rp, wp;
 	public DetectiveNotesDialog(ArrayList<String> players, ArrayList<String> rooms, ArrayList<String> weapons) {
 		setTitle("Detective Notes");
 		setSize(700, 500);
@@ -44,9 +44,9 @@ SuspectsPanel pp, rp, wp;
 		setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2);
 	}
 	public void setTheme(Player p){
-		pp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"I suspect", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
-		rp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"on the planet", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
-		wp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"with the", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
+		pp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"Who", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
+		rp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"Where", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
+		wp.setBorder(new TitledBorder (BorderFactory.createLineBorder(p.getColor()),"How", 0, 0, new Font("Arial Narrow", Font.BOLD, 12), p.getColor()));
 	}
 
 }

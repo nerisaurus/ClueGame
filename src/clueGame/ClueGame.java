@@ -926,7 +926,7 @@ public class ClueGame extends JFrame implements ComponentListener {
 	public void componentMoved(ComponentEvent e) {	}
 	@Override
 	public void componentShown(ComponentEvent e) { }
-	
+
 	//UI Monstrosity Function
 	private static void UIStuff() {
 
@@ -970,7 +970,7 @@ public class ClueGame extends JFrame implements ComponentListener {
 		UIManager.put("ScrollBar.foreground",new ColorUIResource(255,255,255));
 		UIManager.put("ScrollBar.darkShadow",new ColorUIResource(255,255,255));
 		UIManager.put("ScrollBar.track",new ColorUIResource(0,0,0));
-		UIManager.put("ScrollBar.thumb",new ColorUIResource(0,0,0));
+		UIManager.put("ScrollBar.thumb",new ColorUIResource(200,200,200));
 		UIManager.put("ScrollBar.thumbHighlight",new ColorUIResource(255,255,255));
 		UIManager.put("ScrollBar.thumbShadow",new ColorUIResource(255,255,255));
 		UIManager.put("ScrollBar.trackHighlight",new ColorUIResource(255,255,255));
