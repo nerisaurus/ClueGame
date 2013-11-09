@@ -1,6 +1,5 @@
 package clueGameGUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -10,14 +9,10 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import clueGame.Card;
-import clueGame.CardType;
-import clueGame.HumanPlayer;
 import clueGame.Player;
 
 
@@ -38,8 +33,6 @@ public class MyCardsPanel extends JPanel{
 			
 			//Then pick its image:
 			cardIcon = new JLabel();
-			//cardIcon.setBackground(Color.BLACK);
-			//cardIcon.setForeground(p.getColor());
 			
 			switch(card.getType()) {
 			case ROOM:
@@ -62,7 +55,7 @@ public class MyCardsPanel extends JPanel{
 			displayCard.setBackground(Color.BLACK);
 			displayCard.setForeground(p.getColor());
 			displayCard.setEditable(false);
-			displayCard.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, Color.black));
+			displayCard.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.black));
 			displayCard.setText(cardDescription);
 			
 			//And add it and the icon into a JPanel
