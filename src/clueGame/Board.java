@@ -38,11 +38,12 @@ public class Board extends JPanel {
 
 	//For Drawing Purposes Only:
 	private Map<String, LinkedList<Player>> players;
+	private Color winnerColor = null;
 
 	//Handy Size Variables for Drawing Purposes:
 	private int panelHeight, panelWidth;
 	private int cellDimensions = 25;
-	
+
 	//Turn logic: (package variable, since it is used primarily in ClueGame)
 	private boolean highlightTargets;
 
@@ -84,10 +85,10 @@ public class Board extends JPanel {
 		loadConfigFiles();
 		visited = new boolean[cells.size()];
 		calculateAdjacencies();
-		
+
 	}
-	
-	
+
+
 
 	public void loadConfigFiles() {
 		try {
@@ -103,16 +104,20 @@ public class Board extends JPanel {
 	@Override 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		
+
+
 		drawGrid(g);
 		drawPlayers(g);
 		drawLabels(g);
 		if(isHighlightTargets()){
 			drawTargets(g);
 		}
-		//g.setColor(Color.BLUE);
-		//g.drawRect(23, 23, 23, 23);
+
+		if(winnerColor != null) {
+			winnerColor.darker().darker().darker();
+			g.setColor(new Color(winnerColor.getRed(), winnerColor.getGreen(), winnerColor.getBlue(), 100));
+			g.fillRect(0, 0, panelWidth, panelHeight);
+		}
 	}
 
 	public void drawGrid(Graphics g) {
@@ -147,7 +152,7 @@ public class Board extends JPanel {
 			}
 		}
 	}
-	
+
 	public void drawTargets(Graphics g) {
 		for(BoardCell target : targets){
 			target.highlight(g, cellDimensions);
@@ -432,9 +437,17 @@ public class Board extends JPanel {
 	public void setPlayerMap(Map<String, LinkedList<Player>> players) {
 		this.players = players;
 	}
-	
+
 	public void setCellDimensions(int cellDimensions){
 		this.cellDimensions = cellDimensions;
+	}
+	
+	public void setWinnerColor(Color winnerColor) {
+		this.winnerColor = winnerColor;
+	}
+	
+	public Color getWinnerColor() {
+		return winnerColor;
 	}
 
 	public int getPanelHeight() {
@@ -444,7 +457,7 @@ public class Board extends JPanel {
 	public int getPanelWidth() {
 		return panelWidth;
 	}
-	
+
 	public int getCellDimensions() {
 		return cellDimensions;
 	}
@@ -470,7 +483,7 @@ public class Board extends JPanel {
 		this.highlightTargets = highlightTargets;
 	}
 
-	
-	
+
+
 
 }

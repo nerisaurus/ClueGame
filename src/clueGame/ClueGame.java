@@ -366,6 +366,9 @@ public class ClueGame extends JFrame{
 		if(solution.equals(accusation)) {
 			won = true;
 			gameOngoing = false; //The game has ended
+			
+			board.setWinnerColor(accuser.getColor());
+			board.repaint();
 
 			//Adds the accusation to the log:
 			controls.addAccusationToLog(accuser, accusation, won);
@@ -439,6 +442,7 @@ public class ClueGame extends JFrame{
 
 		}
 		else{
+			//(only for human players - the dialog of failed accusations):
 			if (accuser.getName().equals(players.get("Human").getFirst().getName())){
 				String message = "You give an impassioned indictment that the foul deed was committed by:\n" 
 						+"\""+ accusation.getPerson().getName() + " on the planet " + accusation.getRoom().getName() + " with the " + accusation.getWeapon().getName() + "!\"" +
