@@ -1,11 +1,14 @@
 package clueGame;
 
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JDialog;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class DetectiveNotesDialog extends JDialog {
 
@@ -13,6 +16,8 @@ public class DetectiveNotesDialog extends JDialog {
 		setTitle("Detective Notes");
 		setSize(700, 500);
 		setLayout(new GridLayout(3, 1));
+		
+		ClueGame.setGUILookAndFeel("CDE/Motif");
 		
 		SuspectsPanel pp = new SuspectsPanel(players, "Who", "I suspect ");
 		add(pp);
@@ -24,14 +29,14 @@ public class DetectiveNotesDialog extends JDialog {
 		add(wp);
 		
 		//Logic to load it in the middle of the screen:
+
 		Dimension sd = Toolkit.getDefaultToolkit().getScreenSize(); 
 		Dimension fd = getSize(); 
 		if (fd.height > sd.height) 
 			fd.height = sd.height; 
 		if (fd.width > sd.width) 
 			fd.width = sd.width; 
-		setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2); 
-		
+		setLocation((sd.width - fd.width) / 2, (sd.height - fd.height) / 2);
 	}
 
 }

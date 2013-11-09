@@ -1,6 +1,5 @@
 package clueGame;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +22,8 @@ public class SuspectsPanel extends JPanel {
 	ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
 	DefaultComboBoxModel<String> combo;
 	JComboBox<String> comboList;
-
+	
+	
 	//Logic for Updating the Notes:
 	private class CheckboxListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -66,6 +66,7 @@ public class SuspectsPanel extends JPanel {
 
 		JPanel checkPanel_1 = new JPanel(new GridLayout(0, 1));
 		JPanel checkPanel_2 = new JPanel(new GridLayout(0, 1));
+
 
 		int  half_options = possible_cards.size()/2; //Returns half (rounded) the number of options
 		int counter = 0;
