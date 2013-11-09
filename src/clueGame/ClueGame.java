@@ -434,10 +434,10 @@ public class ClueGame extends JFrame{
 		}
 	}
 	
-	//TODO: Add here
+	//This checks without the laf (Look and Feel) can be implemented.
 	public static void setGUILookAndFeel(String laf) {
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
 				if (laf.equals(info.getName())) {
 					UIManager.setLookAndFeel(info.getClassName());
