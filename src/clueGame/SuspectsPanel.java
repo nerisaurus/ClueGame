@@ -22,7 +22,8 @@ public class SuspectsPanel extends JPanel {
 	ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
 	DefaultComboBoxModel<String> combo;
 	JComboBox<String> comboList;
-
+	
+	
 	//Logic for Updating the Notes:
 	private class CheckboxListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -54,18 +55,29 @@ public class SuspectsPanel extends JPanel {
 		setBorder(new TitledBorder (new EtchedBorder(), name));
 		combo = new DefaultComboBoxModel<String>();
 		comboList = new JComboBox<String>(combo);
-		
+		setBackground(Color.BLACK);
+		setForeground(Color.WHITE);
+		//combo.setBackground(Color.BLACK);
+		//combo.setForeground(Color.WHITE);
+		comboList.setBackground(Color.BLACK);
+		comboList.setForeground(Color.WHITE);
 
 		JCheckBox checkBox;
 
 		JPanel checkPanel_1 = new JPanel(new GridLayout(0, 1));
+		checkPanel_1.setBackground(Color.BLACK);
+		checkPanel_1.setForeground(Color.WHITE);
 		JPanel checkPanel_2 = new JPanel(new GridLayout(0, 1));
+		checkPanel_2.setBackground(Color.BLACK);
+		checkPanel_2.setForeground(Color.WHITE);
 
 		int  half_options = possible_cards.size()/2; //Returns half (rounded) the number of options
 		int counter = 0;
 		combo.addElement(UNSURE);
 		for(String card: possible_cards) {
 			checkBox = new JCheckBox(card);
+			checkBox.setBackground(Color.BLACK);
+			checkBox.setForeground(Color.WHITE);
 			checkBox.addActionListener(new CheckboxListener());
 			//checkBox.setName(weapon);
 			checkboxes.add(checkBox);

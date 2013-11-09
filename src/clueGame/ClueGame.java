@@ -736,7 +736,6 @@ public class ClueGame extends JFrame{
 		// - Scrollbar
 		// - Buttons
 		ClueGame.setGUILookAndFeel("Metal");
-		
 		//Initialize Just About Everything:
 		ClueGame clue = new ClueGame(LEGEND, BOARD,
 				PERSON_CARDS, WEAPON_CARDS, ROOM_CARDS, false);
