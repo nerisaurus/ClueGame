@@ -365,8 +365,21 @@ public class Board extends JPanel {
 			}
 		}
 	}
+	
+	// Be sure to trim the color, we don't want spaces around the name
+	public Color convertColor(String strColor){
+		Color color; 
+		try {     
+			// We can use reflection to convert the string to a color
+			java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(strColor.trim());        
+			color = (Color)field.get(null); } 
+		catch (Exception e) {  
+			color = null; // Not defined } 
+		}
+		return color;
+	}
 
-	//Getters and Setters (rearrange later)
+	//GETTERS:
 	public RoomCell getRoomCellAt(int row, int col) {
 		return getRoomCellAt(calcIndex(row,col));
 	}
@@ -428,22 +441,6 @@ public class Board extends JPanel {
 	public Map<Character, Color> getRoomColors() {
 		return roomColors;
 	}
-
-	public void setRoomColors(Map<Character, Color> roomColors) {
-		this.roomColors = roomColors;
-	}
-
-	public void setPlayerMap(Map<String, LinkedList<Player>> players) {
-		this.players = players;
-	}
-
-	public void setCellDimensions(int cellDimensions){
-		this.cellDimensions = cellDimensions;
-	}
-	
-	public void setWinnerColor(Color winnerColor) {
-		this.winnerColor = winnerColor;
-	}
 	
 	public Color getWinnerColor() {
 		return winnerColor;
@@ -461,17 +458,21 @@ public class Board extends JPanel {
 		return cellDimensions;
 	}
 
-	// Be sure to trim the color, we don't want spaces around the name
-	public Color convertColor(String strColor){
-		Color color; 
-		try {     
-			// We can use reflection to convert the string to a color
-			java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(strColor.trim());        
-			color = (Color)field.get(null); } 
-		catch (Exception e) {  
-			color = null; // Not defined } 
-		}
-		return color;
+	//SETTERS:
+	public void setRoomColors(Map<Character, Color> roomColors) {
+		this.roomColors = roomColors;
+	}
+
+	public void setPlayerMap(Map<String, LinkedList<Player>> players) {
+		this.players = players;
+	}
+
+	public void setCellDimensions(int cellDimensions){
+		this.cellDimensions = cellDimensions;
+	}
+	
+	public void setWinnerColor(Color winnerColor) {
+		this.winnerColor = winnerColor;
 	}
 
 	public boolean isHighlightTargets() {

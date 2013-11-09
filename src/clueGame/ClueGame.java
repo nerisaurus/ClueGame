@@ -112,22 +112,6 @@ public class ClueGame extends JFrame implements ComponentListener {
 		this.setBoard(new Board(board, legend));
 		this.getBoard().setPlayerMap(players);
 
-		/*board.addComponentListener();
-		board.addComponentListener(new ComponentListener() 
-		{  
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-
-			}
-
-			//And then the ones we don't care about:
-			@Override
-			public void componentHidden(ComponentEvent arg0) {}
-			@Override
-			public void componentMoved(ComponentEvent arg0) {}
-			@Override
-			public void componentShown(ComponentEvent arg0) {}
-		});*/
 		this.deck = new LinkedList<Card>();
 		this.solution = new Solution();
 
