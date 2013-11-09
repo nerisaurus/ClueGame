@@ -1,5 +1,6 @@
 package clueGameGUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -54,6 +55,8 @@ public class SuggestionDialog extends JDialog{
 			//Add a text field with the room
 			roomName = new JTextField(room);
 			roomName.setEditable(false);
+			roomName.setBackground(Color.BLACK);
+			roomName.setForeground(Color.WHITE);
 			add(roomName);
 		}
 
