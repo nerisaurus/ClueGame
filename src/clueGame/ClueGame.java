@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,13 +19,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.LookAndFeel;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -229,7 +226,8 @@ public class ClueGame extends JFrame implements ComponentListener {
 		this.solution.setRoom(deck.get(roomIndex));
 		deck.remove(roomIndex);
 
-		System.out.println(this.solution);
+		//For Testing (or Cheating) Purposes Only:
+		//System.out.println(this.solution);
 	}
 
 	public void dealCards() {	
@@ -247,29 +245,12 @@ public class ClueGame extends JFrame implements ComponentListener {
 	}
 
 	public Card handleSuggestion(Player accusingPlayer, Solution suggestion, boolean updatePanel) {
-		Player accused;
 		if (suggestion.getPerson().getName().equals((players.get("Human")).getFirst().getName())){
-			accused = players.get("Human").getFirst();
-			accused.setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
-			LinkedList<Player> ll = new LinkedList<Player>();
-			ll.add(accused);
-			players.put("Human", ll);
-		}
-		else{
+			players.get("Human").getFirst().setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
+		} else{
 			for (int i = 0; i < players.get("Computer").size(); i++){
-				if (suggestion.getPerson().getName().equals(players.get("Computer").get(i).getName())){
-					accused = players.get("Computer").get(i);
-					accused.setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
-					LinkedList<Player> ll = new LinkedList<Player>();
-					for (Player p : players.get("Computer")){
-						if (p.getName().equals(accused.getName())){
-							ll.add(accused);
-						}
-						else{
-							ll.add(p);
-						}
-					}
-					players.put("Computer", ll);
+				if(suggestion.getPerson().getName().equals(players.get("Computer").get(i).getName())) {
+					players.get("Computer").get(i).setLocation(accusingPlayer.getCurrentColumn(), accusingPlayer.getCurrentRow());
 				}
 			}
 		}
@@ -440,7 +421,7 @@ public class ClueGame extends JFrame implements ComponentListener {
 
 
 			//Get the accusation he made and string it all into a sentence.
-			message = "Turns out, the murderer was " + murderer + " all along!  "
+			message = "Turns out the murderer was " + murderer + " all along!  "
 					+ "Yes, " + murderer + " on the planet " + murderRoom
 					+ "\n" + "with the " + murderWeapon + ".  "
 					+ "Good thing " + name + action;
