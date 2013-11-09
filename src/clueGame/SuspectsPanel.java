@@ -22,8 +22,8 @@ public class SuspectsPanel extends JPanel {
 	ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
 	DefaultComboBoxModel<String> combo;
 	JComboBox<String> comboList;
-	
-	
+
+
 	//Logic for Updating the Notes:
 	private class CheckboxListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -55,12 +55,14 @@ public class SuspectsPanel extends JPanel {
 		setBorder(new TitledBorder (new EtchedBorder(), name));
 		combo = new DefaultComboBoxModel<String>();
 		comboList = new JComboBox<String>(combo);
-		
-		comboList.setAlignmentY(java.awt.Component.CENTER_ALIGNMENT);
-		
-	/*	 DefaultListCellRenderer centerer = new DefaultListCellRenderer();
+
+		//comboList.setAlignmentY(java.awt.Component.CENTER_ALIGNMENT);
+
+		/*	 DefaultListCellRenderer centerer = new DefaultListCellRenderer();
 		 centerer.setVerticalAlignment(DefaultListCellRenderer.CENTER);
-		 comboList.setRenderer(centerer);*/
+		 comboList.setRenderer(centerer);*/ 
+		//Not even this code works to center the comboList options 
+		// (in the y direction - it's not too hard to center them in the x direction)
 
 		JCheckBox checkBox;
 
@@ -84,13 +86,13 @@ public class SuspectsPanel extends JPanel {
 			}
 			counter++;
 		}
-		
+
 
 		add(checkPanel_1);
 		add(checkPanel_2);
 		add(comboList);
 	}
-	
+
 	private String makePhrase(String name){
 		return description + name;
 	}

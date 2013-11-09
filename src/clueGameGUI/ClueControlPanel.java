@@ -100,7 +100,7 @@ public class ClueControlPanel extends JPanel{
 	public void addSuggestionToLog(Player accuser, Solution suggestion, Card disprovedBy) {
 		suggestionLog.addSuggestion(accuser, suggestion, disprovedBy);
 	}
-	
+
 	public void addAccusationToLog(Player accuser, Solution suggestion, boolean b) {
 		suggestionLog.addAccusationToLog(accuser, suggestion, b);
 	}
@@ -139,7 +139,7 @@ public class ClueControlPanel extends JPanel{
 
 		Solution accusation = new Solution(suspect, weapon, room);
 		//moved it up here so that it will close the dialog box right away, but the internal work will still continue!
-		
+
 		accusationDialog.setVisible(false);
 		clue.accusationDialogOpen = false;
 		clue.hasActed = true;

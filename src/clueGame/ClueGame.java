@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -369,18 +371,18 @@ public class ClueGame extends JFrame{
 			controls.addAccusationToLog(accuser, accusation, won);
 
 			//Now to make a Dialog:
-			
+
 			//First, we have to do some setup:
 			String message, title, name, action;
 			String murderer, murderWeapon, murderRoom;
-			
+
 			//Get the name of our lucky detective and his discoveries:
 			name = accuser.getName();
 			murderer = accusation.getPerson().getName();
 			murderWeapon = accusation.getWeapon().getName();
 			murderRoom = accusation.getRoom().getName();
 			action = " was on the case!"; //Default action statement
-			
+
 			if(name.equals(murderer)){
 				//Since all of our characters have unisex names, let's have some fun randomness.
 				boolean male = new Random().nextBoolean();
@@ -390,7 +392,7 @@ public class ClueGame extends JFrame{
 					action = " turned herself in.";
 				}
 			}
-			
+
 			//Adjust text based on whether the human won:
 			if (name.equals(players.get("Human").getFirst().getName())) {
 				name = "you";
@@ -412,18 +414,20 @@ public class ClueGame extends JFrame{
 				}
 			}
 
+
 			//Get the accusation he made and string it all into a sentence.
 			message = "Turns out, the murderer was " + murderer + " all along!  "
 					+ "Yes, " + murderer + " on the planet " + murderRoom
 					+ "\n" + "with the " + murderWeapon + ".  "
 					+ "Good thing " + name + action;
+
 			int option = JOptionPane.showOptionDialog(null,
 					message,
 					title,
 					2,
 					JOptionPane.PLAIN_MESSAGE,
 					null,
-					new String[] {"Play Again", "Goodbye"},
+					new String[] {"Play Again", "That is Enough For Now"},
 					null);
 			if (option == 0){ //Play Again
 				setVisible(false);
