@@ -6,21 +6,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 
+import javax.swing.JPanel;
 import clueGame.Card;
 import clueGame.CardType;
 import clueGame.ClueGame;
@@ -68,7 +56,7 @@ public class ClueControlPanel extends JPanel{
 		endTurn = new JButton("End Turn");
 		endTurn.setBackground(Color.BLACK);
 		endTurn.setForeground(Color.WHITE);
-		endTurn.addActionListener(new nextPlayerListener());
+		endTurn.addActionListener(new EndTurnListener());
 
 		buttons.add(makeAccusation);
 		buttons.add(endTurn);
@@ -77,7 +65,7 @@ public class ClueControlPanel extends JPanel{
 
 	}
 
-	class nextPlayerListener implements ActionListener{
+	class EndTurnListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if (clue.gameOngoing)
 				nextPlayer();
@@ -185,7 +173,6 @@ public class ClueControlPanel extends JPanel{
 		//Nameplate
 		currentTurn.setCurrentPlayerTheme(p);
 	}
-
 
 }
 
