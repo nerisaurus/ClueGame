@@ -360,27 +360,30 @@ public class ClueGame extends JFrame{
 		return roll;
 	}
 
-	public boolean testAccusation(Solution accusation, Player p, boolean isPlayer){
+	public boolean testAccusation(Solution accusation, Player accuser, boolean isPlayer){
 		boolean won = false;
 		
 		if(solution.equals(accusation)) {
 			won = true;
 			gameOngoing = false; //The game has ended
 			//dialogs only pop up if the human player made the accusations
-			String name = p.getName();
-			if (p.getName().equals(players.get("Human").getFirst().getName()))
+			String name = accuser.getName();
+			if (accuser.getName().equals(players.get("Human").getFirst().getName()))
 				name = "You";
+			//Adds the accusation to the log:
+			controls.addAccusationToLog(accuser, accusation, won);
+			//Pops up a dialog: Do you want to play again?
 			if (JOptionPane.showConfirmDialog(null, name + " won the game!" + "\n" + "Play again?", "End Game Result", JOptionPane.YES_NO_OPTION) == 0){
 				setVisible(false);
 				ClueGame.main(null);
 			}
-			else
+			else {
 				System.exit(0);
-			//And let calling functions know that it worked
-			controls.addAccusationToLog(p, accusation, won);
+			}
+			
 		}
 		else{
-			if (p.getName().equals(players.get("Human").getFirst().getName())){
+			if (accuser.getName().equals(players.get("Human").getFirst().getName())){
 				String message = "You give an impassioned indictment that the foul deed was committed by:\n" 
 						+"\""+ accusation.getPerson().getName() + " on the planet " + accusation.getRoom().getName() + " with the " + accusation.getWeapon().getName() + "!\"" +
 						"\n" + "But... you are wrong.";
@@ -392,7 +395,7 @@ public class ClueGame extends JFrame{
 						null,
 						new String[] {"I promise it won't happen again, your Honour!"},
 						null);
-				controls.addAccusationToLog(p, accusation, won);
+				controls.addAccusationToLog(accuser, accusation, won);
 			}
 		}
 		return won;
@@ -403,8 +406,8 @@ public class ClueGame extends JFrame{
 		if(ai.makeAccusation(goodAccusation) != null) {
 			//If they do make an accusation, let's test it:
 			boolean won = testAccusation(ai.makeAccusation(goodAccusation), ai, false);
-			//TODO: (Add the accusation they made to the log via SuggestionLog's addAccusation method)
-			
+			//Then add this accusation to the log:
+			controls.addAccusationToLog(ai, ai.makeAccusation(goodAccusation), won);
 
 			//Then a reset.  If they didn't win, it must not be the right thing, and
 			//other AI know this (they "know" that any AI will pick that suggestion
