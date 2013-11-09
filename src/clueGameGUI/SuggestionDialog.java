@@ -18,7 +18,7 @@ public class SuggestionDialog extends JDialog{
 	JButton cancelButton;
 	JButton submitButton;
 
-	JComboBox rooms, people, weapons;
+	JComboBox<String> rooms, people, weapons;
 	JTextField roomName;
 
 	private ClueGame clueGame;

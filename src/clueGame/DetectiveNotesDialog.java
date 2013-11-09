@@ -7,8 +7,6 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JDialog;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class DetectiveNotesDialog extends JDialog {
 
